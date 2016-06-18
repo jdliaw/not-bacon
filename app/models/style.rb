@@ -1,4 +1,4 @@
 class Style < ActiveRecord::Base
-  serialize :data
+  serialize :style_attributes
   belongs_to :publisher
 end

@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 20160617205324) do
 
   create_table "styles", force: :cascade do |t|
     t.integer  "publisher_id"
-    t.text     "data"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.text     "style_attributes"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   add_index "styles", ["publisher_id"], name: "index_styles_on_publisher_id"

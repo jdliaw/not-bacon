@@ -1,0 +1,23 @@
+{
+  "name": "skinzzz",
+  "version": "1.0.0",
+  "description": "Skinzzz React",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weilandia/skinzzz.git"
+  },
+  "keywords": [
+    "react",
+    "skinzzz"
+  ],
+  "author": "Nick and Jen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weilandia/skinzzz/issues"
+  },
+  "homepage": "https://github.com/weilandia/skinzzz#readme"
+}

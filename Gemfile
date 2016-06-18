@@ -15,12 +15,12 @@ group :development, :test do
   gem 'pry-rails'
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'simplecov'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
 
-  gem 'spring'
+  # gem 'spring'
 end

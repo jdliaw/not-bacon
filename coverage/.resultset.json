@@ -1,0 +1,312 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/requests/api/v1/styles_spec.rb": [
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/rails_helper.rb": [
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        4,
+        null,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/environment.rb": [
+        null,
+        1,
+        null,
+        null,
+        1
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/application.rb": [
+        1,
+        null,
+        1,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/boot.rb": [
+        1,
+        null,
+        1
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/environments/test.rb": [
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/assets.rb": [
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/backtrace_silencers.rb": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/cookies_serializer.rb": [
+        null,
+        null,
+        1
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/filter_parameter_logging.rb": [
+        null,
+        null,
+        null,
+        1
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/inflections.rb": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/mime_types.rb": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/session_store.rb": [
+        null,
+        null,
+        1
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/wrap_parameters.rb": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/factories/publishers.rb": [
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/routes.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/resources/api/v1/style_resource.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/resources/base_resource.rb": [
+        1,
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/database_cleaner.rb": [
+        1,
+        1,
+        null,
+        1,
+        1,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        0,
+        null,
+        0,
+        0,
+        null,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/factory_girl.rb": [
+        1,
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/shoulda_matchers.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/models/publisher.rb": [
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/api/v1/styles_controller.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/api/api_controller.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/models/style.rb": [
+        1,
+        1,
+        1,
+        null
+      ]
+    },
+    "timestamp": 1466208352
+  }
+}
