@@ -21,6 +21,22 @@
         1,
         null,
         null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        1,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
         null
       ],
       "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/rails_helper.rb": [
@@ -197,6 +213,12 @@
         null,
         null
       ],
+      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/factories/styles.rb": [
+        1,
+        1,
+        null,
+        null
+      ],
       "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/routes.rb": [
         1,
         1,
@@ -240,7 +262,7 @@
         null,
         null,
         1,
-        1,
+        2,
         null,
         null,
         1,
@@ -252,11 +274,11 @@
         null,
         null,
         1,
-        1,
+        2,
         null,
         null,
         1,
-        1,
+        2,
         null,
         null
       ],
@@ -274,6 +296,7 @@
         null
       ],
       "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/models/publisher.rb": [
+        1,
         1,
         null
       ],
@@ -307,6 +330,6 @@
         null
       ]
     },
-    "timestamp": 1466208352
+    "timestamp": 1466209610
   }
 }
