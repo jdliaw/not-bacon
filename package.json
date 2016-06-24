@@ -4,11 +4,12 @@
   "description": "Hume React",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p --config webpack.config.js --profile --progress --colors --watch",
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weilandia/skinzzz.git"
+    "url": "git+https://github.com/stacksocial/hume.git"
   },
   "keywords": [
     "react",
@@ -17,7 +18,23 @@
   "author": "Nick and Jen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/weilandia/skinzzz/issues"
+    "url": "https://github.com/stacksocial/hume/issues"
   },
-  "homepage": "https://github.com/weilandia/skinzzz#readme"
+  "homepage": "https://github.com/stacksocial/hume#readme",
+  "dependencies": {
+    "react": "^15.1.0",
+    "react-dom": "^0.14.6"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.35",
+    "babel-loader": "^5.4.0",
+    "css-loader": "^0.23.1",
+    "jsx-loader": "^0.13.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.2.5",
+    "mocha-loader": "^0.7.1"
+  }
 }

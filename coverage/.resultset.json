@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/requests/api/v1/styles_spec.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/requests/api/v1/styles_spec.rb": [
         1,
         null,
         1,
@@ -39,7 +39,7 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/rails_helper.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/rails_helper.rb": [
         null,
         1,
         1,
@@ -57,14 +57,14 @@
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/environment.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/environment.rb": [
         null,
         1,
         null,
         null,
         1
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/application.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/application.rb": [
         1,
         null,
         1,
@@ -79,12 +79,12 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/boot.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/boot.rb": [
         1,
         null,
         1
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/environments/test.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/environments/test.rb": [
         1,
         null,
         null,
@@ -128,7 +128,7 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/assets.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/assets.rb": [
         null,
         null,
         null,
@@ -141,7 +141,7 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/backtrace_silencers.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/backtrace_silencers.rb": [
         null,
         null,
         null,
@@ -150,18 +150,18 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/cookies_serializer.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/cookies_serializer.rb": [
         null,
         null,
         1
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/filter_parameter_logging.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/filter_parameter_logging.rb": [
         null,
         null,
         null,
         1
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/inflections.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/inflections.rb": [
         null,
         null,
         null,
@@ -179,18 +179,18 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/mime_types.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/mime_types.rb": [
         null,
         null,
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/session_store.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/session_store.rb": [
         null,
         null,
         1
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/initializers/wrap_parameters.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/initializers/wrap_parameters.rb": [
         null,
         null,
         null,
@@ -206,29 +206,20 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/factories/publishers.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/factories/publishers.rb": [
         1,
         1,
         1,
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/factories/styles.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/factories/styles.rb": [
         1,
         1,
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/config/routes.rb": [
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        null
-      ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/resources/api/v1/style_resource.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/config/routes.rb": [
         1,
         1,
         1,
@@ -237,16 +228,25 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/resources/base_resource.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/resources/api/v1/style_resource.rb": [
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/resources/base_resource.rb": [
         1,
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/helpers/application_helper.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/helpers/application_helper.rb": [
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/database_cleaner.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/support/database_cleaner.rb": [
         1,
         1,
         null,
@@ -282,12 +282,12 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/factory_girl.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/support/factory_girl.rb": [
         1,
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/spec/support/shoulda_matchers.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/spec/support/shoulda_matchers.rb": [
         1,
         1,
         1,
@@ -295,12 +295,12 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/models/publisher.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/models/publisher.rb": [
         1,
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/api/v1/styles_controller.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/controllers/api/v1/styles_controller.rb": [
         1,
         1,
         1,
@@ -308,7 +308,7 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/api/api_controller.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/controllers/api/api_controller.rb": [
         1,
         1,
         1,
@@ -316,20 +316,20 @@
         null,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/controllers/application_controller.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/controllers/application_controller.rb": [
         1,
         null,
         null,
         1,
         null
       ],
-      "/Users/weilandia/Documents/workspace/Stack/skinzzz/app/models/style.rb": [
+      "/Users/weilandia/Documents/workspace/Stack/hume/app/models/style.rb": [
         1,
         1,
         1,
         null
       ]
     },
-    "timestamp": 1466210708
+    "timestamp": 1466210953
   }
 }
