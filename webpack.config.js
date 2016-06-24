@@ -1,20 +1,24 @@
 var webpack = require('webpack');
+var path = require('path');
+
+var BUILD_DIR = path.resolve(__dirname, 'app/assets/javascripts');
+var APP_DIR = path.resolve(__dirname, 'react_app/src');
 
 module.exports = {
   entry: {
-    react_app: './react_app/index.js',
+    react_app: APP_DIR + '/index.js'
   },
   output: {
-    path: './app/assets/javascripts',
-    filename: '[name].js'
+    path: BUILD_DIR,
+    filename: 'react.js'
   },
   module: {
     loaders: [
-      { test: /\.html$/, loader: "file?name=[name].[ext]"} ,
-      { test: /\.css$/, loader: 'style!css' },
-      { test: /\.js$/, loader: "babel-loader?stage=0", exclude: '/node_modules/' },
-      { test: /\.jsx$/, loaders: ['jsx-loader', "babel-loader?stage=0"] }
+      {
+        test: /\.jsx?/,
+        include: APP_DIR,
+        loader: 'babel'
+      }
     ]
-  },
-  plugins: []
+  }
 };
