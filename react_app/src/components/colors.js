@@ -5,9 +5,9 @@ export function Colors() {
   return (
   	<div className="container">
   		<div className="row">
-  			<div className="col-xs-9">
+  			<div className="col-md-10">
 		  		<div className="row">
-		  			<div className="col-sm-6">
+		  			<div className="col-md-6">
 		  				<h2 className="style-type">Colors</h2>
 		  				<h6 className="style-type-description">Gray and brand colors for use across Bootstrap.</h6>
 		  			</div>
@@ -17,26 +17,26 @@ export function Colors() {
 		  				<InputFields id="@gray-base" initialValue="#000"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-darker" initialValue="lighten(@gray-base, 13.5%)"/>
+		  				<InputFields id="@gray-darker" initialValue="#f7f7f9"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-dark" initialValue="lighten(@gray-base, 20%)"/>
-		  			</div>
-		  		</div>
-		  		<div className="row">
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray" initialValue="#lighten(@gray-base, 33.5%)"/>
-		  			</div>
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-light" initialValue="lighten(@gray-base, 46.7%)"/>
-		  			</div>
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-lighter" initialValue="lighten(@gray-base, 93.5%)"/>
+		  				<InputFields id="@gray-dark" initialValue="#373a3c"/>
 		  			</div>
 		  		</div>
 		  		<div className="row">
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-primary" initialValue="darken(#48bc2a, 6.5%)"/>
+		  				<InputFields id="@gray" initialValue="#55595c"/>
+		  			</div>
+		  			<div className="col-xs-4">
+		  				<InputFields id="@gray-light" initialValue="#818a91"/>
+		  			</div>
+		  			<div className="col-xs-4">
+		  				<InputFields id="@gray-lighter" initialValue="#eceeef"/>
+		  			</div>
+		  		</div>
+		  		<div className="row">
+		  			<div className="col-xs-4">
+		  				<InputFields id="@brand-primary" initialValue="#0275d8"/>
 		  			</div>
 		  			<div className="col-xs-4">
 		  				<InputFields id="@brand-success" initialValue="#5cb85c"/>

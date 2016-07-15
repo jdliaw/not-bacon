@@ -21078,13 +21078,13 @@
 							{ className: 'row' },
 							_react2.default.createElement(
 									'div',
-									{ className: 'col-xs-9' },
+									{ className: 'col-md-10' },
 									_react2.default.createElement(
 											'div',
 											{ className: 'row' },
 											_react2.default.createElement(
 													'div',
-													{ className: 'col-sm-6' },
+													{ className: 'col-md-6' },
 													_react2.default.createElement(
 															'h2',
 															{ className: 'style-type' },
@@ -21108,12 +21108,12 @@
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-darker', initialValue: 'lighten(@gray-base, 13.5%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-darker', initialValue: '#f7f7f9' })
 											),
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-dark', initialValue: 'lighten(@gray-base, 20%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-dark', initialValue: '#373a3c' })
 											)
 									),
 									_react2.default.createElement(
@@ -21122,17 +21122,17 @@
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@gray', initialValue: '#lighten(@gray-base, 33.5%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@gray', initialValue: '#55595c' })
 											),
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-light', initialValue: 'lighten(@gray-base, 46.7%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-light', initialValue: '#818a91' })
 											),
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-lighter', initialValue: 'lighten(@gray-base, 93.5%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@gray-lighter', initialValue: '#eceeef' })
 											)
 									),
 									_react2.default.createElement(
@@ -21141,7 +21141,7 @@
 											_react2.default.createElement(
 													'div',
 													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { id: '@brand-primary', initialValue: 'darken(#48bc2a, 6.5%)' })
+													_react2.default.createElement(_inputFields.InputFields, { id: '@brand-primary', initialValue: '#0275d8' })
 											),
 											_react2.default.createElement(
 													'div',
@@ -21194,16 +21194,19 @@
 	  var id = _ref.id;
 	  var initialValue = _ref.initialValue;
 
+	  var style = {
+	    background: "linear-gradient(to left, " + initialValue + ", " + initialValue + " 17%, transparent 17%, transparent 100%)"
+	  };
 
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "style-input" },
+	    { className: "style-input-div" },
 	    _react2.default.createElement(
 	      "label",
 	      { id: id },
 	      id
 	    ),
-	    _react2.default.createElement("input", { className: "form-control", type: "text", placeholder: initialValue })
+	    _react2.default.createElement("input", { className: "form-control style-input", type: "text", placeholder: initialValue, style: style })
 	  );
 	}
 
