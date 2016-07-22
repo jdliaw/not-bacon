@@ -14,43 +14,43 @@ export function Colors() {
 		  		</div>
 		  		<div className="row">
 		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-base" initialValue="#000"/>
+		  				<InputFields name="@gray-base" initialValue="#000"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-darker" initialValue="#f7f7f9"/>
+		  				<InputFields name="@gray-darker" initialValue="#f7f7f9"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-dark" initialValue="#373a3c"/>
-		  			</div>
-		  		</div>
-		  		<div className="row">
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray" initialValue="#55595c"/>
-		  			</div>
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-light" initialValue="#818a91"/>
-		  			</div>
-		  			<div className="col-xs-4">
-		  				<InputFields id="@gray-lighter" initialValue="#eceeef"/>
+		  				<InputFields name="@gray-dark" initialValue="#373a3c"/>
 		  			</div>
 		  		</div>
 		  		<div className="row">
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-primary" initialValue="#0275d8"/>
+		  				<InputFields name="@gray" initialValue="#55595c"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-success" initialValue="#5cb85c"/>
+		  				<InputFields name="@gray-light" initialValue="#818a91"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-info" initialValue="#5bc0de"/>
+		  				<InputFields name="@gray-lighter" initialValue="#eceeef"/>
 		  			</div>
 		  		</div>
 		  		<div className="row">
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-warning" initialValue="#f0ad4e"/>
+		  				<InputFields name="@brand-primary" initialValue="#0275d8"/>
 		  			</div>
 		  			<div className="col-xs-4">
-		  				<InputFields id="@brand-danger" initialValue="#d9534f"/>
+		  				<InputFields name="@brand-success" initialValue="#5cb85c"/>
+		  			</div>
+		  			<div className="col-xs-4">
+		  				<InputFields name="@brand-info" initialValue="#5bc0de"/>
+		  			</div>
+		  		</div>
+		  		<div className="row">
+		  			<div className="col-xs-4">
+		  				<InputFields name="@brand-warning" initialValue="#f0ad4e"/>
+		  			</div>
+		  			<div className="col-xs-4">
+		  				<InputFields name="@brand-danger" initialValue="#d9534f"/>
 		  			</div>
 		  		</div>
 		  	</div>
