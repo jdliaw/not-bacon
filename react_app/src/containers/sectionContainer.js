@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import { updatePreview } from '../actions'
-import { Colors } from '../components/colors'
+import Section from '../components/section'
 
 const mapStateToProps = (state) => {
-  debugger
   return {
     fields: state.fields
   }
@@ -17,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const Fields = connect(
+const SectionContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Colors)
+)(Section)
 
-export default Fields
+export default SectionContainer

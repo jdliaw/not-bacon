@@ -58,15 +58,15 @@
 
 	var _Hume = __webpack_require__(192);
 
-	var _reducers = __webpack_require__(197);
+	var _reducers = __webpack_require__(198);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _actions = __webpack_require__(196);
+	var _actions = __webpack_require__(195);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var store = (0, _redux.createStore)(_reducers2.default);
+	var store = (0, _redux.createStore)(_reducers2.default, window.devToolsExtension && window.devToolsExtension());
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -82,7 +82,7 @@
 	  return console.log(store.getState());
 	});
 
-	store.dispatch((0, _actions.updatePreview)(0, 'hello'));
+	// store.dispatch(updatePreview(0, 'hello'))
 
 	unsubscribe();
 
@@ -22618,7 +22618,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _colors = __webpack_require__(194);
+	var _sectionContainer = __webpack_require__(194);
+
+	var _sectionContainer2 = _interopRequireDefault(_sectionContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22626,7 +22628,7 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_colors.Colors, null)
+	    _react2.default.createElement(_sectionContainer2.default, null)
 	  );
 	}
 
@@ -22637,169 +22639,39 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+	  value: true
 	});
-	exports.Colors = Colors;
 
-	var _react = __webpack_require__(1);
+	var _reactRedux = __webpack_require__(183);
 
-	var _react2 = _interopRequireDefault(_react);
+	var _actions = __webpack_require__(195);
 
-	var _inputFields = __webpack_require__(195);
+	var _section = __webpack_require__(196);
+
+	var _section2 = _interopRequireDefault(_section);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function Colors() {
-			return _react2.default.createElement(
-					'div',
-					{ className: 'container' },
-					_react2.default.createElement(
-							'div',
-							{ className: 'row' },
-							_react2.default.createElement(
-									'div',
-									{ className: 'col-md-10' },
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-md-6' },
-													_react2.default.createElement(
-															'h2',
-															{ className: 'style-type' },
-															'Colors'
-													),
-													_react2.default.createElement(
-															'h6',
-															{ className: 'style-type-description' },
-															'Gray and brand colors for use across Bootstrap.'
-													)
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray-base', initialValue: '#000' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray-darker', initialValue: '#f7f7f9' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray-dark', initialValue: '#373a3c' })
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray', initialValue: '#55595c' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray-light', initialValue: '#818a91' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@gray-lighter', initialValue: '#eceeef' })
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@brand-primary', initialValue: '#0275d8' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@brand-success', initialValue: '#5cb85c' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@brand-info', initialValue: '#5bc0de' })
-											)
-									),
-									_react2.default.createElement(
-											'div',
-											{ className: 'row' },
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@brand-warning', initialValue: '#f0ad4e' })
-											),
-											_react2.default.createElement(
-													'div',
-													{ className: 'col-xs-4' },
-													_react2.default.createElement(_inputFields.InputFields, { name: '@brand-danger', initialValue: '#d9534f' })
-											)
-									)
-							)
-					)
-			);
-	}
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    fields: state.fields
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onInputChange: function onInputChange(id, preview) {
+	      dispatch((0, _actions.updatePreview)(id, preview));
+	    }
+	  };
+	};
+
+	var SectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_section2.default);
+
+	exports.default = SectionContainer;
 
 /***/ },
 /* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.InputFields = InputFields;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function InputFields(_ref) {
-	  var name = _ref.name;
-	  var initialValue = _ref.initialValue;
-
-	  var style = {
-	    background: "linear-gradient(to left, " + initialValue + ", " + initialValue + " 17%, transparent 17%, transparent 100%)"
-	  };
-
-	  propTypes: {
-	    value: _react2.default.PropTypes.element.isRequired;
-	    handleChange: _react2.default.PropTypes.element.isRequired;
-	  }
-
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "style-input-div" },
-	    _react2.default.createElement(
-	      "label",
-	      { id: name },
-	      name
-	    ),
-	    _react2.default.createElement("input", { className: "form-control style-input",
-	      type: "text",
-	      placeholder: initialValue,
-	      style: style })
-	  );
-	}
-
-/***/ },
-/* 196 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22812,7 +22684,147 @@
 	};
 
 /***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _inputField = __webpack_require__(197);
+
+	var _inputField2 = _interopRequireDefault(_inputField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Section = function Section(_ref) {
+	  var fields = _ref.fields;
+	  var onInputChange = _ref.onInputChange;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-6' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'style-type' },
+	              'Colors'
+	            ),
+	            _react2.default.createElement(
+	              'h6',
+	              { className: 'style-type-description' },
+	              'Gray and brand colors for use across Bootstrap.'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          fields.map(function (field) {
+	            return _react2.default.createElement(_inputField2.default, _extends({
+	              key: field.id
+	            }, field, {
+	              onBlur: function onBlur() {
+	                return onInputChange(field.id, field.preview);
+	              }
+	            }));
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	Section.propTypes = {
+	  fields: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
+	    id: _react2.default.PropTypes.number.isRequired,
+	    name: _react2.default.PropTypes.string.isRequired,
+	    preview: _react2.default.PropTypes.string.isRequired,
+	    value: _react2.default.PropTypes.string.isRequired
+	  }).isRequired).isRequired,
+	  onInputChange: _react2.default.PropTypes.func.isRequired
+	};
+
+	exports.default = Section;
+
+/***/ },
 /* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(183);
+
+	var _actions = __webpack_require__(195);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var InputField = function InputField(_ref) {
+	  var id = _ref.id;
+	  var name = _ref.name;
+	  var preview = _ref.preview;
+	  var value = _ref.value;
+	  var onBlur = _ref.onBlur;
+
+	  var style = {
+	    background: "linear-gradient(to left, " + preview + ", " + preview + " 17%, transparent 17%, transparent 100%)"
+	  };
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'style-input-div col-xs-4' },
+	    _react2.default.createElement(
+	      'label',
+	      { id: name },
+	      name
+	    ),
+	    _react2.default.createElement('input', { className: 'form-control style-input',
+	      type: 'text',
+	      placeholder: value,
+	      style: style,
+	      onBlur: onBlur
+	    })
+	  );
+	};
+
+	InputField.propTypes = {
+	  id: _react2.default.PropTypes.number.isRequired,
+	  name: _react2.default.PropTypes.string.isRequired,
+	  preview: _react2.default.PropTypes.string.isRequired,
+	  value: _react2.default.PropTypes.string.isRequired,
+	  onBlur: _react2.default.PropTypes.func.isRequired
+	};
+
+	exports.default = InputField;
+
+/***/ },
+/* 198 */
 /***/ function(module, exports) {
 
 	'use strict';

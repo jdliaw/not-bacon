@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { Hume } from './components/Hume';
 import fields from './reducers';
 
-let store = createStore(fields)
+let store = createStore(fields, window.devToolsExtension && window.devToolsExtension())
 
 render(
   <Provider store={store}>
@@ -23,6 +23,6 @@ let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
 
-store.dispatch(updatePreview(0, 'hello'))
+// store.dispatch(updatePreview(0, 'hello'))
 
 unsubscribe();

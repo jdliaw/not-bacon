@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Colors } from './colors';
+import SectionContainer from '../containers/sectionContainer';
 
 export function StyleForm() {
   return (
   	<div>
-  		<Colors />
+  		<SectionContainer />
   	</div>
   )
 }
