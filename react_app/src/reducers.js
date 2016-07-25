@@ -9,32 +9,32 @@ const initialState = {
     {
       id: 1,
       name: 'gray-darker',
-      preview: '#f7f7f9',
-      value: '#f7f7f9'
-    },
-    {
-      id: 2,
-      name: 'gray-dark',
       preview: '#373a3c',
       value: '#373a3c'
     },
     {
-      id: 3,
-      name: 'gray',
+      id: 2,
+      name: 'gray-dark',
       preview: '#55595c',
       value: '#55595c'
     },
     {
-      id: 4,
-      name: 'gray-light',
+      id: 3,
+      name: 'gray',
       preview: '#818a91',
       value: '#818a91'
     },
     {
-      id: 5,
-      name: 'gray-lighter',
+      id: 4,
+      name: 'gray-light',
       preview: '#eceeef',
       value: '#eceeef'
+    },
+    {
+      id: 5,
+      name: 'gray-lighter',
+      preview: '#f7f7f9',
+      value: '#f7f7f9'
     },
     {
       id: 6,

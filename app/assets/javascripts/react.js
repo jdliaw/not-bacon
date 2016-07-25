@@ -22742,8 +22742,8 @@
 	            return _react2.default.createElement(_inputField2.default, _extends({
 	              key: field.id
 	            }, field, {
-	              onBlur: function onBlur() {
-	                return onInputChange(field.id, field.preview);
+	              onBlur: function onBlur(id, value) {
+	                return onInputChange(id, value);
 	              }
 	            }));
 	          })
@@ -22790,11 +22790,13 @@
 	  var name = _ref.name;
 	  var preview = _ref.preview;
 	  var value = _ref.value;
-	  var onBlur = _ref.onBlur;
+	  var _onBlur = _ref.onBlur;
 
 	  var style = {
 	    background: "linear-gradient(to left, " + preview + ", " + preview + " 17%, transparent 17%, transparent 100%)"
 	  };
+
+	  var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#aabbcc');
 
 	  return _react2.default.createElement(
 	    'div',
@@ -22802,13 +22804,17 @@
 	    _react2.default.createElement(
 	      'label',
 	      { id: name },
+	      '@',
 	      name
 	    ),
 	    _react2.default.createElement('input', { className: 'form-control style-input',
 	      type: 'text',
 	      placeholder: value,
 	      style: style,
-	      onBlur: onBlur
+	      onBlur: function onBlur(e) {
+	        return (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e.target.value) || e.target.value == "" ? _onBlur(id, e.target.value) : alert("Invalid hex color")
+	        );
+	      }
 	    })
 	  );
 	};
@@ -22842,28 +22848,28 @@
 	  }, {
 	    id: 1,
 	    name: 'gray-darker',
-	    preview: '#f7f7f9',
-	    value: '#f7f7f9'
-	  }, {
-	    id: 2,
-	    name: 'gray-dark',
 	    preview: '#373a3c',
 	    value: '#373a3c'
 	  }, {
-	    id: 3,
-	    name: 'gray',
+	    id: 2,
+	    name: 'gray-dark',
 	    preview: '#55595c',
 	    value: '#55595c'
 	  }, {
-	    id: 4,
-	    name: 'gray-light',
+	    id: 3,
+	    name: 'gray',
 	    preview: '#818a91',
 	    value: '#818a91'
 	  }, {
-	    id: 5,
-	    name: 'gray-lighter',
+	    id: 4,
+	    name: 'gray-light',
 	    preview: '#eceeef',
 	    value: '#eceeef'
+	  }, {
+	    id: 5,
+	    name: 'gray-lighter',
+	    preview: '#f7f7f9',
+	    value: '#f7f7f9'
 	  }, {
 	    id: 6,
 	    name: 'brand-primary',
