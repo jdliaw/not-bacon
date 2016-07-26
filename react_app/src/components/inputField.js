@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { updatePreview } from '../actions';
 
@@ -8,18 +9,20 @@ const InputField = ({id, name, preview, value, onBlur}) => {
     color: preview
   };
 
-  var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#aabbcc')
+  var divID = name + "-div";
+  var inputID = name + "-input"
 
   return (
-    <div className="style-input-div input-group col-md-4 col-sm-6 col-xs-12">
+    <div className="style-input-div col-md-4 col-sm-6 col-xs-12" id={divID}>
       <label id={name}>
         @{name}
       </label>
       <div className="input-group">
         <input className="form-control style-input"
+               id={inputID}
                type="text"
                placeholder={value}
-               onBlur={e => (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e.target.value) || e.target.value == "") ? onBlur(id, e.target.value) : alert("Invalid hex color")}
+               onBlur={e => onBlur(id, name, e.target.value)}
         />
         <span className="input-group-addon" style={style}>@</span>
       </div>

@@ -58,11 +58,11 @@
 
 	var _Hume = __webpack_require__(192);
 
-	var _reducers = __webpack_require__(198);
+	var _reducers = __webpack_require__(195);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _actions = __webpack_require__(195);
+	var _actions = __webpack_require__(196);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22644,9 +22644,9 @@
 
 	var _reactRedux = __webpack_require__(183);
 
-	var _actions = __webpack_require__(195);
+	var _actions = __webpack_require__(196);
 
-	var _section = __webpack_require__(196);
+	var _section = __webpack_require__(197);
 
 	var _section2 = _interopRequireDefault(_section);
 
@@ -22660,8 +22660,16 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onInputChange: function onInputChange(id, preview) {
-	      dispatch((0, _actions.updatePreview)(id, preview));
+	    onInputChange: function onInputChange(id, name, preview) {
+	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
+	      if (isHexColor && preview != "") {
+	        $('#' + name + '-input').removeClass('form-control-danger');
+	        $('#' + name + '-div').removeClass('has-danger');
+	        dispatch((0, _actions.updatePreview)(id, preview));
+	      } else if (!isHexColor && preview != "") {
+	        $('#' + name + '-input').addClass('form-control-danger');
+	        $('#' + name + '-div').addClass('has-danger');
+	      }
 	    }
 	  };
 	};
@@ -22672,174 +22680,6 @@
 
 /***/ },
 /* 195 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var updatePreview = exports.updatePreview = function updatePreview(id, preview) {
-	  return { type: 'UPDATE_PREVIEW', id: id, preview: preview };
-	};
-
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _inputField = __webpack_require__(197);
-
-	var _inputField2 = _interopRequireDefault(_inputField);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Section = function Section(_ref) {
-	  var fields = _ref.fields;
-	  var onInputChange = _ref.onInputChange;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-10 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-8' },
-	            _react2.default.createElement(
-	              'h2',
-	              { className: 'style-type' },
-	              'Colors'
-	            ),
-	            _react2.default.createElement(
-	              'h6',
-	              { className: 'style-type-description' },
-	              'Gray and brand colors for use across Bootstrap.'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          fields.map(function (field) {
-	            return _react2.default.createElement(_inputField2.default, _extends({
-	              key: field.id
-	            }, field, {
-	              onBlur: function onBlur(id, value) {
-	                return onInputChange(id, value);
-	              }
-	            }));
-	          })
-	        )
-	      )
-	    )
-	  );
-	};
-
-	Section.propTypes = {
-	  fields: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-	    id: _react2.default.PropTypes.number.isRequired,
-	    name: _react2.default.PropTypes.string.isRequired,
-	    preview: _react2.default.PropTypes.string.isRequired,
-	    value: _react2.default.PropTypes.string.isRequired
-	  }).isRequired).isRequired,
-	  onInputChange: _react2.default.PropTypes.func.isRequired
-	};
-
-	exports.default = Section;
-
-/***/ },
-/* 197 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(183);
-
-	var _actions = __webpack_require__(195);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var InputField = function InputField(_ref) {
-	  var id = _ref.id;
-	  var name = _ref.name;
-	  var preview = _ref.preview;
-	  var value = _ref.value;
-	  var _onBlur = _ref.onBlur;
-
-	  var style = {
-	    background: preview,
-	    color: preview
-	  };
-
-	  var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#aabbcc');
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'style-input-div input-group col-md-4 col-sm-6 col-xs-12' },
-	    _react2.default.createElement(
-	      'label',
-	      { id: name },
-	      '@',
-	      name
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'input-group' },
-	      _react2.default.createElement('input', { className: 'form-control style-input',
-	        type: 'text',
-	        placeholder: value,
-	        onBlur: function onBlur(e) {
-	          return (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e.target.value) || e.target.value == "" ? _onBlur(id, e.target.value) : alert("Invalid hex color")
-	          );
-	        }
-	      }),
-	      _react2.default.createElement(
-	        'span',
-	        { className: 'input-group-addon', style: style },
-	        '@'
-	      )
-	    )
-	  );
-	};
-
-	InputField.propTypes = {
-	  id: _react2.default.PropTypes.number.isRequired,
-	  name: _react2.default.PropTypes.string.isRequired,
-	  preview: _react2.default.PropTypes.string.isRequired,
-	  value: _react2.default.PropTypes.string.isRequired,
-	  onBlur: _react2.default.PropTypes.func.isRequired
-	};
-
-	exports.default = InputField;
-
-/***/ },
-/* 198 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22927,6 +22767,175 @@
 	      return state;
 	  }
 	}
+
+/***/ },
+/* 196 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var updatePreview = exports.updatePreview = function updatePreview(id, preview) {
+	  return { type: 'UPDATE_PREVIEW', id: id, preview: preview };
+	};
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _inputField = __webpack_require__(198);
+
+	var _inputField2 = _interopRequireDefault(_inputField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Section = function Section(_ref) {
+	  var fields = _ref.fields;
+	  var onInputChange = _ref.onInputChange;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-8' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'style-type' },
+	              'Colors'
+	            ),
+	            _react2.default.createElement(
+	              'h6',
+	              { className: 'style-type-description' },
+	              'Gray and brand colors for use across Bootstrap.'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          fields.map(function (field) {
+	            return _react2.default.createElement(_inputField2.default, _extends({
+	              key: field.id
+	            }, field, {
+	              onBlur: function onBlur(id, name, value) {
+	                return onInputChange(id, name, value);
+	              }
+	            }));
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	Section.propTypes = {
+	  fields: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
+	    id: _react2.default.PropTypes.number.isRequired,
+	    name: _react2.default.PropTypes.string.isRequired,
+	    preview: _react2.default.PropTypes.string.isRequired,
+	    value: _react2.default.PropTypes.string.isRequired
+	  }).isRequired).isRequired,
+	  onInputChange: _react2.default.PropTypes.func.isRequired
+	};
+
+	exports.default = Section;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(183);
+
+	var _actions = __webpack_require__(196);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var InputField = function InputField(_ref) {
+	  var id = _ref.id;
+	  var name = _ref.name;
+	  var preview = _ref.preview;
+	  var value = _ref.value;
+	  var _onBlur = _ref.onBlur;
+
+	  var style = {
+	    background: preview,
+	    color: preview
+	  };
+
+	  var divID = name + "-div";
+	  var inputID = name + "-input";
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'style-input-div col-md-4 col-sm-6 col-xs-12', id: divID },
+	    _react2.default.createElement(
+	      'label',
+	      { id: name },
+	      '@',
+	      name
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'input-group' },
+	      _react2.default.createElement('input', { className: 'form-control style-input',
+	        id: inputID,
+	        type: 'text',
+	        placeholder: value,
+	        onBlur: function onBlur(e) {
+	          return _onBlur(id, name, e.target.value);
+	        }
+	      }),
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'input-group-addon', style: style },
+	        '@'
+	      )
+	    )
+	  );
+	};
+
+	InputField.propTypes = {
+	  id: _react2.default.PropTypes.number.isRequired,
+	  name: _react2.default.PropTypes.string.isRequired,
+	  preview: _react2.default.PropTypes.string.isRequired,
+	  value: _react2.default.PropTypes.string.isRequired,
+	  onBlur: _react2.default.PropTypes.func.isRequired
+	};
+
+	exports.default = InputField;
 
 /***/ }
 /******/ ]);

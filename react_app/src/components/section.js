@@ -17,7 +17,7 @@ const Section = ({ fields, onInputChange }) => (
                 <InputField
                   key={field.id}
                   {...field}
-                  onBlur={(id, value) => onInputChange(id, value)}
+                  onBlur={(id, name, value) => onInputChange(id, name, value)}
                 />
             )}
 		  		</div>
