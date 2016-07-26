@@ -4,9 +4,9 @@ import InputField from './inputField';
 const Section = ({ fields, onInputChange }) => (
   	<div className="container">
   		<div className="row">
-  			<div className="col-md-10">
+  			<div className="col-md-10 col-sm-12">
 		  		<div className="row">
-		  			<div className="col-md-6">
+		  			<div className="col-md-8">
 		  				<h2 className="style-type">Colors</h2>
 		  				<h6 className="style-type-description">Gray and brand colors for use across Bootstrap.</h6>
 		  			</div>

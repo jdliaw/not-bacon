@@ -22716,13 +22716,13 @@
 	      { className: 'row' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-10' },
+	        { className: 'col-md-10 col-sm-12' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-6' },
+	            { className: 'col-md-8' },
 	            _react2.default.createElement(
 	              'h2',
 	              { className: 'style-type' },
@@ -22793,29 +22793,38 @@
 	  var _onBlur = _ref.onBlur;
 
 	  var style = {
-	    background: "linear-gradient(to left, " + preview + ", " + preview + " 17%, transparent 17%, transparent 100%)"
+	    background: preview,
+	    color: preview
 	  };
 
 	  var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#aabbcc');
 
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'style-input-div col-xs-4' },
+	    { className: 'style-input-div input-group col-md-4 col-sm-6 col-xs-12' },
 	    _react2.default.createElement(
 	      'label',
 	      { id: name },
 	      '@',
 	      name
 	    ),
-	    _react2.default.createElement('input', { className: 'form-control style-input',
-	      type: 'text',
-	      placeholder: value,
-	      style: style,
-	      onBlur: function onBlur(e) {
-	        return (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e.target.value) || e.target.value == "" ? _onBlur(id, e.target.value) : alert("Invalid hex color")
-	        );
-	      }
-	    })
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'input-group' },
+	      _react2.default.createElement('input', { className: 'form-control style-input',
+	        type: 'text',
+	        placeholder: value,
+	        onBlur: function onBlur(e) {
+	          return (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(e.target.value) || e.target.value == "" ? _onBlur(id, e.target.value) : alert("Invalid hex color")
+	          );
+	        }
+	      }),
+	      _react2.default.createElement(
+	        'span',
+	        { className: 'input-group-addon', style: style },
+	        '@'
+	      )
+	    )
 	  );
 	};
 
