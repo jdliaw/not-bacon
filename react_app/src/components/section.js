@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InputField from './inputField';
 
-const Section = ({ fields, onInputChange }) => (
+const Section = ({ fields, onInputChange, onClickHandler }) => (
   	<div className="container">
   		<div className="row">
   			<div className="col-md-10 col-sm-12">
@@ -23,7 +23,7 @@ const Section = ({ fields, onInputChange }) => (
 		  		</div>
           <div className="row">
             <div className="col-md-4 col-md-offset-8">
-              <input className="btn btn-primary" id="submit" type="submit" value="Save" />
+              <input className="btn btn-primary" id="submit" type="submit" value="Save" onClick={onClickHandler} />
             </div>
           </div>
 		  	</div>
@@ -38,7 +38,8 @@ Section.propTypes = {
     preview: React.PropTypes.string.isRequired,
     value: React.PropTypes.string.isRequired
   }).isRequired).isRequired,
-  onInputChange: React.PropTypes.func.isRequired
+  onInputChange: React.PropTypes.func.isRequired,
+  onClickHandler: React.PropTypes.func.isRequired
 }
 
 export default Section

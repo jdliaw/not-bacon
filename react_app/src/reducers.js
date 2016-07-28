@@ -1,78 +1,8 @@
 import { combineReducers } from 'redux'
-import { UPDATE_PREVIEW,
+import { UPDATE_PREVIEW, SAVE_THEME, BEFORE_SAVE_THEME,
   REQUEST_STYLES, REQUEST_STYLES_SUCCESS, REQUEST_STYLES_FAILURE,
   SAVE_STYLES, SAVE_STYLES_SUCCESS, SAVE_STYLES_FAILURE
 } from './actions'
-
-const initialState = [
-    {
-      id: 0,
-      name: 'gray-base',
-      preview: '#000',
-      value: '#000'
-    },
-    {
-      id: 1,
-      name: 'gray-darker',
-      preview: '#373a3c',
-      value: '#373a3c'
-    },
-    {
-      id: 2,
-      name: 'gray-dark',
-      preview: '#55595c',
-      value: '#55595c'
-    },
-    {
-      id: 3,
-      name: 'gray',
-      preview: '#818a91',
-      value: '#818a91'
-    },
-    {
-      id: 4,
-      name: 'gray-light',
-      preview: '#eceeef',
-      value: '#eceeef'
-    },
-    {
-      id: 5,
-      name: 'gray-lighter',
-      preview: '#f7f7f9',
-      value: '#f7f7f9'
-    },
-    {
-      id: 6,
-      name: 'brand-primary',
-      preview: '#0275d8',
-      value: '#0275d8'
-    },
-    {
-      id: 7,
-      name: 'brand-success',
-      preview: '#5cb85c',
-      value: '#5cb85c'
-    },
-    {
-      id: 8,
-      name: 'brand-info',
-      preview: '#5bc0de',
-      value: '#5bc0de'
-    },
-    {
-      id: 9,
-      name: 'brand-warning',
-      preview: '#f0ad4e',
-      value: '#f0ad4e'
-    },
-    {
-      id: 10,
-      name: 'brand-danger',
-      preview: '#d9534f',
-      value: '#d9534f'
-    }
-]
-
 
 function isLoading(state = false, action) {
   switch (action.type) {
@@ -140,6 +70,12 @@ function fields(state = [], action) {
         return Object.assign({}, field, {
           preview: field.preview,
           value: field.value
+        })
+      })
+    case BEFORE_SAVE_THEME:
+      return state.map((field) => {
+        return Object.assign({}, field, {
+          value: field.preview
         })
       })
     default:

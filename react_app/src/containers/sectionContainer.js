@@ -1,6 +1,7 @@
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updatePreview, updateStyles } from '../actions'
+import { updatePreview, saveTheme, fetchStyles } from '../actions'
 import Section from '../components/section'
 
 const mapStateToProps = (state) => {
@@ -22,6 +23,9 @@ const mapDispatchToProps = (dispatch) => {
         $('#' + name + '-input').addClass('form-control-danger')
         $('#' + name + '-div').addClass('has-danger')
       }
+    },
+    onClickHandler: () => {
+      dispatch(saveTheme())
     }
   }
 }
@@ -30,5 +34,3 @@ const SectionContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Section)
-
-export default SectionContainer

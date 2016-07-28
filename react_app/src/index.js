@@ -27,7 +27,7 @@ let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
 
-console.log('hello, starting async actions')
+// console.log('hello, starting async actions')
 
 store.dispatch(fetchStyles()).then(() =>
   // store.dispatch(updateStyles(store.getState().fields)).then(() =>

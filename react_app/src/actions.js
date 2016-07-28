@@ -12,13 +12,25 @@ export const updatePreview = (id, preview) => {
   }
 }
 
-// for when user presses the save button
-export const SAVE_THEME = 'SAVE_THEME'
+// for updating value to current preview value before save
+export const BEFORE_SAVE_THEME = 'BEFORE_SAVE_THEME'
 
-// action creator for SAVE_STYLES
-export const saveTheme = () => {
+// action creator for BEFORE_SAVE_THEME
+export const beforeSaveTheme = () => {
   return {
-    type: SAVE_THEME
+    type: BEFORE_SAVE_THEME
+  }
+}
+
+// for when user presses the save button
+export function saveTheme() {
+  return (dispatch, getState) => {
+    // update VALUE according to latest PREVIEW
+    dispatch(beforeSaveTheme())
+    // PATCH to update theme
+    dispatch(updateStyles(getState().fields))
+    // GET to reload state
+    dispatch(fetchStyles())
   }
 }
 
@@ -88,8 +100,8 @@ function checkStatus(response) {
   }
 }
 
+// function to build our JSON object how we want
 function buildJSON(fields) {
-  // debugger
   return fields.map((field) => {
     return Object.assign({}, {
       "name": field.name,
@@ -105,7 +117,6 @@ export function fetchStyles() {
     dispatch(requestStyles())
     console.log('in fetchStyles')
     console.log(getState())
-    // debugger
 
     return fetch('/api/v1/styles/1')
       .then(checkStatus)
@@ -120,11 +131,12 @@ export function fetchStyles() {
 
 // async PATCH request
 export function updateStyles(fields) {
+  console.log('updateStyles')
   return (dispatch, getState) => {
     dispatch(saveStyles())
     console.log('in updateStyles')
     console.log(getState())
-    // debugger
+
     return fetch('/api/v1/styles/1', {
       method: 'PATCH',
       headers: {

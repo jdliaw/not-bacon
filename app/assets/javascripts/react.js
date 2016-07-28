@@ -88,7 +88,7 @@
 	  return console.log(store.getState());
 	});
 
-	console.log('hello, starting async actions');
+	// console.log('hello, starting async actions')
 
 	store.dispatch((0, _actions.fetchStyles)()).then(function () {
 	  return(
@@ -30633,9 +30633,9 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
 
 	var _reactRedux = __webpack_require__(480);
 
@@ -30667,13 +30667,14 @@
 	        $('#' + name + '-input').addClass('form-control-danger');
 	        $('#' + name + '-div').addClass('has-danger');
 	      }
+	    },
+	    onClickHandler: function onClickHandler() {
+	      dispatch((0, _actions.saveTheme)());
 	    }
 	  };
 	};
 
 	var SectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_section2.default);
-
-	exports.default = SectionContainer;
 
 /***/ },
 /* 492 */
@@ -30688,63 +30689,6 @@
 	var _redux = __webpack_require__(467);
 
 	var _actions = __webpack_require__(493);
-
-	var initialState = [{
-	  id: 0,
-	  name: 'gray-base',
-	  preview: '#000',
-	  value: '#000'
-	}, {
-	  id: 1,
-	  name: 'gray-darker',
-	  preview: '#373a3c',
-	  value: '#373a3c'
-	}, {
-	  id: 2,
-	  name: 'gray-dark',
-	  preview: '#55595c',
-	  value: '#55595c'
-	}, {
-	  id: 3,
-	  name: 'gray',
-	  preview: '#818a91',
-	  value: '#818a91'
-	}, {
-	  id: 4,
-	  name: 'gray-light',
-	  preview: '#eceeef',
-	  value: '#eceeef'
-	}, {
-	  id: 5,
-	  name: 'gray-lighter',
-	  preview: '#f7f7f9',
-	  value: '#f7f7f9'
-	}, {
-	  id: 6,
-	  name: 'brand-primary',
-	  preview: '#0275d8',
-	  value: '#0275d8'
-	}, {
-	  id: 7,
-	  name: 'brand-success',
-	  preview: '#5cb85c',
-	  value: '#5cb85c'
-	}, {
-	  id: 8,
-	  name: 'brand-info',
-	  preview: '#5bc0de',
-	  value: '#5bc0de'
-	}, {
-	  id: 9,
-	  name: 'brand-warning',
-	  preview: '#f0ad4e',
-	  value: '#f0ad4e'
-	}, {
-	  id: 10,
-	  name: 'brand-danger',
-	  preview: '#d9534f',
-	  value: '#d9534f'
-	}];
 
 	function isLoading() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
@@ -30826,6 +30770,12 @@
 	          value: field.value
 	        });
 	      });
+	    case _actions.BEFORE_SAVE_THEME:
+	      return state.map(function (field) {
+	        return Object.assign({}, field, {
+	          value: field.preview
+	        });
+	      });
 	    default:
 	      return state;
 	  }
@@ -30849,7 +30799,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.saveTheme = exports.SAVE_THEME = exports.updatePreview = exports.UPDATE_PREVIEW = undefined;
+	exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.beforeSaveTheme = exports.BEFORE_SAVE_THEME = exports.updatePreview = exports.UPDATE_PREVIEW = undefined;
+	exports.saveTheme = saveTheme;
 	exports.requestStyles = requestStyles;
 	exports.requestStylesSuccess = requestStylesSuccess;
 	exports.requestStylesFailure = requestStylesFailure;
@@ -30877,15 +30828,27 @@
 	  };
 	};
 
-	// for when user presses the save button
-	var SAVE_THEME = exports.SAVE_THEME = 'SAVE_THEME';
+	// for updating value to current preview value before save
+	var BEFORE_SAVE_THEME = exports.BEFORE_SAVE_THEME = 'BEFORE_SAVE_THEME';
 
-	// action creator for SAVE_STYLES
-	var saveTheme = exports.saveTheme = function saveTheme() {
+	// action creator for BEFORE_SAVE_THEME
+	var beforeSaveTheme = exports.beforeSaveTheme = function beforeSaveTheme() {
 	  return {
-	    type: SAVE_THEME
+	    type: BEFORE_SAVE_THEME
 	  };
 	};
+
+	// for when user presses the save button
+	function saveTheme() {
+	  return function (dispatch, getState) {
+	    // update VALUE according to latest PREVIEW
+	    dispatch(beforeSaveTheme());
+	    // PATCH to update theme
+	    dispatch(updateStyles(getState().fields));
+	    // GET to reload state
+	    dispatch(fetchStyles());
+	  };
+	}
 
 	// GET requests for a publisher's styles
 	var REQUEST_STYLES = exports.REQUEST_STYLES = 'REQUEST_STYLES';
@@ -30953,8 +30916,8 @@
 	  }
 	}
 
+	// function to build our JSON object how we want
 	function buildJSON(fields) {
-	  // debugger
 	  return fields.map(function (field) {
 	    return Object.assign({}, {
 	      "name": field.name,
@@ -30970,7 +30933,6 @@
 	    dispatch(requestStyles());
 	    console.log('in fetchStyles');
 	    console.log(getState());
-	    // debugger
 
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1').then(checkStatus).then(function (response) {
 	      return response.json();
@@ -30986,11 +30948,12 @@
 
 	// async PATCH request
 	function updateStyles(fields) {
+	  console.log('updateStyles');
 	  return function (dispatch, getState) {
 	    dispatch(saveStyles());
 	    console.log('in updateStyles');
 	    console.log(getState());
-	    // debugger
+
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1', {
 	      method: 'PATCH',
 	      headers: {
@@ -31493,6 +31456,7 @@
 	var Section = function Section(_ref) {
 	  var fields = _ref.fields;
 	  var onInputChange = _ref.onInputChange;
+	  var onClickHandler = _ref.onClickHandler;
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'container' },
@@ -31539,7 +31503,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-md-4 col-md-offset-8' },
-	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save' })
+	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: onClickHandler })
 	          )
 	        )
 	      )
@@ -31554,7 +31518,8 @@
 	    preview: _react2.default.PropTypes.string.isRequired,
 	    value: _react2.default.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
-	  onInputChange: _react2.default.PropTypes.func.isRequired
+	  onInputChange: _react2.default.PropTypes.func.isRequired,
+	  onClickHandler: _react2.default.PropTypes.func.isRequired
 	};
 
 	exports.default = Section;
