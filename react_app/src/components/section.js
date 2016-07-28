@@ -11,7 +11,7 @@ const Section = ({ fields, onInputChange }) => (
 		  				<h6 className="style-type-description">Gray and brand colors for use across Bootstrap.</h6>
 		  			</div>
 		  		</div>
-		  		<div className="row">
+		  		<div className="row style-input-row">
             {
               fields.map(field =>
                 <InputField
@@ -21,6 +21,11 @@ const Section = ({ fields, onInputChange }) => (
                 />
             )}
 		  		</div>
+          <div className="row">
+            <div className="col-md-4 col-md-offset-8">
+              <input className="btn btn-primary" id="submit" type="submit" value="Save" />
+            </div>
+          </div>
 		  	</div>
 	  	</div>
   	</div>

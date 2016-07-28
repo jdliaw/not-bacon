@@ -6,6 +6,19 @@
   margin-bottom: 20px;
 }
 
+.style-input-row {
+  margin-bottom: 20px;
+}
+
 .style-input-div {
 	margin-bottom: 10px;
+}
+
+#submit {
+  float: right !important;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    display: block;
+  }
 }

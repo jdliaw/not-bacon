@@ -1,5 +1,10 @@
-const initialState = {
-  fields: [
+import { combineReducers } from 'redux'
+import { UPDATE_PREVIEW,
+  REQUEST_STYLES, REQUEST_STYLES_SUCCESS, REQUEST_STYLES_FAILURE,
+  SAVE_STYLES, SAVE_STYLES_SUCCESS, SAVE_STYLES_FAILURE
+} from './actions'
+
+const initialState = [
     {
       id: 0,
       name: 'gray-base',
@@ -66,26 +71,87 @@ const initialState = {
       preview: '#d9534f',
       value: '#d9534f'
     }
-  ]
-}
+]
 
 
-export default function fields(state = initialState, action) {
+function isLoading(state = false, action) {
   switch (action.type) {
-    case 'UPDATE_PREVIEW':
-      return Object.assign({},
-        state,
-        {
-          fields: state.fields.map((field) => {
-            if (field.id === action.id) {
-              return Object.assign({}, field, {
-                preview: action.preview
-              })
-            }
-            return field
-          })
-        })
+    case REQUEST_STYLES:
+    case SAVE_STYLES:
+      return true
+    case REQUEST_STYLES_SUCCESS:
+    case REQUEST_STYLES_FAILURE:
+    case SAVE_STYLES_SUCCESS:
+    case SAVE_STYLES_FAILURE:
+      return false
     default:
       return state
   }
 }
+
+function requestFailed(state = false, action) {
+  switch (action.type) {
+    case REQUEST_STYLES_FAILURE:
+    case SAVE_STYLES_FAILURE:
+      return true
+    case REQUEST_STYLES:
+    case SAVE_STYLES:
+    case REQUEST_STYLES_SUCCESS:
+    case SAVE_STYLES_SUCCESS:
+      return false
+    default:
+      return state
+  }
+}
+
+function errorMessage(state = null, action) {
+  switch (action.type) {
+    case REQUEST_STYLES_FAILURE:
+    case SAVE_STYLES_FAILURE:
+      return action.error
+    default:
+      return state
+  }
+}
+
+function fields(state = [], action) {
+  switch (action.type) {
+    case UPDATE_PREVIEW:
+      return state.map((field) => {
+        if (field.id === action.id) {
+          return Object.assign({}, field, {
+            preview: action.preview
+          })
+        }
+        return field
+      })
+    case REQUEST_STYLES_SUCCESS:
+      // debugger
+      return action.response.map((field) => {
+        if (action.response.length > state.length) {
+          // new field
+          return Object.assign({}, {
+            id: parseInt(field.id),
+            name: field.name,
+            preview: field.value,
+            value: field.value
+          })
+        }
+        return Object.assign({}, field, {
+          preview: field.preview,
+          value: field.value
+        })
+      })
+    default:
+      return state
+  }
+}
+
+const rootReducer = combineReducers({
+  isLoading,
+  requestFailed,
+  errorMessage,
+  fields
+})
+
+export default rootReducer

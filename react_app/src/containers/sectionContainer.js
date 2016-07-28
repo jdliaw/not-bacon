@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { updatePreview } from '../actions'
+import { bindActionCreators } from 'redux'
+import { updatePreview, updateStyles } from '../actions'
 import Section from '../components/section'
 
 const mapStateToProps = (state) => {
