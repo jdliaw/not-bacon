@@ -29,11 +29,11 @@ let unsubscribe = store.subscribe(() =>
 
 // console.log('hello, starting async actions')
 
-store.dispatch(fetchStyles()).then(() =>
-  // store.dispatch(updateStyles(store.getState().fields)).then(() =>
-          console.log(store.getState())
-        // )
-)
+// store.dispatch(fetchStyles()).then(() =>
+//   // store.dispatch(updateStyles(store.getState().fields)).then(() =>
+//           console.log(store.getState())
+//         // )
+// )
 // .then(() => store.dispatch(updateStyles(store.getState().fields)).then(() =>
 //   console.log(store.getState())
 // ))

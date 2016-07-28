@@ -90,14 +90,11 @@
 
 	// console.log('hello, starting async actions')
 
-	store.dispatch((0, _actions.fetchStyles)()).then(function () {
-	  return(
-	    // store.dispatch(updateStyles(store.getState().fields)).then(() =>
-	    console.log(store.getState())
-	  );
-	}
+	// store.dispatch(fetchStyles()).then(() =>
+	//   // store.dispatch(updateStyles(store.getState().fields)).then(() =>
+	//           console.log(store.getState())
+	//         // )
 	// )
-	);
 	// .then(() => store.dispatch(updateStyles(store.getState().fields)).then(() =>
 	//   console.log(store.getState())
 	// ))
@@ -30633,6 +30630,12 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -30649,6 +30652,53 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SectionContainer = function (_Component) {
+	  _inherits(SectionContainer, _Component);
+
+	  function SectionContainer() {
+	    _classCallCheck(this, SectionContainer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SectionContainer).apply(this, arguments));
+	  }
+
+	  _createClass(SectionContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // fetch styles to load
+	      this.props.dispatch((0, _actions.fetchStyles)());
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var fields = _props.fields;
+	      var onInputChange = _props.onInputChange;
+	      var onClickHandler = _props.onClickHandler;
+
+	      return _react2.default.createElement(_section2.default, {
+	        fields: fields,
+	        onInputChange: onInputChange,
+	        onClickHandler: onClickHandler
+	      });
+	    }
+	  }]);
+
+	  return SectionContainer;
+	}(_react.Component);
+
+	SectionContainer.propTypes = {
+	  fields: _react.PropTypes.array.isRequired,
+	  onInputChange: _react.PropTypes.func.isRequired,
+	  onClickHandler: _react.PropTypes.func.isRequired,
+	  dispatch: _react.PropTypes.func.isRequired
+	};
+
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    fields: state.fields
@@ -30658,23 +30708,27 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onInputChange: function onInputChange(id, name, preview) {
+	      // validate hex colors
 	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
 	      if (isHexColor && preview != "") {
 	        $('#' + name + '-input').removeClass('form-control-danger');
 	        $('#' + name + '-div').removeClass('has-danger');
 	        dispatch((0, _actions.updatePreview)(id, preview));
-	      } else if (!isHexColor && preview != "") {
-	        $('#' + name + '-input').addClass('form-control-danger');
-	        $('#' + name + '-div').addClass('has-danger');
 	      }
+	      // but no warning if didn't change anything
+	      else if (!isHexColor && preview != "") {
+	          $('#' + name + '-input').addClass('form-control-danger');
+	          $('#' + name + '-div').addClass('has-danger');
+	        }
 	    },
 	    onClickHandler: function onClickHandler() {
 	      dispatch((0, _actions.saveTheme)());
-	    }
+	    },
+	    dispatch: dispatch
 	  };
 	};
 
-	var SectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_section2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SectionContainer);
 
 /***/ },
 /* 492 */
