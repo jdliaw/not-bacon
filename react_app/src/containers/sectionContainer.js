@@ -29,7 +29,6 @@ SectionContainer.propTypes = {
   dispatch: PropTypes.func.isRequired
 }
 
-
 const mapStateToProps = (state) => {
   return {
     fields: state.fields
@@ -39,14 +38,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onInputChange: (id, name, preview) => {
-      // validate hex colors
+      // validate hex colors (reset warnings if fine)
       var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview)
       if (isHexColor && preview != "") {
         $('#' + name + '-input').removeClass('form-control-danger')
         $('#' + name + '-div').removeClass('has-danger')
         dispatch(updatePreview(id, preview))
       }
-      // but no warning if didn't change anything
+      // add warnings if not valid
       else if (!isHexColor && preview != "") {
         $('#' + name + '-input').addClass('form-control-danger')
         $('#' + name + '-div').addClass('has-danger')

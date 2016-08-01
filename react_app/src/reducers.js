@@ -56,20 +56,26 @@ function fields(state = [], action) {
         return field
       })
     case REQUEST_STYLES_SUCCESS:
-      // debugger
-      return action.response.map((field) => {
-        if (action.response.length > state.length) {
-          // new field
+      if (action.response.length > state.length) {
+        return action.response.map((field) => {
+          let key = Object.keys(field)[0]
+          let value = Object.values(field)[0]
+
           return Object.assign({}, {
-            id: parseInt(field.id),
-            name: field.name,
-            preview: field.value,
-            value: field.value
+            id: action.response.findIndex((x) => Object.keys(x)[0] === key),
+            name: key,
+            preview: value,
+            value: value
           })
-        }
-        return Object.assign({}, field, {
-          preview: field.preview,
-          value: field.value
+        })
+      }
+      return state.map((existing_field) => {
+        let index = action.response.findIndex((x) => Object.keys(x)[0] === existing_field.name)
+        let value = Object.values(action.response[index])[0]
+
+        return Object.assign({}, existing_field, {
+          preview: value,
+          value: value
         })
       })
     case BEFORE_SAVE_THEME:

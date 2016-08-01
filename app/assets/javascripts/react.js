@@ -64,11 +64,11 @@
 
 	var _Hume = __webpack_require__(489);
 
-	var _reducers = __webpack_require__(492);
+	var _reducers = __webpack_require__(497);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
-	var _actions = __webpack_require__(493);
+	var _actions = __webpack_require__(492);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30644,9 +30644,9 @@
 
 	var _redux = __webpack_require__(467);
 
-	var _actions = __webpack_require__(493);
+	var _actions = __webpack_require__(492);
 
-	var _section = __webpack_require__(496);
+	var _section = __webpack_require__(495);
 
 	var _section2 = _interopRequireDefault(_section);
 
@@ -30708,14 +30708,14 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onInputChange: function onInputChange(id, name, preview) {
-	      // validate hex colors
+	      // validate hex colors (reset warnings if fine)
 	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
 	      if (isHexColor && preview != "") {
 	        $('#' + name + '-input').removeClass('form-control-danger');
 	        $('#' + name + '-div').removeClass('has-danger');
 	        dispatch((0, _actions.updatePreview)(id, preview));
 	      }
-	      // but no warning if didn't change anything
+	      // add warnings if not valid
 	      else if (!isHexColor && preview != "") {
 	          $('#' + name + '-input').addClass('form-control-danger');
 	          $('#' + name + '-div').addClass('has-danger');
@@ -30739,120 +30739,6 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _redux = __webpack_require__(467);
-
-	var _actions = __webpack_require__(493);
-
-	function isLoading() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES:
-	    case _actions.SAVE_STYLES:
-	      return true;
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_SUCCESS:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return false;
-	    default:
-	      return state;
-	  }
-	}
-
-	function requestFailed() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return true;
-	    case _actions.REQUEST_STYLES:
-	    case _actions.SAVE_STYLES:
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	    case _actions.SAVE_STYLES_SUCCESS:
-	      return false;
-	    default:
-	      return state;
-	  }
-	}
-
-	function errorMessage() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return action.error;
-	    default:
-	      return state;
-	  }
-	}
-
-	function fields() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.UPDATE_PREVIEW:
-	      return state.map(function (field) {
-	        if (field.id === action.id) {
-	          return Object.assign({}, field, {
-	            preview: action.preview
-	          });
-	        }
-	        return field;
-	      });
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	      // debugger
-	      return action.response.map(function (field) {
-	        if (action.response.length > state.length) {
-	          // new field
-	          return Object.assign({}, {
-	            id: parseInt(field.id),
-	            name: field.name,
-	            preview: field.value,
-	            value: field.value
-	          });
-	        }
-	        return Object.assign({}, field, {
-	          preview: field.preview,
-	          value: field.value
-	        });
-	      });
-	    case _actions.BEFORE_SAVE_THEME:
-	      return state.map(function (field) {
-	        return Object.assign({}, field, {
-	          value: field.preview
-	        });
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
-	var rootReducer = (0, _redux.combineReducers)({
-	  isLoading: isLoading,
-	  requestFailed: requestFailed,
-	  errorMessage: errorMessage,
-	  fields: fields
-	});
-
-	exports.default = rootReducer;
-
-/***/ },
-/* 493 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.beforeSaveTheme = exports.BEFORE_SAVE_THEME = exports.updatePreview = exports.UPDATE_PREVIEW = undefined;
 	exports.saveTheme = saveTheme;
 	exports.requestStyles = requestStyles;
@@ -30864,11 +30750,13 @@
 	exports.fetchStyles = fetchStyles;
 	exports.updateStyles = updateStyles;
 
-	var _isomorphicFetch = __webpack_require__(494);
+	var _isomorphicFetch = __webpack_require__(493);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	// for updating preview of color styles
 	var UPDATE_PREVIEW = exports.UPDATE_PREVIEW = 'UPDATE_PREVIEW';
@@ -30960,7 +30848,6 @@
 
 	// first a function to check response status for errors
 	function checkStatus(response) {
-	  // debugger
 	  if (response.status >= 200 && response.status < 300) {
 	    return response;
 	  } else {
@@ -30973,10 +30860,7 @@
 	// function to build our JSON object how we want
 	function buildJSON(fields) {
 	  return fields.map(function (field) {
-	    return Object.assign({}, {
-	      "name": field.name,
-	      "value": field.value
-	    });
+	    return _defineProperty({}, field.name, field.value);
 	  });
 	}
 
@@ -30986,15 +30870,15 @@
 	    // update app state to inform that API call is starting
 	    dispatch(requestStyles());
 	    console.log('in fetchStyles');
-	    console.log(getState());
+	    // console.log(getState())
 
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1').then(checkStatus).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      console.log('response', json);
+	      console.log('fetch response', json);
 	      dispatch(requestStylesSuccess(json.data.attributes["style-attributes"]));
-	    }) //here json is like data > attr > style-attr > gray_base
-	    .catch(function (e) {
+	      console.log('fetch state', getState());
+	    }).catch(function (e) {
 	      return dispatch(requestStylesFailure(e));
 	    });
 	  };
@@ -31006,7 +30890,7 @@
 	  return function (dispatch, getState) {
 	    dispatch(saveStyles());
 	    console.log('in updateStyles');
-	    console.log(getState());
+	    // console.log(getState())
 
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1', {
 	      method: 'PATCH',
@@ -31018,7 +30902,7 @@
 	          "type": "styles",
 	          "id": "1",
 	          "attributes": {
-	            "style-attributes": fields,
+	            "style-attributes": buildJSON(fields),
 	            "publisher-id": "1"
 	          }
 	        }
@@ -31026,8 +30910,8 @@
 	    }).then(checkStatus).then(function (response) {
 	      return response.json();
 	    }).then(function (json) {
-	      console.log('response', json);
-	      dispatch(saveStylesSuccess(json));
+	      console.log('update response', json);
+	      dispatch(saveStylesSuccess());
 	    }).catch(function (e) {
 	      return dispatch(saveStylesFailure(e));
 	    });
@@ -31035,19 +30919,19 @@
 	}
 
 /***/ },
-/* 494 */
+/* 493 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(495);
+	__webpack_require__(494);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 495 */
+/* 494 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -31486,7 +31370,7 @@
 
 
 /***/ },
-/* 496 */
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31501,7 +31385,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _inputField = __webpack_require__(497);
+	var _inputField = __webpack_require__(496);
 
 	var _inputField2 = _interopRequireDefault(_inputField);
 
@@ -31579,7 +31463,7 @@
 	exports.default = Section;
 
 /***/ },
-/* 497 */
+/* 496 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31594,7 +31478,7 @@
 
 	var _reactRedux = __webpack_require__(480);
 
-	var _actions = __webpack_require__(493);
+	var _actions = __webpack_require__(492);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31635,7 +31519,7 @@
 	      }),
 	      _react2.default.createElement(
 	        'span',
-	        { className: 'input-group-addon', style: style },
+	        { className: 'input-group-addon', id: 'input-preview', style: style },
 	        '@'
 	      )
 	    )
@@ -31651,6 +31535,130 @@
 	};
 
 	exports.default = InputField;
+
+/***/ },
+/* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _redux = __webpack_require__(467);
+
+	var _actions = __webpack_require__(492);
+
+	function isLoading() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES:
+	    case _actions.SAVE_STYLES:
+	      return true;
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_SUCCESS:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return false;
+	    default:
+	      return state;
+	  }
+	}
+
+	function requestFailed() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return true;
+	    case _actions.REQUEST_STYLES:
+	    case _actions.SAVE_STYLES:
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	    case _actions.SAVE_STYLES_SUCCESS:
+	      return false;
+	    default:
+	      return state;
+	  }
+	}
+
+	function errorMessage() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return action.error;
+	    default:
+	      return state;
+	  }
+	}
+
+	function fields() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.UPDATE_PREVIEW:
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            preview: action.preview
+	          });
+	        }
+	        return field;
+	      });
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	      if (action.response.length > state.length) {
+	        return action.response.map(function (field) {
+	          var key = Object.keys(field)[0];
+	          var value = Object.values(field)[0];
+
+	          return Object.assign({}, {
+	            id: action.response.findIndex(function (x) {
+	              return Object.keys(x)[0] === key;
+	            }),
+	            name: key,
+	            preview: value,
+	            value: value
+	          });
+	        });
+	      }
+	      return state.map(function (existing_field) {
+	        var index = action.response.findIndex(function (x) {
+	          return Object.keys(x)[0] === existing_field.name;
+	        });
+	        var value = Object.values(action.response[index])[0];
+
+	        return Object.assign({}, existing_field, {
+	          preview: value,
+	          value: value
+	        });
+	      });
+	    case _actions.BEFORE_SAVE_THEME:
+	      return state.map(function (field) {
+	        return Object.assign({}, field, {
+	          value: field.preview
+	        });
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+	var rootReducer = (0, _redux.combineReducers)({
+	  isLoading: isLoading,
+	  requestFailed: requestFailed,
+	  errorMessage: errorMessage,
+	  fields: fields
+	});
+
+	exports.default = rootReducer;
 
 /***/ }
 /******/ ]);

@@ -24,7 +24,7 @@ const InputField = ({id, name, preview, value, onBlur}) => {
                placeholder={value}
                onBlur={e => onBlur(id, name, e.target.value)}
         />
-        <span className="input-group-addon" style={style}>@</span>
+        <span className="input-group-addon" id="input-preview" style={style}>@</span>
       </div>
     </div>
   )

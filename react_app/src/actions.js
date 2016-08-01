@@ -90,7 +90,6 @@ export function saveStylesFailure(error) {
 
 // first a function to check response status for errors
 function checkStatus(response) {
-  // debugger
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else {
@@ -103,10 +102,9 @@ function checkStatus(response) {
 // function to build our JSON object how we want
 function buildJSON(fields) {
   return fields.map((field) => {
-    return Object.assign({}, {
-      "name": field.name,
-      "value": field.value
-    })
+    return {
+      [field.name]: field.value
+    }
   })
 }
 
@@ -116,15 +114,16 @@ export function fetchStyles() {
     // update app state to inform that API call is starting
     dispatch(requestStyles())
     console.log('in fetchStyles')
-    console.log(getState())
+    // console.log(getState())
 
     return fetch('/api/v1/styles/1')
       .then(checkStatus)
       .then(response => response.json())
       .then(json => {
-        console.log('response', json)
+        console.log('fetch response', json)
         dispatch(requestStylesSuccess(json.data.attributes["style-attributes"]))
-      }) //here json is like data > attr > style-attr > gray_base
+        console.log('fetch state', getState())
+      })
       .catch(e => dispatch(requestStylesFailure(e)))
   }
 }
@@ -135,7 +134,7 @@ export function updateStyles(fields) {
   return (dispatch, getState) => {
     dispatch(saveStyles())
     console.log('in updateStyles')
-    console.log(getState())
+    // console.log(getState())
 
     return fetch('/api/v1/styles/1', {
       method: 'PATCH',
@@ -147,7 +146,7 @@ export function updateStyles(fields) {
           "type": "styles",
           "id": "1",
           "attributes": {
-            "style-attributes": fields,
+            "style-attributes": buildJSON(fields),
             "publisher-id": "1"
           }
         }
@@ -156,8 +155,8 @@ export function updateStyles(fields) {
       .then(checkStatus)
       .then(response => response.json())
       .then(json => {
-        console.log('response', json)
-        dispatch(saveStylesSuccess(json))
+        console.log('update response', json)
+        dispatch(saveStylesSuccess())
       })
       .catch(e => dispatch(saveStylesFailure(e)))
   }
