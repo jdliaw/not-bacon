@@ -8,7 +8,7 @@ class StyleCompiler
   end
 
   def template
-    template = <<-TPL.gsub(/_/, "-").strip_heredoc
+    template = <<-TPL.strip_heredoc
       html {
       <% @attributes.each do | attr | -%>
         --<%= attr.keys[0] %>: <%= attr.values[0] %>;
