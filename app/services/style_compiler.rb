@@ -8,17 +8,17 @@ class StyleCompiler
   end
 
   def template
-    template = <<-TPL
-html {
-  <% @attributes.each do | attr | %>
-  --<%= attr.keys[0] %>: <%= attr.values[0] %>;
-  <% end %>
-}
+    template = <<-TPL.gsub(/_/, "-").strip_heredoc
+      html {
+      <% @attributes.each do | attr | -%>
+        --<%= attr.keys[0] %>: <%= attr.values[0] %>;
+      <% end -%>
+      }
     TPL
   end
 
   def render
-    ERB.new(template).result(binding)
+    ERB.new(template, nil, '-').result(binding) # third argument enables trim mode to get rid of newlines after -%> tags
   end
 
   def signature
