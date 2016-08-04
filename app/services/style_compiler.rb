@@ -11,7 +11,7 @@ class StyleCompiler
     template = <<-TPL.strip_heredoc
       html {
       <% @attributes.each do | attr | -%>
-        --<%= attr.keys[0] %>: <%= attr.values[0] %>;
+        --<%= attr.keys[0].to_s.dasherize %>: <%= attr.values[0] %>;
       <% end -%>
       }
     TPL

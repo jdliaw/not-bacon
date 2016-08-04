@@ -56,26 +56,30 @@ function fields(state = [], action) {
         return field
       })
     case REQUEST_STYLES_SUCCESS:
-      if (action.response.length > state.length) {
-        return action.response.map((field) => {
-          let key = Object.keys(field)[0]
-          let value = Object.values(field)[0]
-
-          return Object.assign({}, {
-            id: action.response.findIndex((x) => Object.keys(x)[0] === key),
-            name: key,
+      if (Object.keys(action.response).length > state.length){
+        let nextState = []
+        for (let [key, value] of Object.entries(action.response)) {
+          nextState.push({
+            id: Object.keys(action.response).indexOf(key),
+            name: key.replace(/_/, '-'),
             preview: value,
             value: value
           })
-        })
+        }
+        return nextState
       }
-      return state.map((existing_field) => {
-        let index = action.response.findIndex((x) => Object.keys(x)[0] === existing_field.name)
-        let value = Object.values(action.response[index])[0]
-
-        return Object.assign({}, existing_field, {
-          preview: value,
-          value: value
+      return state.map((existingField) => {
+        let existingKey = existingField.name
+        let newValue = ''
+        for (let [key, value] of Object.entries(action.response)) {
+          if ((key.replace(/_/, '-')) === existingKey) {
+            newValue = value
+            break
+          }
+        }
+        return Object.assign({}, existingField, {
+          preview: newValue,
+          value: newValue
         })
       })
     case BEFORE_SAVE_THEME:

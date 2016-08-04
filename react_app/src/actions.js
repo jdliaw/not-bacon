@@ -101,11 +101,14 @@ function checkStatus(response) {
 
 // function to build our JSON object how we want
 function buildJSON(fields) {
-  return fields.map((field) => {
-    return {
+  let jsonObj = Object.assign({})
+
+  fields.map((field) => {
+    Object.assign(jsonObj, {
       [field.name]: field.value
-    }
+    })
   })
+  return jsonObj
 }
 
 // async GET request
