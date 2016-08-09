@@ -11,33 +11,39 @@ class SectionContainer extends Component {
   }
 
   render() {
-    const { fields, onInputChange, onClickHandler } = this.props
+    const { masterField, fields, selectOptions, updateSwatch, saveTheme } = this.props
     return (
       <Section
+        masterField={masterField}
         fields={fields}
-        onInputChange={onInputChange}
-        onClickHandler={onClickHandler}
+        selectOptions={selectOptions}
+        updateSwatch={updateSwatch}
+        saveTheme={saveTheme}
       />
     )
   }
 }
 
 SectionContainer.propTypes = {
+  masterField: PropTypes.object.isRequired,
   fields: PropTypes.array.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  onClickHandler: PropTypes.func.isRequired,
+  selectOptions: PropTypes.array.isRequired,
+  updateSwatch: PropTypes.func.isRequired,
+  saveTheme: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    fields: state.fields
+    masterField: typeof state.fields[0] !== 'undefined' ? state.fields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+    fields: state.fields.slice(1, state.fields.length),
+    selectOptions: ["Monochrome", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onInputChange: (id, name, preview) => {
+    updateSwatch: (id, name, preview) => {
       // validate hex colors (reset warnings if fine)
       var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview)
       if (isHexColor && preview != "") {
@@ -51,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
         $('#' + name + '-div').addClass('has-danger')
       }
     },
-    onClickHandler: () => {
+    saveTheme: () => {
       dispatch(saveTheme())
     },
     dispatch: dispatch

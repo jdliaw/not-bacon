@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import { PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, PropTypes } from 'react';
 import { updatePreview } from '../actions';
 
-const InputField = ({id, name, preview, value, onBlur}) => {
+const InputField = ({id, name, preview, value, updateSwatch}) => {
   var style = {
     background: preview,
     color: preview
@@ -15,14 +13,14 @@ const InputField = ({id, name, preview, value, onBlur}) => {
   return (
     <div className="style-input-div col-md-4 col-sm-6 col-xs-12" id={divID}>
       <label id={name}>
-        @{name}
+        {name}
       </label>
       <div className="input-group">
         <input className="form-control style-input"
                id={inputID}
                type="text"
                placeholder={value}
-               onBlur={e => onBlur(id, name, e.target.value)}
+               onBlur={e => updateSwatch(id, name, e.target.value)}
         />
         <span className="input-group-addon" id="input-preview" style={style}>@</span>
       </div>
@@ -31,11 +29,11 @@ const InputField = ({id, name, preview, value, onBlur}) => {
 }
 
 InputField.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  name: React.PropTypes.string.isRequired,
-  preview: React.PropTypes.string.isRequired,
-  value: React.PropTypes.string.isRequired,
-  onBlur: React.PropTypes.func.isRequired
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  preview: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  updateSwatch: PropTypes.func.isRequired
 }
 
 export default InputField

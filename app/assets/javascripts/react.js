@@ -64,7 +64,7 @@
 
 	var _Hume = __webpack_require__(489);
 
-	var _reducers = __webpack_require__(497);
+	var _reducers = __webpack_require__(498);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -30677,14 +30677,18 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
+	      var masterField = _props.masterField;
 	      var fields = _props.fields;
-	      var onInputChange = _props.onInputChange;
-	      var onClickHandler = _props.onClickHandler;
+	      var selectOptions = _props.selectOptions;
+	      var updateSwatch = _props.updateSwatch;
+	      var saveTheme = _props.saveTheme;
 
 	      return _react2.default.createElement(_section2.default, {
+	        masterField: masterField,
 	        fields: fields,
-	        onInputChange: onInputChange,
-	        onClickHandler: onClickHandler
+	        selectOptions: selectOptions,
+	        updateSwatch: updateSwatch,
+	        saveTheme: saveTheme
 	      });
 	    }
 	  }]);
@@ -30693,21 +30697,25 @@
 	}(_react.Component);
 
 	SectionContainer.propTypes = {
+	  masterField: _react.PropTypes.object.isRequired,
 	  fields: _react.PropTypes.array.isRequired,
-	  onInputChange: _react.PropTypes.func.isRequired,
-	  onClickHandler: _react.PropTypes.func.isRequired,
+	  selectOptions: _react.PropTypes.array.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired,
 	  dispatch: _react.PropTypes.func.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    fields: state.fields
+	    masterField: typeof state.fields[0] !== 'undefined' ? state.fields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+	    fields: state.fields.slice(1, state.fields.length),
+	    selectOptions: ["Monochrome", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
 	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onInputChange: function onInputChange(id, name, preview) {
+	    updateSwatch: function updateSwatch(id, name, preview) {
 	      // validate hex colors (reset warnings if fine)
 	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
 	      if (isHexColor && preview != "") {
@@ -30721,7 +30729,7 @@
 	          $('#' + name + '-div').addClass('has-danger');
 	        }
 	    },
-	    onClickHandler: function onClickHandler() {
+	    saveTheme: function saveTheme() {
 	      dispatch((0, _actions.saveTheme)());
 	    },
 	    dispatch: dispatch
@@ -30866,6 +30874,32 @@
 	  });
 	  return jsonObj;
 	}
+
+	// attempt to convert to saga
+	// export function* fetchStyles() {
+	//   try {
+	//     const response = yield call('/api/v1/styles/1')
+	//     yield call(checkStatus(response))
+	//     yield put({ type: REQUEST_STYLES_SUCCESS, response })
+	//   }
+	//   catch (e) {
+	//     yield put({ type: REQUEST_STYLES_FAILURE, error })
+	//   }
+	// }
+
+	// // convert PATCH to saga
+	// export function* updateStyles(fields) {
+	//   try {
+	//     yield call('/api/v1/styles/1', {
+
+	//     })
+	//     yield call(checkStatus)
+	//     yield put({ type: SAVE_STYLES_SUCCESS })
+	//   }
+	//   catch (e) {
+	//     yield put({ type: SAVE_STYLES_FAILURE, error })
+	//   }
+	// }
 
 	// async GET request
 	function fetchStyles() {
@@ -31392,12 +31426,18 @@
 
 	var _inputField2 = _interopRequireDefault(_inputField);
 
+	var _colorMaster = __webpack_require__(497);
+
+	var _colorMaster2 = _interopRequireDefault(_colorMaster);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Section = function Section(_ref) {
+	  var masterField = _ref.masterField;
 	  var fields = _ref.fields;
-	  var onInputChange = _ref.onInputChange;
-	  var onClickHandler = _ref.onClickHandler;
+	  var selectOptions = _ref.selectOptions;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var saveTheme = _ref.saveTheme;
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'container' },
@@ -31427,13 +31467,23 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(_colorMaster2.default, {
+	            field: masterField,
+	            updateSwatch: _updateSwatch,
+	            selectOptions: selectOptions
+	          })
+	        ),
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
+	          'div',
 	          { className: 'row style-input-row' },
 	          fields.map(function (field) {
 	            return _react2.default.createElement(_inputField2.default, _extends({
 	              key: field.id
 	            }, field, {
-	              onBlur: function onBlur(id, name, value) {
-	                return onInputChange(id, name, value);
+	              updateSwatch: function updateSwatch(id, name, value) {
+	                return _updateSwatch(id, name, value);
 	              }
 	            }));
 	          })
@@ -31444,7 +31494,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-md-4 col-md-offset-8' },
-	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: onClickHandler })
+	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
 	          )
 	        )
 	      )
@@ -31453,14 +31503,21 @@
 	};
 
 	Section.propTypes = {
-	  fields: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.shape({
-	    id: _react2.default.PropTypes.number.isRequired,
-	    name: _react2.default.PropTypes.string.isRequired,
-	    preview: _react2.default.PropTypes.string.isRequired,
-	    value: _react2.default.PropTypes.string.isRequired
+	  masterField: _react.PropTypes.shape({
+	    id: _react.PropTypes.number.isRequired,
+	    name: _react.PropTypes.string.isRequired,
+	    preview: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
+	  }).isRequired,
+	  fields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	    id: _react.PropTypes.number.isRequired,
+	    name: _react.PropTypes.string.isRequired,
+	    preview: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
-	  onInputChange: _react2.default.PropTypes.func.isRequired,
-	  onClickHandler: _react2.default.PropTypes.func.isRequired
+	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = Section;
@@ -31479,8 +31536,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(480);
-
 	var _actions = __webpack_require__(492);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31490,7 +31545,7 @@
 	  var name = _ref.name;
 	  var preview = _ref.preview;
 	  var value = _ref.value;
-	  var _onBlur = _ref.onBlur;
+	  var updateSwatch = _ref.updateSwatch;
 
 	  var style = {
 	    background: preview,
@@ -31506,7 +31561,6 @@
 	    _react2.default.createElement(
 	      'label',
 	      { id: name },
-	      '@',
 	      name
 	    ),
 	    _react2.default.createElement(
@@ -31517,7 +31571,7 @@
 	        type: 'text',
 	        placeholder: value,
 	        onBlur: function onBlur(e) {
-	          return _onBlur(id, name, e.target.value);
+	          return updateSwatch(id, name, e.target.value);
 	        }
 	      }),
 	      _react2.default.createElement(
@@ -31530,17 +31584,79 @@
 	};
 
 	InputField.propTypes = {
-	  id: _react2.default.PropTypes.number.isRequired,
-	  name: _react2.default.PropTypes.string.isRequired,
-	  preview: _react2.default.PropTypes.string.isRequired,
-	  value: _react2.default.PropTypes.string.isRequired,
-	  onBlur: _react2.default.PropTypes.func.isRequired
+	  id: _react.PropTypes.number.isRequired,
+	  name: _react.PropTypes.string.isRequired,
+	  preview: _react.PropTypes.string.isRequired,
+	  value: _react.PropTypes.string.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired
 	};
 
 	exports.default = InputField;
 
 /***/ },
 /* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _inputField = __webpack_require__(496);
+
+	var _inputField2 = _interopRequireDefault(_inputField);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	var _actions = __webpack_require__(492);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ColorMaster = function ColorMaster(_ref) {
+	  var field = _ref.field;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var selectOptions = _ref.selectOptions;
+
+	  return _react2.default.createElement(
+	    'form',
+	    { className: 'form-inline' },
+	    _react2.default.createElement(_inputField2.default, _extends({
+	      key: field.id
+	    }, field, {
+	      updateSwatch: function updateSwatch(id, name, value) {
+	        return _updateSwatch(id, name, value);
+	      }
+	    })),
+	    _react2.default.createElement(_selectInput2.default, {
+	      options: selectOptions
+	    })
+	  );
+	};
+
+	ColorMaster.propTypes = {
+	  field: _react.PropTypes.shape({
+	    id: _react.PropTypes.number.isRequired,
+	    name: _react.PropTypes.string.isRequired,
+	    preview: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
+	  }).isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
+	};
+
+	exports.default = ColorMaster;
+
+/***/ },
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31634,7 +31750,7 @@
 
 	            nextState.push({
 	              id: Object.keys(action.response).indexOf(key),
-	              name: key.replace(/_/, '-'),
+	              name: key.replace(/_/g, '-'),
 	              preview: value,
 	              value: value
 	            });
@@ -31670,7 +31786,7 @@
 	            var key = _step2$value[0];
 	            var value = _step2$value[1];
 
-	            if (key.replace(/_/, '-') === existingKey) {
+	            if (key.replace(/_/g, '-') === existingKey) {
 	              newValue = value;
 	              break;
 	            }
@@ -31714,6 +31830,55 @@
 	});
 
 	exports.default = rootReducer;
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectInput = function SelectInput(_ref) {
+	  var options = _ref.options;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "form-group col-md-4 col-sm-6 col-xs-12" },
+	    _react2.default.createElement(
+	      "label",
+	      null,
+	      "Color Scheme"
+	    ),
+	    _react2.default.createElement(
+	      "select",
+	      { className: "form-control", id: "color-scheme" },
+	      options.map(function (option) {
+	        return _react2.default.createElement(
+	          "option",
+	          { key: options.findIndex(function (x) {
+	              return x === option;
+	            }) },
+	          option
+	        );
+	      })
+	    )
+	  );
+	};
+
+	SelectInput.propTypes = {
+	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
+	};
+
+	exports.default = SelectInput;
 
 /***/ }
 /******/ ]);

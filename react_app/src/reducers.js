@@ -61,7 +61,7 @@ function fields(state = [], action) {
         for (let [key, value] of Object.entries(action.response)) {
           nextState.push({
             id: Object.keys(action.response).indexOf(key),
-            name: key.replace(/_/, '-'),
+            name: key.replace(/_/g, '-'),
             preview: value,
             value: value
           })
@@ -72,7 +72,7 @@ function fields(state = [], action) {
         let existingKey = existingField.name
         let newValue = ''
         for (let [key, value] of Object.entries(action.response)) {
-          if ((key.replace(/_/, '-')) === existingKey) {
+          if ((key.replace(/_/g, '-')) === existingKey) {
             newValue = value
             break
           }

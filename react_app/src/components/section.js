@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import InputField from './inputField';
+import ColorMaster from './colorMaster';
 
-const Section = ({ fields, onInputChange, onClickHandler }) => (
+const Section = ({ masterField, fields, selectOptions, updateSwatch, saveTheme }) => (
   	<div className="container">
   		<div className="row">
   			<div className="col-md-10 col-sm-12">
@@ -11,19 +12,27 @@ const Section = ({ fields, onInputChange, onClickHandler }) => (
 		  				<h6 className="style-type-description">Gray and brand colors for use across Bootstrap.</h6>
 		  			</div>
 		  		</div>
+          <div className="row">
+            <ColorMaster
+              field={masterField}
+              updateSwatch={updateSwatch}
+              selectOptions={selectOptions}
+            />
+          </div>
+          <hr />
 		  		<div className="row style-input-row">
             {
               fields.map(field =>
                 <InputField
                   key={field.id}
                   {...field}
-                  onBlur={(id, name, value) => onInputChange(id, name, value)}
+                  updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
                 />
             )}
 		  		</div>
           <div className="row">
             <div className="col-md-4 col-md-offset-8">
-              <input className="btn btn-primary" id="submit" type="submit" value="Save" onClick={onClickHandler} />
+              <input className="btn btn-primary" id="submit" type="submit" value="Save" onClick={saveTheme} />
             </div>
           </div>
 		  	</div>
@@ -32,14 +41,21 @@ const Section = ({ fields, onInputChange, onClickHandler }) => (
   )
 
 Section.propTypes = {
-  fields: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    name: React.PropTypes.string.isRequired,
-    preview: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string.isRequired
+  masterField: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
+  }).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
   }).isRequired).isRequired,
-  onInputChange: React.PropTypes.func.isRequired,
-  onClickHandler: React.PropTypes.func.isRequired
+  selectOptions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  updateSwatch: PropTypes.func.isRequired,
+  saveTheme: PropTypes.func.isRequired
 }
 
 export default Section
