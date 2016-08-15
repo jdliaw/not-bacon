@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
-import { UPDATE_PREVIEW, SAVE_THEME, BEFORE_SAVE_THEME,
+import { UPDATE_PREVIEW, UPDATE_VALUE,
+  CHOOSE_COLOR_SCHEME, DISPLAY_COLOR_SCHEME,
+  SAVE_THEME, BEFORE_SAVE_THEME,
   REQUEST_STYLES, REQUEST_STYLES_SUCCESS, REQUEST_STYLES_FAILURE,
   SAVE_STYLES, SAVE_STYLES_SUCCESS, SAVE_STYLES_FAILURE
 } from './actions'
@@ -44,7 +46,32 @@ function errorMessage(state = null, action) {
   }
 }
 
-function fields(state = [], action) {
+function colorScheme(state = "Analogous", action) {
+  switch (action.type) {
+    case CHOOSE_COLOR_SCHEME:
+      return action.scheme
+    default:
+      return state
+  }
+}
+
+function colorSchemeModule(state = [], action) {
+  switch (action.type) {
+    case DISPLAY_COLOR_SCHEME:
+      state = []
+      for (let [index, value] of action.colors.entries()) {
+        state.push({
+          id: index,
+          value: value
+        })
+      }
+      return state
+    default:
+      return state
+  }
+}
+
+function colorFields(state = [], action) {
   switch (action.type) {
     case UPDATE_PREVIEW:
       return state.map((field) => {
@@ -56,6 +83,7 @@ function fields(state = [], action) {
         return field
       })
     case REQUEST_STYLES_SUCCESS:
+      // initial populate or adding on new fields
       if (Object.keys(action.response).length > state.length){
         let nextState = []
         for (let [key, value] of Object.entries(action.response)) {
@@ -68,6 +96,7 @@ function fields(state = [], action) {
         }
         return nextState
       }
+      // updating existing fields (only modify preview & value)
       return state.map((existingField) => {
         let existingKey = existingField.name
         let newValue = ''
@@ -93,11 +122,30 @@ function fields(state = [], action) {
   }
 }
 
+function typographyFields(state = [{id: 0, name: "primary-font", value: "Helvetica"}, {id: 1, name: "secondary-font", value: "Arial"}], action) {
+  switch (action.type) {
+    case UPDATE_VALUE:
+      return state.map((field) => {
+        if (field.id === action.id) {
+          return Object.assign({}, field, {
+            value: action.value
+          })
+        }
+        return field
+      })
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   isLoading,
   requestFailed,
   errorMessage,
-  fields
+  colorScheme,
+  colorSchemeModule,
+  colorFields,
+  typographyFields
 })
 
 export default rootReducer

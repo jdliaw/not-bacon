@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import SectionContainer from '../containers/sectionContainer';
+import ColorsSectionContainer from '../containers/colorsSectionContainer';
+import TypographySectionContainer from '../containers/typographySectionContainer';
 
 export function StyleForm() {
   return (
   	<div>
-  		<SectionContainer />
+  		<ColorsSectionContainer />
+      <TypographySectionContainer />
   	</div>
   )
 }

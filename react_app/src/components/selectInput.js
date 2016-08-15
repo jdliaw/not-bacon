@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
-const SelectInput = ({ options }) => {
+const SelectInput = ({ id, name, value, options, onInputChange }) => {
   return (
     <div className="form-group col-md-4 col-sm-6 col-xs-12">
-      <label>Color Scheme</label>
-      <select className="form-control" id="color-scheme">
+      <label>{name}</label>
+      <select className="form-control select-input" onChange={e => onInputChange(id, e.target.value)} value={value}>
         {
           options.map(option =>
             <option key={options.findIndex(x => x === option)} >{option}</option>
@@ -16,7 +16,10 @@ const SelectInput = ({ options }) => {
 }
 
 SelectInput.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  onInputChange: PropTypes.func.isRequired
 }
 
 export default SelectInput

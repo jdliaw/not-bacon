@@ -1,43 +1,51 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updatePreview, saveTheme, fetchStyles } from '../actions'
-import Section from '../components/section'
+import { updatePreview, getColorScheme, saveTheme, fetchStyles } from '../actions'
+import ColorsSection from '../components/colorsSection'
 
-class SectionContainer extends Component {
+class ColorsSectionContainer extends Component {
   componentDidMount() {
     // fetch styles to load
     this.props.dispatch(fetchStyles())
   }
 
   render() {
-    const { masterField, fields, selectOptions, updateSwatch, saveTheme } = this.props
+    const { masterField, fields, colors, colorScheme, selectOptions, updateSwatch, chooseColorScheme, saveTheme } = this.props
     return (
-      <Section
+      <ColorsSection
         masterField={masterField}
         fields={fields}
+        colors={colors}
+        colorScheme={colorScheme}
         selectOptions={selectOptions}
         updateSwatch={updateSwatch}
+        chooseColorScheme={chooseColorScheme}
         saveTheme={saveTheme}
       />
     )
   }
 }
 
-SectionContainer.propTypes = {
+ColorsSectionContainer.propTypes = {
   masterField: PropTypes.object.isRequired,
   fields: PropTypes.array.isRequired,
+  colors: PropTypes.array.isRequired,
+  colorScheme: PropTypes.string.isRequired,
   selectOptions: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
+  chooseColorScheme: PropTypes.func.isRequired,
   saveTheme: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
-    masterField: typeof state.fields[0] !== 'undefined' ? state.fields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-    fields: state.fields.slice(1, state.fields.length),
-    selectOptions: ["Monochrome", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
+    masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+    fields: state.colorFields.slice(1, state.colorFields.length),
+    colors: state.colorSchemeModule, //[{ id: 0, value: "rgb(135, 206, 235)" }, { id: 1, value: "rgb(135, 172, 235)" }, { id: 2, value: "rgb(135, 139, 235)" }, { id: 3, value: "rgb(164, 135, 235)" }],
+    colorScheme: state.colorScheme,
+    selectOptions: ["Monochromatic", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
   }
 }
 
@@ -57,6 +65,9 @@ const mapDispatchToProps = (dispatch) => {
         $('#' + name + '-div').addClass('has-danger')
       }
     },
+    chooseColorScheme: (masterColor, scheme) => {
+      dispatch(getColorScheme(masterColor, scheme))
+    },
     saveTheme: () => {
       dispatch(saveTheme())
     },
@@ -64,4 +75,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SectionContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ColorsSectionContainer)

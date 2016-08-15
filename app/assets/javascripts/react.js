@@ -64,7 +64,7 @@
 
 	var _Hume = __webpack_require__(489);
 
-	var _reducers = __webpack_require__(498);
+	var _reducers = __webpack_require__(502);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -30610,9 +30610,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _sectionContainer = __webpack_require__(491);
+	var _colorsSectionContainer = __webpack_require__(491);
 
-	var _sectionContainer2 = _interopRequireDefault(_sectionContainer);
+	var _colorsSectionContainer2 = _interopRequireDefault(_colorsSectionContainer);
+
+	var _typographySectionContainer = __webpack_require__(501);
+
+	var _typographySectionContainer2 = _interopRequireDefault(_typographySectionContainer);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30620,7 +30624,8 @@
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_sectionContainer2.default, null)
+	    _react2.default.createElement(_colorsSectionContainer2.default, null),
+	    _react2.default.createElement(_typographySectionContainer2.default, null)
 	  );
 	}
 
@@ -30646,9 +30651,9 @@
 
 	var _actions = __webpack_require__(492);
 
-	var _section = __webpack_require__(495);
+	var _colorsSection = __webpack_require__(496);
 
-	var _section2 = _interopRequireDefault(_section);
+	var _colorsSection2 = _interopRequireDefault(_colorsSection);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30658,16 +30663,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var SectionContainer = function (_Component) {
-	  _inherits(SectionContainer, _Component);
+	var ColorsSectionContainer = function (_Component) {
+	  _inherits(ColorsSectionContainer, _Component);
 
-	  function SectionContainer() {
-	    _classCallCheck(this, SectionContainer);
+	  function ColorsSectionContainer() {
+	    _classCallCheck(this, ColorsSectionContainer);
 
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(SectionContainer).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ColorsSectionContainer).apply(this, arguments));
 	  }
 
-	  _createClass(SectionContainer, [{
+	  _createClass(ColorsSectionContainer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      // fetch styles to load
@@ -30679,37 +30684,48 @@
 	      var _props = this.props;
 	      var masterField = _props.masterField;
 	      var fields = _props.fields;
+	      var colors = _props.colors;
+	      var colorScheme = _props.colorScheme;
 	      var selectOptions = _props.selectOptions;
 	      var updateSwatch = _props.updateSwatch;
+	      var chooseColorScheme = _props.chooseColorScheme;
 	      var saveTheme = _props.saveTheme;
 
-	      return _react2.default.createElement(_section2.default, {
+	      return _react2.default.createElement(_colorsSection2.default, {
 	        masterField: masterField,
 	        fields: fields,
+	        colors: colors,
+	        colorScheme: colorScheme,
 	        selectOptions: selectOptions,
 	        updateSwatch: updateSwatch,
+	        chooseColorScheme: chooseColorScheme,
 	        saveTheme: saveTheme
 	      });
 	    }
 	  }]);
 
-	  return SectionContainer;
+	  return ColorsSectionContainer;
 	}(_react.Component);
 
-	SectionContainer.propTypes = {
+	ColorsSectionContainer.propTypes = {
 	  masterField: _react.PropTypes.object.isRequired,
 	  fields: _react.PropTypes.array.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
 	  selectOptions: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
 	  saveTheme: _react.PropTypes.func.isRequired,
 	  dispatch: _react.PropTypes.func.isRequired
 	};
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    masterField: typeof state.fields[0] !== 'undefined' ? state.fields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-	    fields: state.fields.slice(1, state.fields.length),
-	    selectOptions: ["Monochrome", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
+	    masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+	    fields: state.colorFields.slice(1, state.colorFields.length),
+	    colors: state.colorSchemeModule, //[{ id: 0, value: "rgb(135, 206, 235)" }, { id: 1, value: "rgb(135, 172, 235)" }, { id: 2, value: "rgb(135, 139, 235)" }, { id: 3, value: "rgb(164, 135, 235)" }],
+	    colorScheme: state.colorScheme,
+	    selectOptions: ["Monochromatic", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
 	  };
 	};
 
@@ -30729,6 +30745,9 @@
 	          $('#' + name + '-div').addClass('has-danger');
 	        }
 	    },
+	    chooseColorScheme: function chooseColorScheme(masterColor, scheme) {
+	      dispatch((0, _actions.getColorScheme)(masterColor, scheme));
+	    },
 	    saveTheme: function saveTheme() {
 	      dispatch((0, _actions.saveTheme)());
 	    },
@@ -30736,7 +30755,7 @@
 	  };
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(SectionContainer);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ColorsSectionContainer);
 
 /***/ },
 /* 492 */
@@ -30747,7 +30766,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.beforeSaveTheme = exports.BEFORE_SAVE_THEME = exports.updatePreview = exports.UPDATE_PREVIEW = undefined;
+	exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.beforeSaveTheme = exports.BEFORE_SAVE_THEME = exports.displayColorScheme = exports.chooseColorScheme = exports.updateValue = exports.updatePreview = exports.DISPLAY_COLOR_SCHEME = exports.CHOOSE_COLOR_SCHEME = exports.UPDATE_VALUE = exports.UPDATE_PREVIEW = undefined;
+	exports.getColorScheme = getColorScheme;
 	exports.saveTheme = saveTheme;
 	exports.requestStyles = requestStyles;
 	exports.requestStylesSuccess = requestStylesSuccess;
@@ -30762,12 +30782,19 @@
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
+	var _pleasejs = __webpack_require__(495);
+
+	var _pleasejs2 = _interopRequireDefault(_pleasejs);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	// for updating preview of color styles
 	var UPDATE_PREVIEW = exports.UPDATE_PREVIEW = 'UPDATE_PREVIEW';
+	var UPDATE_VALUE = exports.UPDATE_VALUE = 'UPDATE_VALUE';
+	var CHOOSE_COLOR_SCHEME = exports.CHOOSE_COLOR_SCHEME = 'CHOOSE_COLOR_SCHEME';
+	var DISPLAY_COLOR_SCHEME = exports.DISPLAY_COLOR_SCHEME = 'DISPLAY_COLOR_SCHEME';
 
 	// action creator for UPDATE_PREVIEW
 	var updatePreview = exports.updatePreview = function updatePreview(id, preview) {
@@ -30775,6 +30802,48 @@
 	    type: UPDATE_PREVIEW,
 	    id: id,
 	    preview: preview
+	  };
+	};
+
+	// action creator for UPDATE_VALUE
+	var updateValue = exports.updateValue = function updateValue(id, value) {
+	  return {
+	    type: UPDATE_VALUE,
+	    id: id,
+	    value: value
+	  };
+	};
+
+	// action creator for CHOOSE_COLOR_SCHEME
+	var chooseColorScheme = exports.chooseColorScheme = function chooseColorScheme(id, scheme) {
+	  return {
+	    type: CHOOSE_COLOR_SCHEME,
+	    id: id,
+	    scheme: scheme
+	  };
+	};
+
+	// on CHOOSE_COLOR_SCHEME, get colors from pleaseJS
+	function getColorScheme(masterColor, scheme) {
+	  return function (dispatch, getState) {
+	    // update value shown in the select field
+	    dispatch(chooseColorScheme(null, scheme));
+	    // generate colors using base color and specified scheme
+	    var baseColor = (0, _pleasejs.HEX_to_HSV)(masterColor);
+	    var colors = _pleasejs2.default.make_scheme(baseColor, {
+	      scheme_type: scheme,
+	      format: 'hex'
+	    });
+	    // update state with colors generated
+	    dispatch(displayColorScheme(colors));
+	  };
+	}
+
+	// action creator to update colorSchemeModules
+	var displayColorScheme = exports.displayColorScheme = function displayColorScheme(colors) {
+	  return {
+	    type: DISPLAY_COLOR_SCHEME,
+	    colors: colors
 	  };
 	};
 
@@ -31410,6 +31479,13 @@
 /* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!Please JS v0.4.2, Jordan Checkman 2014, Checkman.io, MIT License, Have fun.*/
+	!function(e,r,a){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (a), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"object"==typeof exports?module.exports=a():r[e]=a()}("Please",this,function(){"use strict";function e(){function e(e,r,a){var o=Math.random;return a instanceof l&&(o=a.random),Math.floor(o()*(r-e+1))+e}function r(e,r,a){var o=Math.random;return a instanceof l&&(o=a.random),o()*(r-e)+e}function a(e,r,a){return Math.max(r,Math.min(e,a))}function o(e,r){var a;switch(e){case"hex":for(a=0;a<r.length;a++)r[a]=F.HSV_to_HEX(r[a]);break;case"rgb":for(a=0;a<r.length;a++)r[a]=F.HSV_to_RGB(r[a]);break;case"rgb-string":for(a=0;a<r.length;a++){var o=F.HSV_to_RGB(r[a]);r[a]="rgb("+o.r+","+o.g+","+o.b+")"}break;case"hsv":break;default:console.error("Format not recognized.")}return r}function n(e){var r=F.HSV_to_RGB(e),a=(299*r.r+587*r.g+114*r.b)/1e3;return a>=128?"dark":"light"}function t(e){var r={};for(var a in e)e.hasOwnProperty(a)&&(r[a]=e[a]);return r}function l(e){function r(){o=(o+1)%256,n=(n+a[o])%256;var e=a[o];return a[o]=a[n],a[n]=e,a[(a[o]+a[n])%256]}for(var a=[],o=0,n=0,t=0;256>t;t++)a[t]=t;for(var l=0,F=0;256>l;l++){F=(F+a[l]+e.charCodeAt(l%e.length))%256;var s=a[l];a[l]=a[F],a[F]=s}this.random=function(){for(var e=0,a=0,o=1;8>e;e++)a+=r()*o,o*=256;return a/0x10000000000000000}}var F={},s={aliceblue:"F0F8FF",antiquewhite:"FAEBD7",aqua:"00FFFF",aquamarine:"7FFFD4",azure:"F0FFFF",beige:"F5F5DC",bisque:"FFE4C4",black:"000000",blanchedalmond:"FFEBCD",blue:"0000FF",blueviolet:"8A2BE2",brown:"A52A2A",burlywood:"DEB887",cadetblue:"5F9EA0",chartreuse:"7FFF00",chocolate:"D2691E",coral:"FF7F50",cornflowerblue:"6495ED",cornsilk:"FFF8DC",crimson:"DC143C",cyan:"00FFFF",darkblue:"00008B",darkcyan:"008B8B",darkgoldenrod:"B8860B",darkgray:"A9A9A9",darkgrey:"A9A9A9",darkgreen:"006400",darkkhaki:"BDB76B",darkmagenta:"8B008B",darkolivegreen:"556B2F",darkorange:"FF8C00",darkorchid:"9932CC",darkred:"8B0000",darksalmon:"E9967A",darkseagreen:"8FBC8F",darkslateblue:"483D8B",darkslategray:"2F4F4F",darkslategrey:"2F4F4F",darkturquoise:"00CED1",darkviolet:"9400D3",deeppink:"FF1493",deepskyblue:"00BFFF",dimgray:"696969",dimgrey:"696969",dodgerblue:"1E90FF",firebrick:"B22222",floralwhite:"FFFAF0",forestgreen:"228B22",fuchsia:"FF00FF",gainsboro:"DCDCDC",ghostwhite:"F8F8FF",gold:"FFD700",goldenrod:"DAA520",gray:"808080",grey:"808080",green:"008000",greenyellow:"ADFF2F",honeydew:"F0FFF0",hotpink:"FF69B4",indianred:"CD5C5C",indigo:"4B0082",ivory:"FFFFF0",khaki:"F0E68C",lavender:"E6E6FA",lavenderblush:"FFF0F5",lawngreen:"7CFC00",lemonchiffon:"FFFACD",lightblue:"ADD8E6",lightcoral:"F08080",lightcyan:"E0FFFF",lightgoldenrodyellow:"FAFAD2",lightgray:"D3D3D3",lightgrey:"D3D3D3",lightgreen:"90EE90",lightpink:"FFB6C1",lightsalmon:"FFA07A",lightseagreen:"20B2AA",lightskyblue:"87CEFA",lightslategray:"778899",lightslategrey:"778899",lightsteelblue:"B0C4DE",lightyellow:"FFFFE0",lime:"00FF00",limegreen:"32CD32",linen:"FAF0E6",magenta:"FF00FF",maroon:"800000",mediumaquamarine:"66CDAA",mediumblue:"0000CD",mediumorchid:"BA55D3",mediumpurple:"9370D8",mediumseagreen:"3CB371",mediumslateblue:"7B68EE",mediumspringgreen:"00FA9A",mediumturquoise:"48D1CC",mediumvioletred:"C71585",midnightblue:"191970",mintcream:"F5FFFA",mistyrose:"FFE4E1",moccasin:"FFE4B5",navajowhite:"FFDEAD",navy:"000080",oldlace:"FDF5E6",olive:"808000",olivedrab:"6B8E23",orange:"FFA500",orangered:"FF4500",orchid:"DA70D6",palegoldenrod:"EEE8AA",palegreen:"98FB98",paleturquoise:"AFEEEE",palevioletred:"D87093",papayawhip:"FFEFD5",peachpuff:"FFDAB9",peru:"CD853F",pink:"FFC0CB",plum:"DDA0DD",powderblue:"B0E0E6",purple:"800080",rebeccapurple:"663399",red:"FF0000",rosybrown:"BC8F8F",royalblue:"4169E1",saddlebrown:"8B4513",salmon:"FA8072",sandybrown:"F4A460",seagreen:"2E8B57",seashell:"FFF5EE",sienna:"A0522D",silver:"C0C0C0",skyblue:"87CEEB",slateblue:"6A5ACD",slategray:"708090",slategrey:"708090",snow:"FFFAFA",springgreen:"00FF7F",steelblue:"4682B4",tan:"D2B48C",teal:"008080",thistle:"D8BFD8",tomato:"FF6347",turquoise:"40E0D0",violet:"EE82EE",wheat:"F5DEB3",white:"FFFFFF",whitesmoke:"F5F5F5",yellow:"FFFF00",yellowgreen:"9ACD32"},i=.618033988749895,u={hue:null,saturation:null,value:null,base_color:"",greyscale:!1,grayscale:!1,golden:!0,full_random:!1,colors_returned:1,format:"hex",seed:null},c={scheme_type:"analogous",format:"hex"},h={golden:!1,format:"hex"};return F.NAME_to_HEX=function(e){return e=e.toLowerCase(),e in s?s[e]:(console.error("Color name not recognized."),void 0)},F.NAME_to_RGB=function(e){return F.HEX_to_RGB(F.NAME_to_HEX(e))},F.NAME_to_HSV=function(e){return F.HEX_to_HSV(F.NAME_to_HEX(e))},F.HEX_to_RGB=function(e){var r=/^#?([a-f\d])([a-f\d])([a-f\d])$/i;e=e.replace(r,function(e,r,a,o){return r+r+a+a+o+o});var a=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return a?{r:parseInt(a[1],16),g:parseInt(a[2],16),b:parseInt(a[3],16)}:null},F.RGB_to_HEX=function(e){return"#"+((1<<24)+(e.r<<16)+(e.g<<8)+e.b).toString(16).slice(1)},F.HSV_to_RGB=function(e){var r,a,o,n,t,l,F,s,i=e.h,u=e.s,c=e.v;if(0===u)return{r:c,g:c,b:c};switch(i/=60,n=Math.floor(i),t=i-n,l=c*(1-u),F=c*(1-u*t),s=c*(1-u*(1-t)),n){case 0:r=c,a=s,o=l;break;case 1:r=F,a=c,o=l;break;case 2:r=l,a=c,o=s;break;case 3:r=l,a=F,o=c;break;case 4:r=s,a=l,o=c;break;case 5:r=c,a=l,o=F}return{r:Math.floor(255*r),g:Math.floor(255*a),b:Math.floor(255*o)}},F.RGB_to_HSV=function(e){var r=e.r/255,a=e.g/255,o=e.b/255,n=0,t=0,l=0,F=Math.min(r,Math.min(a,o)),s=Math.max(r,Math.max(a,o));if(F===s)return l=F,{h:0,s:0,v:l};var i=r===F?a-o:o===F?r-a:o-r,u=r===F?3:o===F?1:5;return n=60*(u-i/(s-F)),t=(s-F)/s,l=s,{h:n,s:t,v:l}},F.HSV_to_HEX=function(e){return F.RGB_to_HEX(F.HSV_to_RGB(e))},F.HEX_to_HSV=function(e){return F.RGB_to_HSV(F.HEX_to_RGB(e))},F.make_scheme=function(e,r){function n(e){return{h:e.h,s:e.s,v:e.v}}var l,F,s,i,u,h=t(c);if(null!==r)for(var d in r)r.hasOwnProperty(d)&&(h[d]=r[d]);var g=[e];switch(h.scheme_type.toLowerCase()){case"monochromatic":case"mono":for(u=1;2>=u;u++)l=n(e),s=l.s+.1*u,s=a(s,0,1),i=l.v+.1*u,i=a(i,0,1),l.s=s,l.v=i,g.push(l);for(u=1;2>=u;u++)l=n(e),s=l.s-.1*u,s=a(s,0,1),i=l.v-.1*u,i=a(i,0,1),l.s=s,l.v=i,g.push(l);break;case"complementary":case"complement":case"comp":l=n(e),l.h=(l.h+180)%360,g.push(l);break;case"split-complementary":case"split-complement":case"split":l=n(e),l.h=(l.h+165)%360,g.push(l),l=n(e),l.h=Math.abs((l.h-165)%360),g.push(l);break;case"double-complementary":case"double-complement":case"double":l=n(e),l.h=(l.h+180)%360,g.push(l),l.h=(l.h+30)%360,F=n(l),g.push(l),l.h=(l.h+180)%360,g.push(F);break;case"analogous":case"ana":for(u=1;5>=u;u++)l=n(e),l.h=(l.h+20*u)%360,g.push(l);break;case"triadic":case"triad":case"tri":for(u=1;3>u;u++)l=n(e),l.h=(l.h+120*u)%360,g.push(l);break;default:console.error("Color scheme not recognized.")}return o(h.format.toLowerCase(),g),g},F.make_color=function(n){var s=[],c=t(u),h=null;if(null!==n)for(var d in n)n.hasOwnProperty(d)&&(c[d]=n[d]);var g=null;"string"==typeof c.seed&&(g=new l(c.seed)),c.base_color.length>0&&(h=c.base_color.match(/^#?([0-9a-f]{3})([0-9a-f]{3})?$/i)?F.HEX_to_HSV(c.base_color):F.NAME_to_HSV(c.base_color));for(var m=0;m<c.colors_returned;m++){var f,E,b,p=e(0,360,g);null!==h?(f=a(e(h.h-5,h.h+5,g),0,360),E=0===h.s?0:r(.4,.85,g),b=r(.4,.85,g),s.push({h:f,s:E,v:b})):(f=c.greyscale===!0||c.grayscale===!0?0:c.golden===!0?(p+p/i)%360:null===c.hue||c.full_random===!0?p:a(c.hue,0,360),E=c.greyscale===!0||c.grayscale===!0?0:c.full_random===!0?r(0,1,g):null===c.saturation?.4:a(c.saturation,0,1),b=c.full_random===!0?r(0,1,g):c.greyscale===!0||c.grayscale===!0?r(.15,.75,g):null===c.value?.75:a(c.value,0,1),s.push({h:f,s:E,v:b}))}return o(c.format.toLowerCase(),s),s},F.make_contrast=function(e,r){var l=t(h);if(null!==r)for(var s in r)r.hasOwnProperty(s)&&(l[s]=r[s]);var u,c,d=n(e);if(l.golden===!0)c=e.h*(1+i)%360;else{var g=F.make_scheme(e,{scheme_type:"complementary",format:"hsv"})[1];c=a(g.h-30,0,360)}var m;return"dark"===d?m=a(e.v-.25,0,1):"light"===d&&(m=a(e.v+.25,0,1)),u=[{h:c,s:e.s,v:m}],o(l.format.toLowerCase(),u),u[0]},F}return e()});
+
+/***/ },
+/* 496 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -31422,21 +31498,24 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _inputField = __webpack_require__(496);
+	var _textInput = __webpack_require__(497);
 
-	var _inputField2 = _interopRequireDefault(_inputField);
+	var _textInput2 = _interopRequireDefault(_textInput);
 
-	var _colorMaster = __webpack_require__(497);
+	var _colorMaster = __webpack_require__(498);
 
 	var _colorMaster2 = _interopRequireDefault(_colorMaster);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Section = function Section(_ref) {
+	var ColorsSection = function ColorsSection(_ref) {
 	  var masterField = _ref.masterField;
 	  var fields = _ref.fields;
 	  var selectOptions = _ref.selectOptions;
+	  var colors = _ref.colors;
+	  var colorScheme = _ref.colorScheme;
 	  var _updateSwatch = _ref.updateSwatch;
+	  var _chooseColorScheme = _ref.chooseColorScheme;
 	  var saveTheme = _ref.saveTheme;
 	  return _react2.default.createElement(
 	    'div',
@@ -31461,17 +31540,22 @@
 	            _react2.default.createElement(
 	              'h6',
 	              { className: 'style-type-description' },
-	              'Gray and brand colors for use across Bootstrap.'
+	              'Brand colors for use across your shop.'
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
+	          { className: 'row style-input-row' },
 	          _react2.default.createElement(_colorMaster2.default, {
 	            field: masterField,
 	            updateSwatch: _updateSwatch,
-	            selectOptions: selectOptions
+	            chooseColorScheme: function chooseColorScheme(id, value) {
+	              return _chooseColorScheme(id, value);
+	            },
+	            selectOptions: selectOptions,
+	            colorScheme: colorScheme,
+	            colors: colors
 	          })
 	        ),
 	        _react2.default.createElement('hr', null),
@@ -31479,12 +31563,13 @@
 	          'div',
 	          { className: 'row style-input-row' },
 	          fields.map(function (field) {
-	            return _react2.default.createElement(_inputField2.default, _extends({
+	            return _react2.default.createElement(_textInput2.default, _extends({
 	              key: field.id
 	            }, field, {
 	              updateSwatch: function updateSwatch(id, name, value) {
 	                return _updateSwatch(id, name, value);
-	              }
+	              },
+	              colors: colors
 	            }));
 	          })
 	        ),
@@ -31502,7 +31587,7 @@
 	  );
 	};
 
-	Section.propTypes = {
+	ColorsSection.propTypes = {
 	  masterField: _react.PropTypes.shape({
 	    id: _react.PropTypes.number.isRequired,
 	    name: _react.PropTypes.string.isRequired,
@@ -31515,15 +31600,18 @@
 	    preview: _react.PropTypes.string.isRequired,
 	    value: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
 	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
 	  saveTheme: _react.PropTypes.func.isRequired
 	};
 
-	exports.default = Section;
+	exports.default = ColorsSection;
 
 /***/ },
-/* 496 */
+/* 497 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31540,12 +31628,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var InputField = function InputField(_ref) {
+	var TextInput = function TextInput(_ref) {
 	  var id = _ref.id;
 	  var name = _ref.name;
 	  var preview = _ref.preview;
 	  var value = _ref.value;
 	  var updateSwatch = _ref.updateSwatch;
+	  var colors = _ref.colors;
 
 	  var style = {
 	    background: preview,
@@ -31569,32 +31658,61 @@
 	      _react2.default.createElement('input', { className: 'form-control style-input',
 	        id: inputID,
 	        type: 'text',
-	        placeholder: value,
+	        placeholder: preview,
 	        onBlur: function onBlur(e) {
 	          return updateSwatch(id, name, e.target.value);
 	        }
 	      }),
 	      _react2.default.createElement(
-	        'span',
-	        { className: 'input-group-addon', id: 'input-preview', style: style },
-	        '@'
+	        'div',
+	        { className: 'input-group-btn' },
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button',
+	            className: 'btn btn-default dropdown-toggle',
+	            id: 'input-preview',
+	            style: style,
+	            'data-toggle': 'dropdown',
+	            'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	          '@',
+	          _react2.default.createElement('span', { className: 'caret' })
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dropdown-menu' },
+	          colors.map(function (color) {
+	            return _react2.default.createElement(
+	              'button',
+	              { className: 'dropdown-item',
+	                type: 'button',
+	                key: color.id,
+	                style: { background: color.value, color: color.value },
+	                onClick: function onClick(e) {
+	                  return updateSwatch(id, name, color.value);
+	                }
+	              },
+	              '@'
+	            );
+	          })
+	        )
 	      )
 	    )
 	  );
 	};
 
-	InputField.propTypes = {
+	TextInput.propTypes = {
 	  id: _react.PropTypes.number.isRequired,
 	  name: _react.PropTypes.string.isRequired,
 	  preview: _react.PropTypes.string.isRequired,
 	  value: _react.PropTypes.string.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  colors: _react.PropTypes.array.isRequired
 	};
 
-	exports.default = InputField;
+	exports.default = TextInput;
 
 /***/ },
-/* 497 */
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31609,35 +31727,48 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _inputField = __webpack_require__(496);
+	var _textInput = __webpack_require__(497);
 
-	var _inputField2 = _interopRequireDefault(_inputField);
+	var _textInput2 = _interopRequireDefault(_textInput);
 
 	var _selectInput = __webpack_require__(499);
 
 	var _selectInput2 = _interopRequireDefault(_selectInput);
 
-	var _actions = __webpack_require__(492);
+	var _colorSchemeModule = __webpack_require__(500);
+
+	var _colorSchemeModule2 = _interopRequireDefault(_colorSchemeModule);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var ColorMaster = function ColorMaster(_ref) {
 	  var field = _ref.field;
+	  var colors = _ref.colors;
+	  var colorScheme = _ref.colorScheme;
 	  var _updateSwatch = _ref.updateSwatch;
+	  var chooseColorScheme = _ref.chooseColorScheme;
 	  var selectOptions = _ref.selectOptions;
 
 	  return _react2.default.createElement(
-	    'form',
-	    { className: 'form-inline' },
-	    _react2.default.createElement(_inputField2.default, _extends({
+	    'div',
+	    null,
+	    _react2.default.createElement(_textInput2.default, _extends({
 	      key: field.id
 	    }, field, {
 	      updateSwatch: function updateSwatch(id, name, value) {
 	        return _updateSwatch(id, name, value);
-	      }
+	      },
+	      colors: colors
 	    })),
 	    _react2.default.createElement(_selectInput2.default, {
-	      options: selectOptions
+	      id: field.preview,
+	      name: 'Color Scheme',
+	      value: colorScheme,
+	      options: selectOptions,
+	      onInputChange: chooseColorScheme
+	    }),
+	    _react2.default.createElement(_colorSchemeModule2.default, {
+	      colors: colors
 	    })
 	  );
 	};
@@ -31649,14 +31780,210 @@
 	    preview: _react.PropTypes.string.isRequired,
 	    value: _react.PropTypes.string.isRequired
 	  }).isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
 	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
 	};
 
 	exports.default = ColorMaster;
 
 /***/ },
-/* 498 */
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectInput = function SelectInput(_ref) {
+	  var id = _ref.id;
+	  var name = _ref.name;
+	  var value = _ref.value;
+	  var options = _ref.options;
+	  var onInputChange = _ref.onInputChange;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "form-group col-md-4 col-sm-6 col-xs-12" },
+	    _react2.default.createElement(
+	      "label",
+	      null,
+	      name
+	    ),
+	    _react2.default.createElement(
+	      "select",
+	      { className: "form-control select-input", onChange: function onChange(e) {
+	          return onInputChange(id, e.target.value);
+	        }, value: value },
+	      options.map(function (option) {
+	        return _react2.default.createElement(
+	          "option",
+	          { key: options.findIndex(function (x) {
+	              return x === option;
+	            }) },
+	          option
+	        );
+	      })
+	    )
+	  );
+	};
+
+	SelectInput.propTypes = {
+	  name: _react.PropTypes.string.isRequired,
+	  value: _react.PropTypes.string.isRequired,
+	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
+	  onInputChange: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = SelectInput;
+
+/***/ },
+/* 500 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ColorSchemeModule = function ColorSchemeModule(_ref) {
+	  var colors = _ref.colors;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "btn-toolbar col-md-4 col-sm-6 col-xs-12", role: "toolbar" },
+	    colors.map(function (color) {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "btn-group", role: "group", key: color.id },
+	        _react2.default.createElement(
+	          "button",
+	          { type: "button", className: "btn btn-default", key: color.id, style: { background: color.value, color: color.value } },
+	          "$"
+	        )
+	      );
+	    })
+	  );
+	};
+	ColorSchemeModule.propTypes = {
+	  colors: _react.PropTypes.array.isRequired
+	};
+
+	exports.default = ColorSchemeModule;
+
+/***/ },
+/* 501 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(480);
+
+	var _redux = __webpack_require__(467);
+
+	var _actions = __webpack_require__(492);
+
+	var _typographySection = __webpack_require__(503);
+
+	var _typographySection2 = _interopRequireDefault(_typographySection);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TypographySectionContainer = function (_Component) {
+	  _inherits(TypographySectionContainer, _Component);
+
+	  function TypographySectionContainer() {
+	    _classCallCheck(this, TypographySectionContainer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TypographySectionContainer).apply(this, arguments));
+	  }
+
+	  _createClass(TypographySectionContainer, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var masterField = _props.masterField;
+	      var fields = _props.fields;
+	      var selectOptions = _props.selectOptions;
+	      var updateField = _props.updateField;
+	      var saveTheme = _props.saveTheme;
+
+	      return _react2.default.createElement(_typographySection2.default, {
+	        fields: fields,
+	        selectOptions: selectOptions,
+	        updateField: updateField,
+	        saveTheme: saveTheme
+	      });
+	    }
+	  }]);
+
+	  return TypographySectionContainer;
+	}(_react.Component);
+
+	TypographySectionContainer.propTypes = {
+	  fields: _react.PropTypes.array.isRequired,
+	  selectOptions: _react.PropTypes.array.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired,
+	  dispatch: _react.PropTypes.func.isRequired
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    fields: state.typographyFields,
+	    selectOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana"]
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updateField: function updateField(id, value) {
+	      dispatch((0, _actions.updateValue)(id, value));
+	    },
+	    saveTheme: function saveTheme() {
+	      dispatch((0, _actions.saveTheme)());
+	    },
+	    dispatch: dispatch
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TypographySectionContainer);
+
+/***/ },
+/* 502 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31720,7 +32047,63 @@
 	  }
 	}
 
-	function fields() {
+	function colorScheme() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? "Analogous" : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.CHOOSE_COLOR_SCHEME:
+	      return action.scheme;
+	    default:
+	      return state;
+	  }
+	}
+
+	function colorSchemeModule() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.DISPLAY_COLOR_SCHEME:
+	      state = [];
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = action.colors.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var _step$value = _slicedToArray(_step.value, 2);
+
+	          var index = _step$value[0];
+	          var value = _step$value[1];
+
+	          state.push({
+	            id: index,
+	            value: value
+	          });
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+
+	      return state;
+	    default:
+	      return state;
+	  }
+	}
+
+	function colorFields() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 
@@ -31735,46 +32118,9 @@
 	        return field;
 	      });
 	    case _actions.REQUEST_STYLES_SUCCESS:
+	      // initial populate or adding on new fields
 	      if (Object.keys(action.response).length > state.length) {
 	        var nextState = [];
-	        var _iteratorNormalCompletion = true;
-	        var _didIteratorError = false;
-	        var _iteratorError = undefined;
-
-	        try {
-	          for (var _iterator = Object.entries(action.response)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	            var _step$value = _slicedToArray(_step.value, 2);
-
-	            var key = _step$value[0];
-	            var value = _step$value[1];
-
-	            nextState.push({
-	              id: Object.keys(action.response).indexOf(key),
-	              name: key.replace(/_/g, '-'),
-	              preview: value,
-	              value: value
-	            });
-	          }
-	        } catch (err) {
-	          _didIteratorError = true;
-	          _iteratorError = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion && _iterator.return) {
-	              _iterator.return();
-	            }
-	          } finally {
-	            if (_didIteratorError) {
-	              throw _iteratorError;
-	            }
-	          }
-	        }
-
-	        return nextState;
-	      }
-	      return state.map(function (existingField) {
-	        var existingKey = existingField.name;
-	        var newValue = '';
 	        var _iteratorNormalCompletion2 = true;
 	        var _didIteratorError2 = false;
 	        var _iteratorError2 = undefined;
@@ -31786,10 +32132,12 @@
 	            var key = _step2$value[0];
 	            var value = _step2$value[1];
 
-	            if (key.replace(/_/g, '-') === existingKey) {
-	              newValue = value;
-	              break;
-	            }
+	            nextState.push({
+	              id: Object.keys(action.response).indexOf(key),
+	              name: key.replace(/_/g, '-'),
+	              preview: value,
+	              value: value
+	            });
 	          }
 	        } catch (err) {
 	          _didIteratorError2 = true;
@@ -31802,6 +32150,43 @@
 	          } finally {
 	            if (_didIteratorError2) {
 	              throw _iteratorError2;
+	            }
+	          }
+	        }
+
+	        return nextState;
+	      }
+	      // updating existing fields (only modify preview & value)
+	      return state.map(function (existingField) {
+	        var existingKey = existingField.name;
+	        var newValue = '';
+	        var _iteratorNormalCompletion3 = true;
+	        var _didIteratorError3 = false;
+	        var _iteratorError3 = undefined;
+
+	        try {
+	          for (var _iterator3 = Object.entries(action.response)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	            var _step3$value = _slicedToArray(_step3.value, 2);
+
+	            var key = _step3$value[0];
+	            var value = _step3$value[1];
+
+	            if (key.replace(/_/g, '-') === existingKey) {
+	              newValue = value;
+	              break;
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError3 = true;
+	          _iteratorError3 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	              _iterator3.return();
+	            }
+	          } finally {
+	            if (_didIteratorError3) {
+	              throw _iteratorError3;
 	            }
 	          }
 	        }
@@ -31822,20 +32207,42 @@
 	  }
 	}
 
+	function typographyFields() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [{ id: 0, name: "primary-font", value: "Helvetica" }, { id: 1, name: "secondary-font", value: "Arial" }] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.UPDATE_VALUE:
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            value: action.value
+	          });
+	        }
+	        return field;
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
 	var rootReducer = (0, _redux.combineReducers)({
 	  isLoading: isLoading,
 	  requestFailed: requestFailed,
 	  errorMessage: errorMessage,
-	  fields: fields
+	  colorScheme: colorScheme,
+	  colorSchemeModule: colorSchemeModule,
+	  colorFields: colorFields,
+	  typographyFields: typographyFields
 	});
 
 	exports.default = rootReducer;
 
 /***/ },
-/* 499 */
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -31845,40 +32252,82 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var SelectInput = function SelectInput(_ref) {
-	  var options = _ref.options;
-
+	var TypographySection = function TypographySection(_ref) {
+	  var fields = _ref.fields;
+	  var selectOptions = _ref.selectOptions;
+	  var updateField = _ref.updateField;
+	  var saveTheme = _ref.saveTheme;
 	  return _react2.default.createElement(
-	    "div",
-	    { className: "form-group col-md-4 col-sm-6 col-xs-12" },
+	    'div',
+	    { className: 'container' },
 	    _react2.default.createElement(
-	      "label",
-	      null,
-	      "Color Scheme"
-	    ),
-	    _react2.default.createElement(
-	      "select",
-	      { className: "form-control", id: "color-scheme" },
-	      options.map(function (option) {
-	        return _react2.default.createElement(
-	          "option",
-	          { key: options.findIndex(function (x) {
-	              return x === option;
-	            }) },
-	          option
-	        );
-	      })
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-8' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'style-type' },
+	              'Typography'
+	            ),
+	            _react2.default.createElement(
+	              'h6',
+	              { className: 'style-type-description' },
+	              'Font, line-height, and color for body text, headings, and more.'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row style-input-row' },
+	          fields.map(function (field) {
+	            return _react2.default.createElement(_selectInput2.default, {
+	              key: field.id,
+	              id: field.id,
+	              name: field.name,
+	              value: field.value,
+	              options: selectOptions,
+	              onInputChange: function onInputChange(id, value) {
+	                return updateField(id, value);
+	              }
+	            });
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-4 col-md-offset-8' },
+	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
+	          )
+	        )
+	      )
 	    )
 	  );
 	};
 
-	SelectInput.propTypes = {
-	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
+	TypographySection.propTypes = {
+	  fields: _react.PropTypes.array.isRequired,
+	  selectOptions: _react.PropTypes.array.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
 	};
 
-	exports.default = SelectInput;
+	exports.default = TypographySection;
 
 /***/ }
 /******/ ]);

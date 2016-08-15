@@ -1,21 +1,30 @@
 import React, { Component, PropTypes } from 'react';
-import InputField from './inputField';
+import TextInput from './textInput';
 import SelectInput from './selectInput';
-import { updatePreview } from '../actions';
+import ColorSchemeModule from './colorSchemeModule';
 
-const ColorMaster = ({ field, updateSwatch, selectOptions }) => {
+const ColorMaster = ({ field, colors, colorScheme, updateSwatch, chooseColorScheme, selectOptions }) => {
   return (
-    <form className="form-inline">
-      <InputField
+    <div>
+      <TextInput
         key={field.id}
         {...field}
         updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
+        colors={colors}
       />
 
       <SelectInput
+        id={field.preview}
+        name="Color Scheme"
+        value={colorScheme}
         options={selectOptions}
+        onInputChange={chooseColorScheme}
       />
-    </form>
+
+      <ColorSchemeModule
+        colors={colors}
+      />
+    </div>
   )
 }
 
@@ -26,7 +35,10 @@ ColorMaster.propTypes = {
     preview: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   }).isRequired,
+  colorScheme: PropTypes.string.isRequired,
+  colors: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
+  chooseColorScheme: PropTypes.func.isRequired,
   selectOptions: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired
 }
 

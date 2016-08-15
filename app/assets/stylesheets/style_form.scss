@@ -12,6 +12,29 @@
 
 .style-input-div {
 	margin-bottom: 10px;
+
+  #input-preview{
+    width: 40px;
+    border: 1px solid #ccc;
+  }
+
+  .dropdown-menu {
+    left: auto;
+    min-width: 0;
+    width: 50px;
+  }
+
+  .dropdown-item {
+    width: 10px;
+    margin: 2px 2px 0 5px;
+  }
+
+  .dropdown-toggle:after {
+    display: none;
+  }
+  .dropdown-toggle:before {
+    display: none;
+  }
 }
 
 #submit {
@@ -23,6 +46,6 @@
   }
 }
 
-#color-scheme {
+.select-input {
   height: 35px;
 }
