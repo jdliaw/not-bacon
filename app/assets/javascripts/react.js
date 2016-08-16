@@ -31868,15 +31868,15 @@
 
 	  return _react2.default.createElement(
 	    "div",
-	    { className: "btn-toolbar col-md-4 col-sm-6 col-xs-12", role: "toolbar" },
+	    { className: "btn-toolbar col-md-4 col-sm-6 col-xs-12", id: "color-scheme", role: "toolbar" },
 	    colors.map(function (color) {
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "btn-group", role: "group", key: color.id },
 	        _react2.default.createElement(
 	          "button",
-	          { type: "button", className: "btn btn-default", key: color.id, style: { background: color.value, color: color.value } },
-	          "$"
+	          { type: "button", className: "btn btn-default", key: color.id, title: color.value, style: { background: color.value, color: color.value } },
+	          "."
 	        )
 	      );
 	    })
@@ -31935,7 +31935,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var _props = this.props;
-	      var masterField = _props.masterField;
 	      var fields = _props.fields;
 	      var selectOptions = _props.selectOptions;
 	      var updateField = _props.updateField;
@@ -31964,7 +31963,7 @@
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    fields: state.typographyFields,
-	    selectOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana"]
+	    selectOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
 	  };
 	};
 

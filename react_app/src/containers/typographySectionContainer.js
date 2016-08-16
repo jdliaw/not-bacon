@@ -6,7 +6,7 @@ import TypographySection from '../components/typographySection'
 
 class TypographySectionContainer extends Component {
   render() {
-    const { masterField, fields, selectOptions, updateField, saveTheme } = this.props
+    const { fields, selectOptions, updateField, saveTheme } = this.props
     return (
       <TypographySection
         fields={fields}
@@ -29,7 +29,7 @@ TypographySectionContainer.propTypes = {
 const mapStateToProps = (state) => {
   return {
     fields: state.typographyFields,
-    selectOptions: ["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana"]
+    selectOptions: ["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
   }
 }
 
