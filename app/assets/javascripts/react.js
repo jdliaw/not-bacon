@@ -64,7 +64,7 @@
 
 	var _Hume = __webpack_require__(489);
 
-	var _reducers = __webpack_require__(502);
+	var _reducers = __webpack_require__(503);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -31812,6 +31812,8 @@
 	  var options = _ref.options;
 	  var onInputChange = _ref.onInputChange;
 
+	  var editableID = "editable-" + id;
+
 	  return _react2.default.createElement(
 	    "div",
 	    { className: "form-group col-md-4 col-sm-6 col-xs-12" },
@@ -31834,7 +31836,8 @@
 	          option
 	        );
 	      })
-	    )
+	    ),
+	    _react2.default.createElement("input", { className: "editable", id: editableID, type: "text", key: id, style: { display: "none" } })
 	  );
 	};
 
@@ -31910,7 +31913,7 @@
 
 	var _actions = __webpack_require__(492);
 
-	var _typographySection = __webpack_require__(503);
+	var _typographySection = __webpack_require__(502);
 
 	var _typographySection2 = _interopRequireDefault(_typographySection);
 
@@ -31970,6 +31973,13 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    updateField: function updateField(id, value) {
+	      var inputID = "#editable-" + id;
+	      if (value === 'Other') {
+	        $(inputID).val('Enter URL...');
+	        $(inputID).show();
+	      } else {
+	        $(inputID).hide();
+	      }
 	      dispatch((0, _actions.updateValue)(id, value));
 	    },
 	    saveTheme: function saveTheme() {
@@ -31983,6 +31993,97 @@
 
 /***/ },
 /* 502 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var TypographySection = function TypographySection(_ref) {
+	  var fields = _ref.fields;
+	  var selectOptions = _ref.selectOptions;
+	  var updateField = _ref.updateField;
+	  var saveTheme = _ref.saveTheme;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-10 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-8' },
+	            _react2.default.createElement(
+	              'h2',
+	              { className: 'style-type' },
+	              'Typography'
+	            ),
+	            _react2.default.createElement(
+	              'h6',
+	              { className: 'style-type-description' },
+	              'Font, line-height, and color for body text, headings, and more.'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row style-input-row' },
+	          fields.map(function (field) {
+	            return _react2.default.createElement(_selectInput2.default, {
+	              key: field.id,
+	              id: field.id,
+	              name: field.name,
+	              value: field.value,
+	              options: selectOptions,
+	              onInputChange: function onInputChange(id, value) {
+	                return updateField(id, value);
+	              }
+	            });
+	          })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-4 col-md-offset-8' },
+	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
+	          )
+	        )
+	      )
+	    )
+	  );
+	};
+
+	TypographySection.propTypes = {
+	  fields: _react.PropTypes.array.isRequired,
+	  selectOptions: _react.PropTypes.array.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = TypographySection;
+
+/***/ },
+/* 503 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32236,97 +32337,6 @@
 	});
 
 	exports.default = rootReducer;
-
-/***/ },
-/* 503 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _selectInput = __webpack_require__(499);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TypographySection = function TypographySection(_ref) {
-	  var fields = _ref.fields;
-	  var selectOptions = _ref.selectOptions;
-	  var updateField = _ref.updateField;
-	  var saveTheme = _ref.saveTheme;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-10 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-8' },
-	            _react2.default.createElement(
-	              'h2',
-	              { className: 'style-type' },
-	              'Typography'
-	            ),
-	            _react2.default.createElement(
-	              'h6',
-	              { className: 'style-type-description' },
-	              'Font, line-height, and color for body text, headings, and more.'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row style-input-row' },
-	          fields.map(function (field) {
-	            return _react2.default.createElement(_selectInput2.default, {
-	              key: field.id,
-	              id: field.id,
-	              name: field.name,
-	              value: field.value,
-	              options: selectOptions,
-	              onInputChange: function onInputChange(id, value) {
-	                return updateField(id, value);
-	              }
-	            });
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4 col-md-offset-8' },
-	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
-	          )
-	        )
-	      )
-	    )
-	  );
-	};
-
-	TypographySection.propTypes = {
-	  fields: _react.PropTypes.array.isRequired,
-	  selectOptions: _react.PropTypes.array.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = TypographySection;
 
 /***/ }
 /******/ ]);

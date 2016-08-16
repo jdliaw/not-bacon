@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { updatePreview } from '../actions';
 
 const TextInput = ({id, name, preview, value, updateSwatch, colors}) => {
-  var style = {
+  let style = {
     background: preview,
     color: preview
   };
 
-  var divID = name + "-div";
-  var inputID = name + "-input"
+  let divID = name + "-div";
+  let inputID = name + "-input"
 
   return (
     <div className="style-input-div col-md-4 col-sm-6 col-xs-12" id={divID}>

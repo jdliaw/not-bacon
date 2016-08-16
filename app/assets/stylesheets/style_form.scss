@@ -9,6 +9,13 @@
 .style-input-row {
   margin-bottom: 20px;
 
+  .editable {
+    top: -35px;
+    height: 35px;
+    width: 190px;
+    position: relative;
+  }
+
   #color-scheme {
     .btn-group {
       margin-bottom: 5px;

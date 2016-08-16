@@ -36,6 +36,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateField: (id, value) => {
+      let inputID = "#editable-" + id
+      if (value === 'Other') {
+        $(inputID).val('Enter URL...')
+        $(inputID).show()
+      }
+      else {
+        $(inputID).hide()
+      }
       dispatch(updateValue(id, value))
     },
     saveTheme: () => {

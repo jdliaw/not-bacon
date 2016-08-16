@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
 const SelectInput = ({ id, name, value, options, onInputChange }) => {
+  let editableID = "editable-" + id;
+
   return (
     <div className="form-group col-md-4 col-sm-6 col-xs-12">
       <label>{name}</label>
@@ -11,6 +13,7 @@ const SelectInput = ({ id, name, value, options, onInputChange }) => {
           )
         }
       </select>
+      <input className="editable" id={editableID} type="text" key={id} style={{display: "none"}} />
     </div>
   )
 }
