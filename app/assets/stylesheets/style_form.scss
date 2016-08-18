@@ -12,8 +12,11 @@
   .editable {
     top: -35px;
     height: 35px;
-    width: 190px;
+    width: 250px;
     position: relative;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
   }
 
   #color-scheme {

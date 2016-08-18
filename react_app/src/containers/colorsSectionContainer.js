@@ -45,7 +45,7 @@ const mapStateToProps = (state) => {
     fields: state.colorFields.slice(1, state.colorFields.length),
     colors: state.colorSchemeModule, //[{ id: 0, value: "rgb(135, 206, 235)" }, { id: 1, value: "rgb(135, 172, 235)" }, { id: 2, value: "rgb(135, 139, 235)" }, { id: 3, value: "rgb(164, 135, 235)" }],
     colorScheme: state.colorScheme,
-    selectOptions: ["Monochromatic", "Complementary", "Split-Complementary", "Double-Complementary", "Analogous", "Triadic"]
+    selectOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"]
   }
 }
 

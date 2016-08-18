@@ -35,7 +35,7 @@ const ColorsSection = ({ masterField, fields, selectOptions, colors, colorScheme
             )}
 		  		</div>
           <div className="row">
-            <div className="col-md-4 col-md-offset-8">
+            <div className="col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8">
               <input className="btn btn-primary" id="submit" type="submit" value="Save" onClick={saveTheme} />
             </div>
           </div>

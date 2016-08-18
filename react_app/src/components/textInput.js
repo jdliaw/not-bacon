@@ -37,7 +37,7 @@ const TextInput = ({id, name, preview, value, updateSwatch, colors}) => {
                 <button className="dropdown-item"
                         type="button"
                         key={color.id}
-                        style={{background: color.value, color: color.value}}
+                        style={{background: color.value, color: color.value, borderRadius: '0.25rem'}}
                         onClick={e => updateSwatch(id, name, color.value)}
                 >@</button>
               )

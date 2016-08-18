@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import Please, { HEX_to_HSV } from 'pleasejs'
+import tinycolor, { toHexString } from 'tinycolor2'
 
 // for updating preview of color styles
 export const UPDATE_PREVIEW = 'UPDATE_PREVIEW'
@@ -40,10 +40,27 @@ export function getColorScheme(masterColor, scheme) {
     // update value shown in the select field
     dispatch(chooseColorScheme(null, scheme))
     // generate colors using base color and specified scheme
-    var baseColor = HEX_to_HSV(masterColor)
-    var colors = Please.make_scheme(baseColor, {
-      scheme_type: scheme,
-      format: 'hex'
+    let colors = []
+    colors.length = 0
+    switch (scheme.toLowerCase()) {
+      case 'analogous':
+        colors = tinycolor(masterColor).analogous()
+        break;
+      case 'monochromatic':
+        colors = tinycolor(masterColor).monochromatic()
+        break;
+      case 'split-complementary':
+        colors = tinycolor(masterColor).splitcomplement()
+        break;
+      case 'triad':
+        colors = tinycolor(masterColor).triad()
+        break;
+      case 'tetrad':
+        colors = tinycolor(masterColor).tetrad()
+        break;
+    }
+    colors = colors.map((color) => {
+      return color.toHexString()
     })
     // update state with colors generated
     dispatch(displayColorScheme(colors))
