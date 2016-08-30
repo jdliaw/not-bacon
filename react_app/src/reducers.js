@@ -163,7 +163,7 @@ function componentFields(state = [], action) {
     case REQUEST_STYLES_SUCCESS:
       return state.map((component) => {
         for (let [key, value] of Object.entries(action.response)) {
-          if ((key.replace(/_/g, '-')) === component.name) {
+          if ((key.replace(/_/g, '-')) === component.className) {
             return Object.assign({}, component, {
               fields: component.fields.map((field) => {
                 let newValue = ''
@@ -216,6 +216,18 @@ function componentFields(state = [], action) {
         return component
       })
     case BEFORE_SAVE_THEME:
+      return state.map((component) => {
+        return Object.assign({}, component, {
+          fields: component.fields.map((field) => {
+            if (field.type === 'hex') {
+              return Object.assign({}, field, {
+                value: field.preview
+              })
+            }
+            return field
+          })
+        })
+      })
     default:
       return state
   }

@@ -93,7 +93,7 @@ export function saveTheme() {
     // update VALUE according to latest PREVIEW
     dispatch(beforeSaveTheme())
     // PATCH to update theme
-    dispatch(updateStyles(getState().fields))
+    dispatch(updateStyles(getState()))
     // GET to reload state
     dispatch(fetchStyles())
   }
@@ -174,18 +174,32 @@ function checkStatus(response) {
   }
 }
 
+// helper for buildJSON
+function buildComponentFields(fields) {
+  let obj = Object.assign({})
+  fields.map((field) => {
+    Object.assign(obj, {
+      [field.name]: field.value
+    })
+  })
+  return obj
+}
+
 // function to build our JSON object how we want
-function buildJSON(fields) {
+function buildJSON(state) {
   let jsonObj = Object.assign({})
 
-  fields.map((field) => {
+  Object.assign(jsonObj, {
+    "variables": buildComponentFields(state.variableFields)
+  })
+
+  state.componentFields.map((component) => {
     Object.assign(jsonObj, {
-      [field.name]: field.value
+      [component.className]: buildComponentFields(component.fields)
     })
   })
   return jsonObj
 }
-
 
 // async GET request
 export function fetchStyles() {
@@ -208,7 +222,7 @@ export function fetchStyles() {
 }
 
 // async PATCH request
-export function updateStyles(fields) {
+export function updateStyles(state) {
   console.log('updateStyles')
   return (dispatch, getState) => {
     dispatch(saveStyles())
@@ -225,7 +239,7 @@ export function updateStyles(fields) {
           "type": "styles",
           "id": "1",
           "attributes": {
-            "style-attributes": buildJSON(fields),
+            "style-attributes": buildJSON(state),
             "publisher-id": "1"
           }
         }
