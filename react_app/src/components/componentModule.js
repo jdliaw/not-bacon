@@ -3,30 +3,29 @@ import TextInput from './textInput'
 import SelectInput from './selectInput'
 
 const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) => {
-  function getFields(data) {
-    let fields = []
-    for (let [key, field] of Object.entries(data)) {
+  function getFields(fields) {
+    return fields.map((field) => {
       switch (field.type) {
         case 'hex':
-          fields.push(
+          return (
             <TextInput
-              key={'c'+ Object.keys(data).indexOf(key)}
-              id={Object.keys(data).indexOf(key)}
-              name={key}
-              preview={field.default}
-              value={field.default}
+              key={'c'+ field.id}
+              id={field.id}
+              name={field.name}
+              preview={field.preview}
+              value={field.value}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
               colors={[]}
             />
           )
           break;
         case 'selector':
-          fields.push(
+          return (
             <SelectInput
-              key={'c' + Object.keys(data).indexOf(key)}
-              id={Object.keys(data).indexOf(key)}
-              name={key}
-              value={field.default}
+              key={'c' + field.id}
+              id={field.id}
+              name={field.name}
+              value={field.value}
               options={["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]}
               onInputChange={(id, value) => updateField(id, value)}
             />
@@ -35,8 +34,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
         default:
           return null
       }
-    }
-    return fields
+    })
   }
 
 	return (
@@ -51,7 +49,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
 
 ComponentModule.propTypes = {
 	name: PropTypes.string.isRequired,
-	fields: PropTypes.object.isRequired,
+	fields: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired
 }

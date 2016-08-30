@@ -7,42 +7,6 @@ import TextInput from '../components/textInput'
 import SelectInput from '../components/selectInput'
 
 var data = require('!json!../config.json')
-console.log('components data', data)
-
-const parseFields = (data) => {
-	let fields = []
-	for (let [key, field] of Object.entries(data)) {
-		switch (field.type) {
-			case 'hex':
-				fields.push(
-					<TextInput
-						key={Object.keys(data).indexOf(key)}
-						id={Object.keys(data).indexOf(key)}
-						name={key}
-						preview={field.default}
-						value={field.default}
-						colors={[]}
-					/>
-				)
-				break;
-			case 'selector':
-				fields.push(
-					<SelectInput
-						key={Object.keys(data).indexOf(key)}
-						id={Object.keys(data).indexOf(key)}
-						name={key}
-						value={field.default}
-						options={["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]}
-						onInputChange={(id, value) => updateField(id, value)}
-					/>
-				)
-				break;
-			default:
-				return null
-		}
-	}
-	return fields
-}
 
 const getComponents = (data) => {
 	return data.map((component) => {
@@ -55,7 +19,7 @@ const getComponents = (data) => {
 
 const mapStateToProps = (state, dispatch) => {
 	return {
-		components: getComponents(data.components)
+		components: state.componentFields
 	}
 }
 

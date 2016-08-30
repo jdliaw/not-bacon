@@ -7,6 +7,8 @@ import ComponentsSectionContainer from '../containers/componentsSectionContainer
 export function StyleForm() {
   return (
   	<div>
+      <VariablesSectionContainer />
+      <ComponentsSectionContainer />
   	</div>
   )
 }

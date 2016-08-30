@@ -1,31 +1,21 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updatePreview, updateValue, getColorScheme, saveTheme, fetchStyles } from '../actions'
+import { updatePreview, updateValue, getColorScheme, saveTheme, fetchStyles, configureState } from '../actions'
 import VariablesSection from '../components/variablesSection'
 
 class VariablesSectionContainer extends Component {
   componentDidMount() {
+    var data = require('!json!../config.json')
+    this.props.dispatch(configureState(data))
     this.props.dispatch(fetchStyles())
-    // var data = require('!json!../config.json')
-    // console.log('data', data)
   }
 
   render() {
     const { masterField, hexFields, selectFields, colors, colorScheme, colorSchemeOptions, fontOptions, updateSwatch, updateField, chooseColorScheme, saveTheme } = this.props
     return (
       <VariablesSection
-        masterField={masterField}
-        hexFields={hexFields}
-        selectFields={selectFields}
-        colors={colors}
-        colorScheme={colorScheme}
-        colorSchemeOptions={colorSchemeOptions}
-        fontOptions={fontOptions}
-        updateSwatch={updateSwatch}
-        updateField={updateField}
-        chooseColorScheme={chooseColorScheme}
-        saveTheme={saveTheme}
+        {...this.props}
       />
     )
   }
@@ -47,9 +37,9 @@ VariablesSectionContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-    hexFields: state.colorFields.slice(state.colorFields.length-3, state.colorFields.length),
-    selectFields: state.typographyFields,
+    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+    hexFields: state.variableFields.slice(1, state.variableFields.length-2),
+    selectFields: state.variableFields.slice(state.variableFields.length-2, state.variableFields.length),
     colors: state.colorSchemeModule,
     colorScheme: state.colorScheme,
     colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],

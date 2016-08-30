@@ -149,6 +149,16 @@ export function saveStylesFailure(error) {
   }
 }
 
+// action creator to configure state
+export const CONFIGURE_STATE = 'CONFIGURE_STATE'
+
+export function configureState(data) {
+  return {
+    type: CONFIGURE_STATE,
+    data
+  }
+}
+
 // ASYNC ACTION CREATORS
 
 // first a function to check response status for errors
@@ -173,33 +183,6 @@ function buildJSON(fields) {
   })
   return jsonObj
 }
-
-
-// attempt to convert to saga
-// export function* fetchStyles() {
-//   try {
-//     const response = yield call('/api/v1/styles/1')
-//     yield call(checkStatus(response))
-//     yield put({ type: REQUEST_STYLES_SUCCESS, response })
-//   }
-//   catch (e) {
-//     yield put({ type: REQUEST_STYLES_FAILURE, error })
-//   }
-// }
-
-// // convert PATCH to saga
-// export function* updateStyles(fields) {
-//   try {
-//     yield call('/api/v1/styles/1', {
-
-//     })
-//     yield call(checkStatus)
-//     yield put({ type: SAVE_STYLES_SUCCESS })
-//   }
-//   catch (e) {
-//     yield put({ type: SAVE_STYLES_FAILURE, error })
-//   }
-// }
 
 
 // async GET request

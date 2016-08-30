@@ -29,7 +29,7 @@ const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorS
         hexFields.map(field =>
           <div className="col-md-4 col-sm-6 col-xs-12">
             <TextInput
-              key={'v' + field.id}
+              key={field.id}
               {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
               colors={colors}
@@ -43,7 +43,7 @@ const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorS
         selectFields.map(field =>
           <div className="col-md-4 col-sm-6 col-xs-12">
             <SelectInput
-              key={'v' + field.id}
+              key={field.id}
               {...field}
               options={fontOptions}
               onInputChange={(id, value) => updateField(id, value)}

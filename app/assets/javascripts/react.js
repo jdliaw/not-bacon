@@ -88,13 +88,13 @@
 	  return console.log(store.getState());
 	});
 
-	var data = __webpack_require__(508);
-	console.log('store config', data);
-	store.dispatch((0, _actions.configureState)(data));
-	console.log('post configure', store.getState());
-	store.dispatch((0, _actions.fetchStyles)()).then(function () {
-	  return console.log('post fetch', store.getState());
-	});
+	// var data = require('!json!./config.json')
+	// console.log('store config', data)
+	// store.dispatch(configureState(data))
+	// console.log('post configure', store.getState())
+	// store.dispatch(fetchStyles()).then(() =>
+	//   console.log('post fetch', store.getState())
+	// )
 
 	unsubscribe();
 
@@ -30620,7 +30620,12 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function StyleForm() {
-	  return _react2.default.createElement('div', null);
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(_variablesSectionContainer2.default, null),
+	    _react2.default.createElement(_componentsSectionContainer2.default, null)
+	  );
 	}
 
 /***/ },
@@ -33324,9 +33329,9 @@
 	  _createClass(VariablesSectionContainer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var data = __webpack_require__(508);
+	      this.props.dispatch((0, _actions.configureState)(data));
 	      this.props.dispatch((0, _actions.fetchStyles)());
-	      // var data = require('!json!../config.json')
-	      // console.log('data', data)
 	    }
 	  }, {
 	    key: 'render',
@@ -33344,19 +33349,7 @@
 	      var chooseColorScheme = _props.chooseColorScheme;
 	      var saveTheme = _props.saveTheme;
 
-	      return _react2.default.createElement(_variablesSection2.default, {
-	        masterField: masterField,
-	        hexFields: hexFields,
-	        selectFields: selectFields,
-	        colors: colors,
-	        colorScheme: colorScheme,
-	        colorSchemeOptions: colorSchemeOptions,
-	        fontOptions: fontOptions,
-	        updateSwatch: updateSwatch,
-	        updateField: updateField,
-	        chooseColorScheme: chooseColorScheme,
-	        saveTheme: saveTheme
-	      });
+	      return _react2.default.createElement(_variablesSection2.default, this.props);
 	    }
 	  }]);
 
@@ -33379,9 +33372,9 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-	    hexFields: state.colorFields.slice(state.colorFields.length - 3, state.colorFields.length),
-	    selectFields: state.typographyFields,
+	    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
+	    hexFields: state.variableFields.slice(1, state.variableFields.length - 2),
+	    selectFields: state.variableFields.slice(state.variableFields.length - 2, state.variableFields.length),
 	    colors: state.colorSchemeModule,
 	    colorScheme: state.colorScheme,
 	    colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],
@@ -33513,7 +33506,7 @@
 	          'div',
 	          { className: 'col-md-4 col-sm-6 col-xs-12' },
 	          _react2.default.createElement(_textInput2.default, _extends({
-	            key: 'v' + field.id
+	            key: field.id
 	          }, field, {
 	            updateSwatch: function updateSwatch(id, name, value) {
 	              return _updateSwatch(id, name, value);
@@ -33531,7 +33524,7 @@
 	          'div',
 	          { className: 'col-md-4 col-sm-6 col-xs-12' },
 	          _react2.default.createElement(_selectInput2.default, _extends({
-	            key: 'v' + field.id
+	            key: field.id
 	          }, field, {
 	            options: fontOptions,
 	            onInputChange: function onInputChange(id, value) {
@@ -33596,8 +33589,6 @@
 		value: true
 	});
 
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -33623,65 +33614,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var data = __webpack_require__(508);
-	console.log('components data', data);
-
-	var parseFields = function parseFields(data) {
-		var fields = [];
-		var _iteratorNormalCompletion = true;
-		var _didIteratorError = false;
-		var _iteratorError = undefined;
-
-		try {
-			for (var _iterator = Object.entries(data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-				var _step$value = _slicedToArray(_step.value, 2);
-
-				var key = _step$value[0];
-				var field = _step$value[1];
-
-				switch (field.type) {
-					case 'hex':
-						fields.push(_react2.default.createElement(_textInput2.default, {
-							key: Object.keys(data).indexOf(key),
-							id: Object.keys(data).indexOf(key),
-							name: key,
-							preview: field.default,
-							value: field.default,
-							colors: []
-						}));
-						break;
-					case 'selector':
-						fields.push(_react2.default.createElement(_selectInput2.default, {
-							key: Object.keys(data).indexOf(key),
-							id: Object.keys(data).indexOf(key),
-							name: key,
-							value: field.default,
-							options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
-							onInputChange: function onInputChange(id, value) {
-								return updateField(id, value);
-							}
-						}));
-						break;
-					default:
-						return null;
-				}
-			}
-		} catch (err) {
-			_didIteratorError = true;
-			_iteratorError = err;
-		} finally {
-			try {
-				if (!_iteratorNormalCompletion && _iterator.return) {
-					_iterator.return();
-				}
-			} finally {
-				if (_didIteratorError) {
-					throw _iteratorError;
-				}
-			}
-		}
-
-		return fields;
-	};
 
 	var getComponents = function getComponents(data) {
 		return data.map(function (component) {
@@ -33694,7 +33626,7 @@
 
 	var mapStateToProps = function mapStateToProps(state, dispatch) {
 		return {
-			components: getComponents(data.components)
+			components: state.componentFields
 		};
 	};
 
@@ -33813,8 +33745,6 @@
 	  value: true
 	});
 
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -33836,65 +33766,38 @@
 	  var updateField = _ref.updateField;
 	  var dispatch = _ref.dispatch;
 
-	  function getFields(data) {
-	    var fields = [];
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = Object.entries(data)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var _step$value = _slicedToArray(_step.value, 2);
-
-	        var key = _step$value[0];
-	        var field = _step$value[1];
-
-	        switch (field.type) {
-	          case 'hex':
-	            fields.push(_react2.default.createElement(_textInput2.default, {
-	              key: 'c' + Object.keys(data).indexOf(key),
-	              id: Object.keys(data).indexOf(key),
-	              name: key,
-	              preview: field.default,
-	              value: field.default,
-	              updateSwatch: function updateSwatch(id, name, value) {
-	                return _updateSwatch(id, name, value);
-	              },
-	              colors: []
-	            }));
-	            break;
-	          case 'selector':
-	            fields.push(_react2.default.createElement(_selectInput2.default, {
-	              key: 'c' + Object.keys(data).indexOf(key),
-	              id: Object.keys(data).indexOf(key),
-	              name: key,
-	              value: field.default,
-	              options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
-	              onInputChange: function onInputChange(id, value) {
-	                return updateField(id, value);
-	              }
-	            }));
-	            break;
-	          default:
-	            return null;
-	        }
+	  function getFields(fields) {
+	    return fields.map(function (field) {
+	      switch (field.type) {
+	        case 'hex':
+	          return _react2.default.createElement(_textInput2.default, {
+	            key: 'c' + field.id,
+	            id: field.id,
+	            name: field.name,
+	            preview: field.preview,
+	            value: field.value,
+	            updateSwatch: function updateSwatch(id, name, value) {
+	              return _updateSwatch(id, name, value);
+	            },
+	            colors: []
+	          });
+	          break;
+	        case 'selector':
+	          return _react2.default.createElement(_selectInput2.default, {
+	            key: 'c' + field.id,
+	            id: field.id,
+	            name: field.name,
+	            value: field.value,
+	            options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
+	            onInputChange: function onInputChange(id, value) {
+	              return updateField(id, value);
+	            }
+	          });
+	          break;
+	        default:
+	          return null;
 	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
-	    }
-
-	    return fields;
+	    });
 	  }
 
 	  return _react2.default.createElement(
@@ -33911,7 +33814,7 @@
 
 	ComponentModule.propTypes = {
 	  name: _react.PropTypes.string.isRequired,
-	  fields: _react.PropTypes.object.isRequired,
+	  fields: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
 	  updateField: _react.PropTypes.func.isRequired
 	};
@@ -34351,12 +34254,12 @@
 	      return action.data.components.map(function (component) {
 	        return Object.assign({}, {
 	          id: action.data.components.indexOf(component),
-	          name: component.id,
+	          name: component.name,
+	          className: component.id,
 	          fields: getFields(component)
 	        });
 	      });
 	    case _actions.REQUEST_STYLES_SUCCESS:
-	      // debugger
 	      return state.map(function (component) {
 	        var _iteratorNormalCompletion6 = true;
 	        var _didIteratorError6 = false;

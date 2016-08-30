@@ -18,7 +18,7 @@ render(
   document.getElementById('react-root')
 );
 
-import { updatePreview,  updateStyles, fetchStyles } from './actions'
+import { updatePreview,  updateStyles, fetchStyles, configureState } from './actions'
 console.log(store.getState())
 
 // Every time the state changes, log it
@@ -27,21 +27,12 @@ let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
 
-// console.log('hello, starting async actions')
-
+// var data = require('!json!./config.json')
+// console.log('store config', data)
+// store.dispatch(configureState(data))
+// console.log('post configure', store.getState())
 // store.dispatch(fetchStyles()).then(() =>
-//   // store.dispatch(updateStyles(store.getState().fields)).then(() =>
-//           console.log(store.getState())
-//         // )
-// )
-// .then(() => store.dispatch(updateStyles(store.getState().fields)).then(() =>
-//   console.log(store.getState())
-// ))
-
-// store.dispatch(updatePreview(0, 'hello'))
-
-// store.dispatch(fetchStyles()).then(() =>
-//   console.log(store.getState())
+//   console.log('post fetch', store.getState())
 // )
 
 unsubscribe();
