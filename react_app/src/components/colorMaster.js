@@ -6,20 +6,24 @@ import ColorSchemeModule from './colorSchemeModule';
 const ColorMaster = ({ field, colors, colorScheme, updateSwatch, chooseColorScheme, selectOptions }) => {
   return (
     <div>
-      <TextInput
-        key={field.id}
-        {...field}
-        updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
-        colors={colors}
-      />
+      <div className="col-md-4 col-sm-6 col-xs-12">
+        <TextInput
+          key={"cm" + field.id}
+          {...field}
+          updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
+          colors={colors}
+        />
+      </div>
 
-      <SelectInput
-        id={field.preview}
-        name="Color Scheme"
-        value={colorScheme}
-        options={selectOptions}
-        onInputChange={chooseColorScheme}
-      />
+      <div className="col-md-4 col-sm-6 col-xs-12">
+        <SelectInput
+          id={"cm" + field.preview}
+          name="Color Scheme"
+          value={colorScheme}
+          options={selectOptions}
+          onInputChange={chooseColorScheme}
+        />
+      </div>
 
       <ColorSchemeModule
         colors={colors}

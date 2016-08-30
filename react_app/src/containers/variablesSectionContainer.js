@@ -1,24 +1,29 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { updatePreview, getColorScheme, saveTheme, fetchStyles } from '../actions'
-import ColorsSection from '../components/colorsSection'
+import { bindActionCreators } from 'redux'
+import { updatePreview, updateValue, getColorScheme, saveTheme, fetchStyles } from '../actions'
+import VariablesSection from '../components/variablesSection'
 
-class ColorsSectionContainer extends Component {
+class VariablesSectionContainer extends Component {
   componentDidMount() {
-    // fetch styles to load
     this.props.dispatch(fetchStyles())
+    // var data = require('!json!../config.json')
+    // console.log('data', data)
   }
 
   render() {
-    const { masterField, fields, colors, colorScheme, selectOptions, updateSwatch, chooseColorScheme, saveTheme } = this.props
+    const { masterField, hexFields, selectFields, colors, colorScheme, colorSchemeOptions, fontOptions, updateSwatch, updateField, chooseColorScheme, saveTheme } = this.props
     return (
-      <ColorsSection
+      <VariablesSection
         masterField={masterField}
-        fields={fields}
+        hexFields={hexFields}
+        selectFields={selectFields}
         colors={colors}
         colorScheme={colorScheme}
-        selectOptions={selectOptions}
+        colorSchemeOptions={colorSchemeOptions}
+        fontOptions={fontOptions}
         updateSwatch={updateSwatch}
+        updateField={updateField}
         chooseColorScheme={chooseColorScheme}
         saveTheme={saveTheme}
       />
@@ -26,25 +31,29 @@ class ColorsSectionContainer extends Component {
   }
 }
 
-ColorsSectionContainer.propTypes = {
+VariablesSectionContainer.propTypes = {
   masterField: PropTypes.object.isRequired,
-  fields: PropTypes.array.isRequired,
+  hexFields: PropTypes.array.isRequired,
+  selectFields: PropTypes.array.isRequired,
   colors: PropTypes.array.isRequired,
   colorScheme: PropTypes.string.isRequired,
-  selectOptions: PropTypes.array.isRequired,
+  colorSchemeOptions: PropTypes.array.isRequired,
+  fontOptions: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
+  updateField: PropTypes.func.isRequired,
   chooseColorScheme: PropTypes.func.isRequired,
-  saveTheme: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired
+  saveTheme: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
   return {
     masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-    fields: state.colorFields.slice(1, state.colorFields.length),
-    colors: state.colorSchemeModule, //[{ id: 0, value: "rgb(135, 206, 235)" }, { id: 1, value: "rgb(135, 172, 235)" }, { id: 2, value: "rgb(135, 139, 235)" }, { id: 3, value: "rgb(164, 135, 235)" }],
+    hexFields: state.colorFields.slice(state.colorFields.length-3, state.colorFields.length),
+    selectFields: state.typographyFields,
+    colors: state.colorSchemeModule,
     colorScheme: state.colorScheme,
-    selectOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"]
+    colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],
+    fontOptions: ["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
   }
 }
 
@@ -64,6 +73,17 @@ const mapDispatchToProps = (dispatch) => {
         $('#' + name + '-div').addClass('has-danger')
       }
     },
+    updateField: (id, value) => {
+      let inputID = "#editable-" + id
+      if (value === 'Other') {
+        $(inputID).val('Enter URL...')
+        $(inputID).show()
+      }
+      else {
+        $(inputID).hide()
+      }
+      dispatch(updateValue(id, value))
+    },
     chooseColorScheme: (masterColor, scheme) => {
       dispatch(getColorScheme(masterColor, scheme))
     },
@@ -74,4 +94,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ColorsSectionContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(VariablesSectionContainer)

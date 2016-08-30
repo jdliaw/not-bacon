@@ -12,12 +12,19 @@ module.exports = {
     path: BUILD_DIR,
     filename: 'react.js'
   },
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.json']
+  },
   module: {
     loaders: [
       {
         test: /\.jsx?/,
         include: APP_DIR,
         loader: 'babel'
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
   }

@@ -1,0 +1,74 @@
+{
+	"variables": [
+		{
+			"name": "brand-primary",
+			"type": "hex",
+			"default": "#000"
+		},
+		{
+			"name": "brand-success",
+			"type": "hex",
+			"default": "#000"
+		},
+		{
+			"name": "brand-warning",
+			"type": "hex",
+			"default": "#000"
+		},
+		{
+			"name": "brand-danger",
+			"type": "hex",
+			"default": "#000"
+		},
+		{
+			"name": "primary-font",
+			"type": "selector",
+			"default": "Arial"
+		},
+		{
+			"name": "secondary-font",
+			"type": "selector",
+			"default": "Arial"
+		}
+	],
+	"components": [
+		{
+			"name": "Hello Bar",
+			"id": "hello-bar",
+			"styles": {
+				"font": {
+					"type": "selector",
+					"default": "Arial"
+				},
+				"color": {
+					"type": "hex",
+					"default": "#373a3c"
+				}
+			}
+		},
+		{
+			"name": "Navbar",
+			"id": "navbar",
+			"styles": {
+				"background-color": {
+					"type": "hex",
+					"default": "#000"
+				},
+				"color": {
+					"type": "hex",
+					"default": "#ccc"
+				}
+			}
+		},
+		{
+			"name": "Third One",
+			"id": "third-one",
+			"styles": {
+				"color": {
+					"type": "hex",
+					"default": "#55595c"
+				}
+			}
+		}
+	]
+}

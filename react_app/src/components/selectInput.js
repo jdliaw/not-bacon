@@ -4,7 +4,7 @@ const SelectInput = ({ id, name, value, options, onInputChange }) => {
   let editableID = "editable-" + id;
 
   return (
-    <div className="form-group col-md-4 col-sm-6 col-xs-12">
+    <div className="form-group">
       <label>{name}</label>
       <select className="form-control select-input" onChange={e => onInputChange(id, e.target.value)} value={value}>
         {

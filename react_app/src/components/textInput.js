@@ -11,7 +11,7 @@ const TextInput = ({id, name, preview, value, updateSwatch, colors}) => {
   let inputID = name + "-input"
 
   return (
-    <div className="style-input-div col-md-4 col-sm-6 col-xs-12" id={divID}>
+    <div className="style-input-div" id={divID}>
       <label id={name}>
         {name}
       </label>
