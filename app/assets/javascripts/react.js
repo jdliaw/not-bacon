@@ -32949,7 +32949,7 @@
 	      'div',
 	      { className: 'col-md-4 col-sm-6 col-xs-12' },
 	      _react2.default.createElement(_textInput2.default, _extends({
-	        key: "cm" + field.id
+	        key: field.id
 	      }, field, {
 	        updateSwatch: function updateSwatch(id, name, value) {
 	          return _updateSwatch(id, name, value);
@@ -32961,7 +32961,7 @@
 	      'div',
 	      { className: 'col-md-4 col-sm-6 col-xs-12' },
 	      _react2.default.createElement(_selectInput2.default, {
-	        id: "cm" + field.preview,
+	        id: field.preview,
 	        name: 'Color Scheme',
 	        value: colorScheme,
 	        options: selectOptions,
@@ -33745,6 +33745,8 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -33770,29 +33772,24 @@
 	    return fields.map(function (field) {
 	      switch (field.type) {
 	        case 'hex':
-	          return _react2.default.createElement(_textInput2.default, {
-	            key: 'c' + field.id,
-	            id: field.id,
-	            name: field.name,
-	            preview: field.preview,
-	            value: field.value,
+	          return _react2.default.createElement(_textInput2.default, _extends({
+	            key: 'c' + field.id
+	          }, field, {
 	            updateSwatch: function updateSwatch(id, name, value) {
 	              return _updateSwatch(id, name, value);
 	            },
 	            colors: []
-	          });
+	          }));
 	          break;
 	        case 'selector':
-	          return _react2.default.createElement(_selectInput2.default, {
-	            key: 'c' + field.id,
-	            id: field.id,
-	            name: field.name,
-	            value: field.value,
+	          return _react2.default.createElement(_selectInput2.default, _extends({
+	            key: 'c' + field.id
+	          }, field, {
 	            options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
 	            onInputChange: function onInputChange(id, value) {
 	              return updateField(id, value);
 	            }
-	          });
+	          }));
 	          break;
 	        default:
 	          return null;
@@ -34021,129 +34018,6 @@
 	  }
 	}
 
-	function colorFields() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.UPDATE_PREVIEW:
-	      return state.map(function (field) {
-	        if (field.id === action.id) {
-	          return Object.assign({}, field, {
-	            preview: action.preview
-	          });
-	        }
-	        return field;
-	      });
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	      // initial populate or adding on new fields
-	      if (Object.keys(action.response).length > state.length) {
-	        var nextState = [];
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-
-	        try {
-	          for (var _iterator2 = Object.entries(action.response)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var _step2$value = _slicedToArray(_step2.value, 2);
-
-	            var key = _step2$value[0];
-	            var value = _step2$value[1];
-
-	            nextState.push({
-	              id: Object.keys(action.response).indexOf(key),
-	              name: key.replace(/_/g, '-'),
-	              preview: value,
-	              value: value
-	            });
-	          }
-	        } catch (err) {
-	          _didIteratorError2 = true;
-	          _iteratorError2 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	              _iterator2.return();
-	            }
-	          } finally {
-	            if (_didIteratorError2) {
-	              throw _iteratorError2;
-	            }
-	          }
-	        }
-
-	        return nextState;
-	      }
-	      // updating existing fields (only modify preview & value)
-	      return state.map(function (existingField) {
-	        var existingKey = existingField.name;
-	        var newValue = '';
-	        var _iteratorNormalCompletion3 = true;
-	        var _didIteratorError3 = false;
-	        var _iteratorError3 = undefined;
-
-	        try {
-	          for (var _iterator3 = Object.entries(action.response)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	            var _step3$value = _slicedToArray(_step3.value, 2);
-
-	            var key = _step3$value[0];
-	            var value = _step3$value[1];
-
-	            if (key.replace(/_/g, '-') === existingKey) {
-	              newValue = value;
-	              break;
-	            }
-	          }
-	        } catch (err) {
-	          _didIteratorError3 = true;
-	          _iteratorError3 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	              _iterator3.return();
-	            }
-	          } finally {
-	            if (_didIteratorError3) {
-	              throw _iteratorError3;
-	            }
-	          }
-	        }
-
-	        return Object.assign({}, existingField, {
-	          preview: newValue,
-	          value: newValue
-	        });
-	      });
-	    case _actions.BEFORE_SAVE_THEME:
-	      return state.map(function (field) {
-	        return Object.assign({}, field, {
-	          value: field.preview
-	        });
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
-	function typographyFields() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [{ id: 0, name: "primary-font", value: "Helvetica" }, { id: 1, name: "secondary-font", value: "Arial" }] : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.UPDATE_VALUE:
-	      return state.map(function (field) {
-	        if (field.id === action.id) {
-	          return Object.assign({}, field, {
-	            value: action.value
-	          });
-	        }
-	        return field;
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
 	function variableFields() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
@@ -34162,16 +34036,16 @@
 	    case _actions.REQUEST_STYLES_SUCCESS:
 	      return state.map(function (variable) {
 	        var newValue = '';
-	        var _iteratorNormalCompletion4 = true;
-	        var _didIteratorError4 = false;
-	        var _iteratorError4 = undefined;
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
 
 	        try {
-	          for (var _iterator4 = Object.entries(action.response.variables)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	            var _step4$value = _slicedToArray(_step4.value, 2);
+	          for (var _iterator2 = Object.entries(action.response.variables)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var _step2$value = _slicedToArray(_step2.value, 2);
 
-	            var key = _step4$value[0];
-	            var value = _step4$value[1];
+	            var key = _step2$value[0];
+	            var value = _step2$value[1];
 
 	            if (key.replace(/_/g, '-') === variable.name) {
 	              newValue = value;
@@ -34179,16 +34053,16 @@
 	            }
 	          }
 	        } catch (err) {
-	          _didIteratorError4 = true;
-	          _iteratorError4 = err;
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
 	        } finally {
 	          try {
-	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	              _iterator4.return();
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	              _iterator2.return();
 	            }
 	          } finally {
-	            if (_didIteratorError4) {
-	              throw _iteratorError4;
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
 	            }
 	          }
 	        }
@@ -34207,16 +34081,16 @@
 	  // debugger
 	  var fieldsArray = [];
 	  var index = 0;
-	  var _iteratorNormalCompletion5 = true;
-	  var _didIteratorError5 = false;
-	  var _iteratorError5 = undefined;
+	  var _iteratorNormalCompletion3 = true;
+	  var _didIteratorError3 = false;
+	  var _iteratorError3 = undefined;
 
 	  try {
-	    for (var _iterator5 = Object.entries(component.styles)[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	      var _step5$value = _slicedToArray(_step5.value, 2);
+	    for (var _iterator3 = Object.entries(component.styles)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	      var _step3$value = _slicedToArray(_step3.value, 2);
 
-	      var key = _step5$value[0];
-	      var value = _step5$value[1];
+	      var key = _step3$value[0];
+	      var value = _step3$value[1];
 
 	      fieldsArray.push(Object.assign({}, {
 	        id: index,
@@ -34228,16 +34102,16 @@
 	      index++;
 	    }
 	  } catch (err) {
-	    _didIteratorError5 = true;
-	    _iteratorError5 = err;
+	    _didIteratorError3 = true;
+	    _iteratorError3 = err;
 	  } finally {
 	    try {
-	      if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	        _iterator5.return();
+	      if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	        _iterator3.return();
 	      }
 	    } finally {
-	      if (_didIteratorError5) {
-	        throw _iteratorError5;
+	      if (_didIteratorError3) {
+	        throw _iteratorError3;
 	      }
 	    }
 	  }
@@ -34261,31 +34135,31 @@
 	      });
 	    case _actions.REQUEST_STYLES_SUCCESS:
 	      return state.map(function (component) {
-	        var _iteratorNormalCompletion6 = true;
-	        var _didIteratorError6 = false;
-	        var _iteratorError6 = undefined;
+	        var _iteratorNormalCompletion4 = true;
+	        var _didIteratorError4 = false;
+	        var _iteratorError4 = undefined;
 
 	        try {
-	          for (var _iterator6 = Object.entries(action.response)[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-	            var _step6$value = _slicedToArray(_step6.value, 2);
+	          for (var _iterator4 = Object.entries(action.response)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	            var _step4$value = _slicedToArray(_step4.value, 2);
 
-	            var key = _step6$value[0];
-	            var value = _step6$value[1];
+	            var key = _step4$value[0];
+	            var value = _step4$value[1];
 
 	            if (key.replace(/_/g, '-') === component.name) {
 	              return Object.assign({}, component, {
 	                fields: component.fields.map(function (field) {
 	                  var newValue = '';
-	                  var _iteratorNormalCompletion7 = true;
-	                  var _didIteratorError7 = false;
-	                  var _iteratorError7 = undefined;
+	                  var _iteratorNormalCompletion5 = true;
+	                  var _didIteratorError5 = false;
+	                  var _iteratorError5 = undefined;
 
 	                  try {
-	                    for (var _iterator7 = Object.entries(action.response[key])[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-	                      var _step7$value = _slicedToArray(_step7.value, 2);
+	                    for (var _iterator5 = Object.entries(action.response[key])[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                      var _step5$value = _slicedToArray(_step5.value, 2);
 
-	                      var _key = _step7$value[0];
-	                      var _value = _step7$value[1];
+	                      var _key = _step5$value[0];
+	                      var _value = _step5$value[1];
 
 	                      if (_key.replace(/_/g, '-') === field.name) {
 	                        newValue = _value;
@@ -34293,16 +34167,16 @@
 	                      }
 	                    }
 	                  } catch (err) {
-	                    _didIteratorError7 = true;
-	                    _iteratorError7 = err;
+	                    _didIteratorError5 = true;
+	                    _iteratorError5 = err;
 	                  } finally {
 	                    try {
-	                      if (!_iteratorNormalCompletion7 && _iterator7.return) {
-	                        _iterator7.return();
+	                      if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
 	                      }
 	                    } finally {
-	                      if (_didIteratorError7) {
-	                        throw _iteratorError7;
+	                      if (_didIteratorError5) {
+	                        throw _iteratorError5;
 	                      }
 	                    }
 	                  }
@@ -34316,16 +34190,16 @@
 	            }
 	          }
 	        } catch (err) {
-	          _didIteratorError6 = true;
-	          _iteratorError6 = err;
+	          _didIteratorError4 = true;
+	          _iteratorError4 = err;
 	        } finally {
 	          try {
-	            if (!_iteratorNormalCompletion6 && _iterator6.return) {
-	              _iterator6.return();
+	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	              _iterator4.return();
 	            }
 	          } finally {
-	            if (_didIteratorError6) {
-	              throw _iteratorError6;
+	            if (_didIteratorError4) {
+	              throw _iteratorError4;
 	            }
 	          }
 	        }

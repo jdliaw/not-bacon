@@ -10,10 +10,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
           return (
             <TextInput
               key={'c'+ field.id}
-              id={field.id}
-              name={field.name}
-              preview={field.preview}
-              value={field.value}
+              {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
               colors={[]}
             />
@@ -23,9 +20,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
           return (
             <SelectInput
               key={'c' + field.id}
-              id={field.id}
-              name={field.name}
-              value={field.value}
+              {...field}
               options={["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]}
               onInputChange={(id, value) => updateField(id, value)}
             />
