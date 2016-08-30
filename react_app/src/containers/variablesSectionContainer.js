@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch) => {
       if (isHexColor && preview != "") {
         $('#' + name + '-input').removeClass('form-control-danger')
         $('#' + name + '-div').removeClass('has-danger')
-        dispatch(updatePreview(id, preview))
+        dispatch(updatePreview(null, id, preview))
       }
       // add warnings if not valid
       else if (!isHexColor && preview != "") {
@@ -68,11 +68,12 @@ const mapDispatchToProps = (dispatch) => {
       if (value === 'Other') {
         $(inputID).val('Enter URL...')
         $(inputID).show()
+        $(inputID).parent().css('margin-bottom', '-20px')
       }
       else {
         $(inputID).hide()
       }
-      dispatch(updateValue(id, value))
+      dispatch(updateValue(null, id, value))
     },
     chooseColorScheme: (masterColor, scheme) => {
       dispatch(getColorScheme(masterColor, scheme))

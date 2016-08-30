@@ -77,7 +77,7 @@ function variableFields(state = [], action) {
     case CONFIGURE_STATE:
       return action.data.variables.map((variable) => {
         return Object.assign({}, {
-          id: action.data.variables.indexOf(variable),
+          id: 'v' + action.data.variables.indexOf(variable),
           name: variable.name,
           type: variable.type, // do we need dis
           preview: variable.default,
@@ -98,18 +98,47 @@ function variableFields(state = [], action) {
           value: newValue
         })
       })
+      case UPDATE_PREVIEW:
+        if (action.componentId !== null) {
+          return state
+        }
+        return state.map((field) => {
+          if (field.id === action.id) {
+            return Object.assign({}, field, {
+              preview: action.preview
+            })
+          }
+          return field
+        })
+      case UPDATE_VALUE:
+        if (action.componentId !== null) {
+          return state
+        }
+        return state.map((field) => {
+          if (field.id === action.id) {
+            return Object.assign({}, field, {
+              value: action.value
+            })
+          }
+          return field
+        })
+      case BEFORE_SAVE_THEME:
+        return state.map((field) => {
+          return Object.assign({}, field, {
+            value: field.preview
+          })
+        })
     default:
       return state
   }
 }
 
-function getFields(component) {
-  // debugger
+function getFields(component, data) {
   let fieldsArray = []
   let index = 0
   for (let [key, value] of Object.entries(component.styles)) {
     fieldsArray.push(Object.assign({}, {
-      id: index,
+      id: 'c' + data.components.indexOf(component) + 'f' + index,
       name: key,
       type: value.type,
       preview: value.default,
@@ -125,10 +154,10 @@ function componentFields(state = [], action) {
     case CONFIGURE_STATE:
       return action.data.components.map((component) => {
         return Object.assign({}, {
-          id: action.data.components.indexOf(component),
+          id: 'c' + action.data.components.indexOf(component),
           name: component.name,
           className: component.id,
-          fields: getFields(component)
+          fields: getFields(component, action.data)
         })
       })
     case REQUEST_STYLES_SUCCESS:
@@ -154,6 +183,39 @@ function componentFields(state = [], action) {
         }
         return component
       })
+    case UPDATE_PREVIEW:
+      return state.map((component) => {
+        if (component.className === action.componentId) {
+          return Object.assign({}, component, {
+            fields: component.fields.map((field) => {
+              if (field.id === action.id) {
+                return Object.assign({}, field, {
+                  preview: action.preview
+                })
+              }
+              return field
+            })
+          })
+        }
+        return component
+      })
+    case UPDATE_VALUE:
+      return state.map((component) => {
+        if (component.className === action.componentId) {
+          return Object.assign({}, component, {
+            fields: component.fields.map((field) => {
+              if (field.id === action.id) {
+                return Object.assign({}, field, {
+                  value: action.value
+                })
+              }
+              return field
+            })
+          })
+        }
+        return component
+      })
+    case BEFORE_SAVE_THEME:
     default:
       return state
   }

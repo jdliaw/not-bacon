@@ -17,8 +17,8 @@ const ComponentsSection = ({ components, updateSwatch, updateField, saveTheme, d
             key={index}
   					name={component.name}
   					fields={component.fields}
-            updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
-            updateField={(id, value) => updateField(id, value)}
+            updateSwatch={(id, name, value) => updateSwatch(id, name, value, component.className)}
+            updateField={(id, value) => updateField(id, value, component.className)}
             dispatch={dispatch}
   				/>
         )

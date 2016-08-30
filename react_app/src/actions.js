@@ -8,18 +8,20 @@ export const CHOOSE_COLOR_SCHEME = 'CHOOSE_COLOR_SCHEME'
 export const DISPLAY_COLOR_SCHEME = 'DISPLAY_COLOR_SCHEME'
 
 // action creator for UPDATE_PREVIEW
-export const updatePreview = (id, preview) => {
+export const updatePreview = (componentId, id, preview) => {
   return {
     type: UPDATE_PREVIEW,
+    componentId,
     id,
     preview
   }
 }
 
 // action creator for UPDATE_VALUE
-export const updateValue = (id, value) => {
+export const updateValue = (componentId, id, value) => {
   return {
     type: UPDATE_VALUE,
+    componentId,
     id,
     value
   }

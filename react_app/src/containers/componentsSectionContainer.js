@@ -25,11 +25,31 @@ const mapStateToProps = (state, dispatch) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		updateSwatch: (id, name, preview) => {
-			dispatch(updatePreview(id, preview))
+		updateSwatch: (id, name, preview, componentId) => {
+			// validate hex colors (reset warnings if fine)
+      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview)
+      if (isHexColor && preview != "") {
+        $('#' + name + '-input').removeClass('form-control-danger')
+        $('#' + name + '-div').removeClass('has-danger')
+        dispatch(updatePreview(componentId, id, preview))
+      }
+      // add warnings if not valid
+      else if (!isHexColor && preview != "") {
+        $('#' + name + '-input').addClass('form-control-danger')
+        $('#' + name + '-div').addClass('has-danger')
+      }
 		},
-		updateField: (id, value) => {
-			dispatch(updateValue(id, value))
+		updateField: (id, value, componentId) => {
+			let inputID = "#editable-" + id
+      if (value === 'Other') {
+        $(inputID).val('Enter URL...')
+        $(inputID).show()
+        $(inputID).parent().css('margin-bottom', '-20px')
+      }
+      else {
+        $(inputID).hide()
+      }
+      dispatch(updateValue(componentId, id, value))
 		},
 		saveTheme: () => {
 			dispatch(saveTheme())

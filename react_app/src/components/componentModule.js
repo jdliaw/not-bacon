@@ -9,7 +9,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
         case 'hex':
           return (
             <TextInput
-              key={'c'+ field.id}
+              key={field.id}
               {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
               colors={[]}
@@ -19,7 +19,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
         case 'selector':
           return (
             <SelectInput
-              key={'c' + field.id}
+              key={field.id}
               {...field}
               options={["Arial","Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]}
               onInputChange={(id, value) => updateField(id, value)}

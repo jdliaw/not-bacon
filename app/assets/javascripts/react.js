@@ -30795,18 +30795,20 @@
 	var DISPLAY_COLOR_SCHEME = exports.DISPLAY_COLOR_SCHEME = 'DISPLAY_COLOR_SCHEME';
 
 	// action creator for UPDATE_PREVIEW
-	var updatePreview = exports.updatePreview = function updatePreview(id, preview) {
+	var updatePreview = exports.updatePreview = function updatePreview(componentId, id, preview) {
 	  return {
 	    type: UPDATE_PREVIEW,
+	    componentId: componentId,
 	    id: id,
 	    preview: preview
 	  };
 	};
 
 	// action creator for UPDATE_VALUE
-	var updateValue = exports.updateValue = function updateValue(id, value) {
+	var updateValue = exports.updateValue = function updateValue(componentId, id, value) {
 	  return {
 	    type: UPDATE_VALUE,
+	    componentId: componentId,
 	    id: id,
 	    value: value
 	  };
@@ -33390,7 +33392,7 @@
 	      if (isHexColor && preview != "") {
 	        $('#' + name + '-input').removeClass('form-control-danger');
 	        $('#' + name + '-div').removeClass('has-danger');
-	        dispatch((0, _actions.updatePreview)(id, preview));
+	        dispatch((0, _actions.updatePreview)(null, id, preview));
 	      }
 	      // add warnings if not valid
 	      else if (!isHexColor && preview != "") {
@@ -33403,10 +33405,11 @@
 	      if (value === 'Other') {
 	        $(inputID).val('Enter URL...');
 	        $(inputID).show();
+	        $(inputID).parent().css('margin-bottom', '-20px');
 	      } else {
 	        $(inputID).hide();
 	      }
-	      dispatch((0, _actions.updateValue)(id, value));
+	      dispatch((0, _actions.updateValue)(null, id, value));
 	    },
 	    chooseColorScheme: function chooseColorScheme(masterColor, scheme) {
 	      dispatch((0, _actions.getColorScheme)(masterColor, scheme));
@@ -33632,11 +33635,30 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			updateSwatch: function updateSwatch(id, name, preview) {
-				dispatch((0, _actions.updatePreview)(id, preview));
+			updateSwatch: function updateSwatch(id, name, preview, componentId) {
+				// validate hex colors (reset warnings if fine)
+				var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
+				if (isHexColor && preview != "") {
+					$('#' + name + '-input').removeClass('form-control-danger');
+					$('#' + name + '-div').removeClass('has-danger');
+					dispatch((0, _actions.updatePreview)(componentId, id, preview));
+				}
+				// add warnings if not valid
+				else if (!isHexColor && preview != "") {
+						$('#' + name + '-input').addClass('form-control-danger');
+						$('#' + name + '-div').addClass('has-danger');
+					}
 			},
-			updateField: function updateField(id, value) {
-				dispatch((0, _actions.updateValue)(id, value));
+			updateField: function updateField(id, value, componentId) {
+				var inputID = "#editable-" + id;
+				if (value === 'Other') {
+					$(inputID).val('Enter URL...');
+					$(inputID).show();
+					$(inputID).parent().css('margin-bottom', '-20px');
+				} else {
+					$(inputID).hide();
+				}
+				dispatch((0, _actions.updateValue)(componentId, id, value));
 			},
 			saveTheme: function saveTheme() {
 				dispatch((0, _actions.saveTheme)());
@@ -33705,10 +33727,10 @@
 	          name: component.name,
 	          fields: component.fields,
 	          updateSwatch: function updateSwatch(id, name, value) {
-	            return _updateSwatch(id, name, value);
+	            return _updateSwatch(id, name, value, component.className);
 	          },
 	          updateField: function updateField(id, value) {
-	            return _updateField(id, value);
+	            return _updateField(id, value, component.className);
 	          },
 	          dispatch: dispatch
 	        });
@@ -33773,7 +33795,7 @@
 	      switch (field.type) {
 	        case 'hex':
 	          return _react2.default.createElement(_textInput2.default, _extends({
-	            key: 'c' + field.id
+	            key: field.id
 	          }, field, {
 	            updateSwatch: function updateSwatch(id, name, value) {
 	              return _updateSwatch(id, name, value);
@@ -33783,7 +33805,7 @@
 	          break;
 	        case 'selector':
 	          return _react2.default.createElement(_selectInput2.default, _extends({
-	            key: 'c' + field.id
+	            key: field.id
 	          }, field, {
 	            options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
 	            onInputChange: function onInputChange(id, value) {
@@ -34026,7 +34048,7 @@
 	    case _actions.CONFIGURE_STATE:
 	      return action.data.variables.map(function (variable) {
 	        return Object.assign({}, {
-	          id: action.data.variables.indexOf(variable),
+	          id: 'v' + action.data.variables.indexOf(variable),
 	          name: variable.name,
 	          type: variable.type, // do we need dis
 	          preview: variable.default,
@@ -34072,13 +34094,42 @@
 	          value: newValue
 	        });
 	      });
+	    case _actions.UPDATE_PREVIEW:
+	      if (action.componentId !== null) {
+	        return state;
+	      }
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            preview: action.preview
+	          });
+	        }
+	        return field;
+	      });
+	    case _actions.UPDATE_VALUE:
+	      if (action.componentId !== null) {
+	        return state;
+	      }
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            value: action.value
+	          });
+	        }
+	        return field;
+	      });
+	    case _actions.BEFORE_SAVE_THEME:
+	      return state.map(function (field) {
+	        return Object.assign({}, field, {
+	          value: field.preview
+	        });
+	      });
 	    default:
 	      return state;
 	  }
 	}
 
-	function getFields(component) {
-	  // debugger
+	function getFields(component, data) {
 	  var fieldsArray = [];
 	  var index = 0;
 	  var _iteratorNormalCompletion3 = true;
@@ -34093,7 +34144,7 @@
 	      var value = _step3$value[1];
 
 	      fieldsArray.push(Object.assign({}, {
-	        id: index,
+	        id: 'c' + data.components.indexOf(component) + 'f' + index,
 	        name: key,
 	        type: value.type,
 	        preview: value.default,
@@ -34127,10 +34178,10 @@
 	    case _actions.CONFIGURE_STATE:
 	      return action.data.components.map(function (component) {
 	        return Object.assign({}, {
-	          id: action.data.components.indexOf(component),
+	          id: 'c' + action.data.components.indexOf(component),
 	          name: component.name,
 	          className: component.id,
-	          fields: getFields(component)
+	          fields: getFields(component, action.data)
 	        });
 	      });
 	    case _actions.REQUEST_STYLES_SUCCESS:
@@ -34206,6 +34257,39 @@
 
 	        return component;
 	      });
+	    case _actions.UPDATE_PREVIEW:
+	      return state.map(function (component) {
+	        if (component.className === action.componentId) {
+	          return Object.assign({}, component, {
+	            fields: component.fields.map(function (field) {
+	              if (field.id === action.id) {
+	                return Object.assign({}, field, {
+	                  preview: action.preview
+	                });
+	              }
+	              return field;
+	            })
+	          });
+	        }
+	        return component;
+	      });
+	    case _actions.UPDATE_VALUE:
+	      return state.map(function (component) {
+	        if (component.className === action.componentId) {
+	          return Object.assign({}, component, {
+	            fields: component.fields.map(function (field) {
+	              if (field.id === action.id) {
+	                return Object.assign({}, field, {
+	                  value: action.value
+	                });
+	              }
+	              return field;
+	            })
+	          });
+	        }
+	        return component;
+	      });
+	    case _actions.BEFORE_SAVE_THEME:
 	    default:
 	      return state;
 	  }
