@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import ComponentModule from './componentModule'
 
-const ComponentsSection = ({ components, updateSwatch, updateField, saveTheme, dispatch }) => (
+const ComponentsSection = ({ components, colors, updateSwatch, updateField, saveTheme, dispatch }) => (
   <div className="container">
   	<div className="row">
   		<div className="col-lg-4 col-md-6 col-sm-12">
@@ -17,6 +17,7 @@ const ComponentsSection = ({ components, updateSwatch, updateField, saveTheme, d
             key={index}
   					name={component.name}
   					fields={component.fields}
+            colors={colors}
             updateSwatch={(id, name, value) => updateSwatch(id, name, value, component.className)}
             updateField={(id, value) => updateField(id, value, component.className)}
             dispatch={dispatch}
@@ -35,6 +36,7 @@ const ComponentsSection = ({ components, updateSwatch, updateField, saveTheme, d
 
 ComponentsSection.propTypes = {
   components: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  colors: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired,
   saveTheme: PropTypes.func.isRequired

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import TextInput from './textInput'
 import SelectInput from './selectInput'
 
-const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) => {
+const ComponentModule = ({ name, fields, colors, updateSwatch, updateField, dispatch }) => {
   function getFields(fields) {
     return fields.map((field) => {
       switch (field.type) {
@@ -12,7 +12,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
               key={field.id}
               {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}
-              colors={[]}
+              colors={colors}
             />
           )
           break;
@@ -46,6 +46,7 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
 ComponentModule.propTypes = {
 	name: PropTypes.string.isRequired,
 	fields: PropTypes.array.isRequired,
+  colors: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,
   updateField: PropTypes.func.isRequired
 }

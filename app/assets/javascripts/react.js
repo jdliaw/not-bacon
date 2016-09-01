@@ -31596,7 +31596,8 @@
 					},
 					"color": {
 						"type": "hex",
-						"default": "#ccc"
+						"default": "#ccc",
+						"dependencies": "background-color"
 					}
 				}
 			},
@@ -31606,7 +31607,8 @@
 				"styles": {
 					"font": {
 						"type": "selector",
-						"default": "Arial"
+						"default": "Arial",
+						"dependencies": "background-color"
 					},
 					"color": {
 						"type": "hex",
@@ -31685,7 +31687,8 @@
 
 	var mapStateToProps = function mapStateToProps(state, dispatch) {
 	  return {
-	    components: state.componentFields
+	    components: state.componentFields,
+	    colors: state.colorSchemeModule
 	  };
 	};
 
@@ -31749,6 +31752,7 @@
 
 	var ComponentsSection = function ComponentsSection(_ref) {
 	  var components = _ref.components;
+	  var colors = _ref.colors;
 	  var _updateSwatch = _ref.updateSwatch;
 	  var _updateField = _ref.updateField;
 	  var saveTheme = _ref.saveTheme;
@@ -31782,6 +31786,7 @@
 	          key: index,
 	          name: component.name,
 	          fields: component.fields,
+	          colors: colors,
 	          updateSwatch: function updateSwatch(id, name, value) {
 	            return _updateSwatch(id, name, value, component.className);
 	          },
@@ -31806,6 +31811,7 @@
 
 	ComponentsSection.propTypes = {
 	  components: _react.PropTypes.arrayOf(_react.PropTypes.object.isRequired).isRequired,
+	  colors: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
 	  updateField: _react.PropTypes.func.isRequired,
 	  saveTheme: _react.PropTypes.func.isRequired
@@ -31842,6 +31848,7 @@
 	var ComponentModule = function ComponentModule(_ref) {
 	  var name = _ref.name;
 	  var fields = _ref.fields;
+	  var colors = _ref.colors;
 	  var _updateSwatch = _ref.updateSwatch;
 	  var updateField = _ref.updateField;
 	  var dispatch = _ref.dispatch;
@@ -31856,7 +31863,7 @@
 	            updateSwatch: function updateSwatch(id, name, value) {
 	              return _updateSwatch(id, name, value);
 	            },
-	            colors: []
+	            colors: colors
 	          }));
 	          break;
 	        case 'selector':
@@ -31891,6 +31898,7 @@
 	ComponentModule.propTypes = {
 	  name: _react.PropTypes.string.isRequired,
 	  fields: _react.PropTypes.array.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
 	  updateField: _react.PropTypes.func.isRequired
 	};

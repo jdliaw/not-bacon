@@ -8,7 +8,8 @@ import SelectInput from '../components/selectInput'
 
 const mapStateToProps = (state, dispatch) => {
 	return {
-		components: state.componentFields
+		components: state.componentFields,
+		colors: state.colorSchemeModule
 	}
 }
 
