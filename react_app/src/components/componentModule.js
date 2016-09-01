@@ -33,11 +33,12 @@ const ComponentModule = ({ name, fields, updateSwatch, updateField, dispatch }) 
   }
 
 	return (
-    <div className="col-lg-4 col-md-6 col-sm-12">
-  		<h5>{name}</h5>
+    <div className="component-module col-lg-4 col-md-6 col-sm-12">
+  		<h5 className="component-name">{name}</h5>
   		{
         getFields(fields)
       }
+      <hr />
   	</div>
   )
 }

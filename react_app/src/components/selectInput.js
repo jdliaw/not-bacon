@@ -19,6 +19,7 @@ const SelectInput = ({ id, name, value, options, onInputChange }) => {
 }
 
 SelectInput.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

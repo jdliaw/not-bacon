@@ -30601,14 +30601,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _colorsSectionContainer = __webpack_require__(491);
-
-	var _colorsSectionContainer2 = _interopRequireDefault(_colorsSectionContainer);
-
-	var _typographySectionContainer = __webpack_require__(498);
-
-	var _typographySectionContainer2 = _interopRequireDefault(_typographySectionContainer);
-
 	var _variablesSectionContainer = __webpack_require__(500);
 
 	var _variablesSectionContainer2 = _interopRequireDefault(_variablesSectionContainer);
@@ -30629,132 +30621,7 @@
 	}
 
 /***/ },
-/* 491 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(480);
-
-	var _actions = __webpack_require__(492);
-
-	var _colorsSection = __webpack_require__(493);
-
-	var _colorsSection2 = _interopRequireDefault(_colorsSection);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ColorsSectionContainer = function (_Component) {
-	  _inherits(ColorsSectionContainer, _Component);
-
-	  function ColorsSectionContainer() {
-	    _classCallCheck(this, ColorsSectionContainer);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(ColorsSectionContainer).apply(this, arguments));
-	  }
-
-	  _createClass(ColorsSectionContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // fetch styles to load
-	      this.props.dispatch((0, _actions.fetchStyles)());
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var masterField = _props.masterField;
-	      var fields = _props.fields;
-	      var colors = _props.colors;
-	      var colorScheme = _props.colorScheme;
-	      var selectOptions = _props.selectOptions;
-	      var updateSwatch = _props.updateSwatch;
-	      var chooseColorScheme = _props.chooseColorScheme;
-	      var saveTheme = _props.saveTheme;
-
-	      return _react2.default.createElement(_colorsSection2.default, {
-	        masterField: masterField,
-	        fields: fields,
-	        colors: colors,
-	        colorScheme: colorScheme,
-	        selectOptions: selectOptions,
-	        updateSwatch: updateSwatch,
-	        chooseColorScheme: chooseColorScheme,
-	        saveTheme: saveTheme
-	      });
-	    }
-	  }]);
-
-	  return ColorsSectionContainer;
-	}(_react.Component);
-
-	ColorsSectionContainer.propTypes = {
-	  masterField: _react.PropTypes.object.isRequired,
-	  fields: _react.PropTypes.array.isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  colorScheme: _react.PropTypes.string.isRequired,
-	  selectOptions: _react.PropTypes.array.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  chooseColorScheme: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired,
-	  dispatch: _react.PropTypes.func.isRequired
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    masterField: typeof state.colorFields[0] !== 'undefined' ? state.colorFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-	    fields: state.colorFields.slice(1, state.colorFields.length),
-	    colors: state.colorSchemeModule, //[{ id: 0, value: "rgb(135, 206, 235)" }, { id: 1, value: "rgb(135, 172, 235)" }, { id: 2, value: "rgb(135, 139, 235)" }, { id: 3, value: "rgb(164, 135, 235)" }],
-	    colorScheme: state.colorScheme,
-	    selectOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"]
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    updateSwatch: function updateSwatch(id, name, preview) {
-	      // validate hex colors (reset warnings if fine)
-	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
-	      if (isHexColor && preview != "") {
-	        $('#' + name + '-input').removeClass('form-control-danger');
-	        $('#' + name + '-div').removeClass('has-danger');
-	        dispatch((0, _actions.updatePreview)(id, preview));
-	      }
-	      // add warnings if not valid
-	      else if (!isHexColor && preview != "") {
-	          $('#' + name + '-input').addClass('form-control-danger');
-	          $('#' + name + '-div').addClass('has-danger');
-	        }
-	    },
-	    chooseColorScheme: function chooseColorScheme(masterColor, scheme) {
-	      dispatch((0, _actions.getColorScheme)(masterColor, scheme));
-	    },
-	    saveTheme: function saveTheme() {
-	      dispatch((0, _actions.saveTheme)());
-	    },
-	    dispatch: dispatch
-	  };
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ColorsSectionContainer);
-
-/***/ },
+/* 491 */,
 /* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30815,10 +30682,9 @@
 	};
 
 	// action creator for CHOOSE_COLOR_SCHEME
-	var chooseColorScheme = exports.chooseColorScheme = function chooseColorScheme(id, scheme) {
+	var chooseColorScheme = exports.chooseColorScheme = function chooseColorScheme(scheme) {
 	  return {
 	    type: CHOOSE_COLOR_SCHEME,
-	    id: id,
 	    scheme: scheme
 	  };
 	};
@@ -30827,7 +30693,7 @@
 	function getColorScheme(masterColor, scheme) {
 	  return function (dispatch, getState) {
 	    // update value shown in the select field
-	    dispatch(chooseColorScheme(null, scheme));
+	    dispatch(chooseColorScheme(scheme));
 	    // generate colors using base color and specified scheme
 	    var colors = [];
 	    colors.length = 0;
@@ -30948,7 +30814,7 @@
 	  };
 	}
 
-	// ASYNC ACTION CREATORS
+	// ASYNC ACTIONS
 
 	// first a function to check response status for errors
 	function checkStatus(response) {
@@ -30984,13 +30850,46 @@
 	  return jsonObj;
 	}
 
+	/**
+	  JSON API OBJECT SHAPE:
+	  {
+	    "data": {
+	      "id": "1",
+	      "type": "styles",
+	      "attributes": {
+	        "style-attributes": {
+	          "variables": {
+	            "brand_primary": "#0275d8",
+	            "brand_success": "#5cb85c",
+	            "brand_warning": "#f0ad4e",
+	            "brand_danger": "#d9534f",
+	            "primary_font": "Helvetica",
+	            "secondary_font": "Arial"
+	          },
+	          "hello_bar": {
+	            "font": "Trebuchet",
+	            "color": "#373a3c"
+	          },
+	          "navbar": {
+	            "background_color": "#000",
+	            "color": "#ccc"
+	          },
+	          "third_one": {
+	            "color": "#55595c"
+	          }
+	        },
+	        "publisher-id": 1
+	      }
+	    }
+	  }
+	**/
+
 	// async GET request
 	function fetchStyles() {
 	  return function (dispatch, getState) {
-	    // update app state to inform that API call is starting
+	    // update state to inform that API call is starting
 	    dispatch(requestStyles());
 	    console.log('in fetchStyles');
-	    // console.log(getState())
 
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1').then(checkStatus).then(function (response) {
 	      return response.json();
@@ -31010,7 +30909,6 @@
 	  return function (dispatch, getState) {
 	    dispatch(saveStyles());
 	    console.log('in updateStyles');
-	    // console.log(getState())
 
 	    return (0, _isomorphicFetch2.default)('/api/v1/styles/1', {
 	      method: 'PATCH',
@@ -31039,134 +30937,7 @@
 	}
 
 /***/ },
-/* 493 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _textInput = __webpack_require__(494);
-
-	var _textInput2 = _interopRequireDefault(_textInput);
-
-	var _colorMaster = __webpack_require__(495);
-
-	var _colorMaster2 = _interopRequireDefault(_colorMaster);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ColorsSection = function ColorsSection(_ref) {
-	  var masterField = _ref.masterField;
-	  var fields = _ref.fields;
-	  var selectOptions = _ref.selectOptions;
-	  var colors = _ref.colors;
-	  var colorScheme = _ref.colorScheme;
-	  var _updateSwatch = _ref.updateSwatch;
-	  var _chooseColorScheme = _ref.chooseColorScheme;
-	  var saveTheme = _ref.saveTheme;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-10 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-8' },
-	            _react2.default.createElement(
-	              'h2',
-	              { className: 'style-type' },
-	              'Colors'
-	            ),
-	            _react2.default.createElement(
-	              'h6',
-	              { className: 'style-type-description' },
-	              'Brand colors for use across your shop.'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row style-input-row' },
-	          _react2.default.createElement(_colorMaster2.default, {
-	            field: masterField,
-	            updateSwatch: _updateSwatch,
-	            chooseColorScheme: function chooseColorScheme(id, value) {
-	              return _chooseColorScheme(id, value);
-	            },
-	            selectOptions: selectOptions,
-	            colorScheme: colorScheme,
-	            colors: colors
-	          })
-	        ),
-	        _react2.default.createElement('hr', null),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row style-input-row' },
-	          fields.map(function (field) {
-	            return _react2.default.createElement(_textInput2.default, _extends({
-	              key: field.id
-	            }, field, {
-	              updateSwatch: function updateSwatch(id, name, value) {
-	                return _updateSwatch(id, name, value);
-	              },
-	              colors: colors
-	            }));
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
-	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
-	          )
-	        )
-	      )
-	    )
-	  );
-	};
-
-	ColorsSection.propTypes = {
-	  masterField: _react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    preview: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired,
-	  fields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    preview: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired).isRequired,
-	  colorScheme: _react.PropTypes.string.isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  chooseColorScheme: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = ColorsSection;
-
-/***/ },
+/* 493 */,
 /* 494 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31257,7 +31028,7 @@
 	};
 
 	TextInput.propTypes = {
-	  id: _react.PropTypes.number.isRequired,
+	  id: _react.PropTypes.string.isRequired,
 	  name: _react.PropTypes.string.isRequired,
 	  preview: _react.PropTypes.string.isRequired,
 	  value: _react.PropTypes.string.isRequired,
@@ -31338,12 +31109,7 @@
 	};
 
 	ColorMaster.propTypes = {
-	  field: _react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    preview: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired,
+	  field: _react.PropTypes.object.isRequired,
 	  colorScheme: _react.PropTypes.string.isRequired,
 	  colors: _react.PropTypes.array.isRequired,
 	  updateSwatch: _react.PropTypes.func.isRequired,
@@ -31406,6 +31172,7 @@
 	};
 
 	SelectInput.propTypes = {
+	  id: _react.PropTypes.string.isRequired,
 	  name: _react.PropTypes.string.isRequired,
 	  value: _react.PropTypes.string.isRequired,
 	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
@@ -31456,197 +31223,8 @@
 	exports.default = ColorSchemeModule;
 
 /***/ },
-/* 498 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(480);
-
-	var _redux = __webpack_require__(467);
-
-	var _actions = __webpack_require__(492);
-
-	var _typographySection = __webpack_require__(499);
-
-	var _typographySection2 = _interopRequireDefault(_typographySection);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var TypographySectionContainer = function (_Component) {
-	  _inherits(TypographySectionContainer, _Component);
-
-	  function TypographySectionContainer() {
-	    _classCallCheck(this, TypographySectionContainer);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TypographySectionContainer).apply(this, arguments));
-	  }
-
-	  _createClass(TypographySectionContainer, [{
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var fields = _props.fields;
-	      var selectOptions = _props.selectOptions;
-	      var updateField = _props.updateField;
-	      var saveTheme = _props.saveTheme;
-
-	      return _react2.default.createElement(_typographySection2.default, {
-	        fields: fields,
-	        selectOptions: selectOptions,
-	        updateField: updateField,
-	        saveTheme: saveTheme
-	      });
-	    }
-	  }]);
-
-	  return TypographySectionContainer;
-	}(_react.Component);
-
-	TypographySectionContainer.propTypes = {
-	  fields: _react.PropTypes.array.isRequired,
-	  selectOptions: _react.PropTypes.array.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired,
-	  dispatch: _react.PropTypes.func.isRequired
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    fields: state.typographyFields,
-	    selectOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    updateField: function updateField(id, value) {
-	      var inputID = "#editable-" + id;
-	      if (value === 'Other') {
-	        $(inputID).val('Enter URL...');
-	        $(inputID).show();
-	      } else {
-	        $(inputID).hide();
-	      }
-	      dispatch((0, _actions.updateValue)(id, value));
-	    },
-	    saveTheme: function saveTheme() {
-	      dispatch((0, _actions.saveTheme)());
-	    },
-	    dispatch: dispatch
-	  };
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TypographySectionContainer);
-
-/***/ },
-/* 499 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _selectInput = __webpack_require__(496);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TypographySection = function TypographySection(_ref) {
-	  var fields = _ref.fields;
-	  var selectOptions = _ref.selectOptions;
-	  var updateField = _ref.updateField;
-	  var saveTheme = _ref.saveTheme;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-10 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-8' },
-	            _react2.default.createElement(
-	              'h2',
-	              { className: 'style-type' },
-	              'Typography'
-	            ),
-	            _react2.default.createElement(
-	              'h6',
-	              { className: 'style-type-description' },
-	              'Font, line-height, and color for body text, headings, and more.'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row style-input-row' },
-	          fields.map(function (field) {
-	            return _react2.default.createElement(_selectInput2.default, {
-	              key: field.id,
-	              id: field.id,
-	              name: field.name,
-	              value: field.value,
-	              options: selectOptions,
-	              onInputChange: function onInputChange(id, value) {
-	                return updateField(id, value);
-	              }
-	            });
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
-	            _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
-	          )
-	        )
-	      )
-	    )
-	  );
-	};
-
-	TypographySection.propTypes = {
-	  fields: _react.PropTypes.array.isRequired,
-	  selectOptions: _react.PropTypes.array.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = TypographySection;
-
-/***/ },
+/* 498 */,
+/* 499 */,
 /* 500 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31692,8 +31270,11 @@
 	  _createClass(VariablesSectionContainer, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      // import config file as json object
 	      var data = __webpack_require__(502);
+	      // configure state according to the json config
 	      this.props.dispatch((0, _actions.configureState)(data));
+	      // fetch values from API
 	      this.props.dispatch((0, _actions.fetchStyles)());
 	    }
 	  }, {
@@ -31733,11 +31314,21 @@
 	  saveTheme: _react.PropTypes.func.isRequired
 	};
 
+	function getFieldsOfType(fields, type) {
+	  var result = [];
+	  fields.map(function (field) {
+	    if (field.type === type) {
+	      result.push(field);
+	    }
+	  });
+	  return result;
+	}
+
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: 1, name: "placeholder", preview: "#fff", value: "#fff" }),
-	    hexFields: state.variableFields.slice(1, state.variableFields.length - 2),
-	    selectFields: state.variableFields.slice(state.variableFields.length - 2, state.variableFields.length),
+	    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: "1", name: "placeholder", preview: "#fff", value: "#fff" }),
+	    hexFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'hex'),
+	    selectFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'selector'),
 	    colors: state.colorSchemeModule,
 	    colorScheme: state.colorScheme,
 	    colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],
@@ -31762,6 +31353,7 @@
 	        }
 	    },
 	    updateField: function updateField(id, value) {
+	      // for 'Other' option in select fields to type a link
 	      var inputID = "#editable-" + id;
 	      if (value === 'Other') {
 	        $(inputID).val('Enter URL...');
@@ -31911,25 +31503,20 @@
 	};
 
 	VariablesSection.propTypes = {
-	  masterField: _react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    preview: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired,
+	  masterField: _react.PropTypes.object.isRequired,
 	  hexFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
+	    id: _react.PropTypes.string.isRequired,
 	    name: _react.PropTypes.string.isRequired,
 	    preview: _react.PropTypes.string.isRequired,
 	    value: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
 	  selectFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
+	    id: _react.PropTypes.string.isRequired,
 	    name: _react.PropTypes.string.isRequired,
 	    value: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
 	  colors: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.number.isRequired,
+	    id: _react.PropTypes.string.isRequired,
 	    value: _react.PropTypes.string.isRequired
 	  }).isRequired).isRequired,
 	  colorScheme: _react.PropTypes.string.isRequired,
@@ -31991,7 +31578,7 @@
 					},
 					"color": {
 						"type": "hex",
-						"default": "#373a3c"
+						"default": "#ccc"
 					}
 				}
 			},
@@ -31999,9 +31586,13 @@
 				"name": "Navbar",
 				"id": "navbar",
 				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
 					"background-color": {
 						"type": "hex",
-						"default": "#000"
+						"default": "#ccc"
 					},
 					"color": {
 						"type": "hex",
@@ -32013,9 +31604,45 @@
 				"name": "Third One",
 				"id": "third-one",
 				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
 					"color": {
 						"type": "hex",
-						"default": "#55595c"
+						"default": "#ccc"
+					},
+					"background-color": {
+						"type": "hex",
+						"default": "#ccc"
+					}
+				}
+			},
+			{
+				"name": "Anotha One",
+				"id": "anotha-one",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc"
+					}
+				}
+			},
+			{
+				"name": "Some Bar",
+				"id": "some-bar",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc"
 					}
 				}
 			}
@@ -32029,7 +31656,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -32056,55 +31683,44 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var data = __webpack_require__(502);
-
-	var getComponents = function getComponents(data) {
-		return data.map(function (component) {
-			return Object.assign({}, {
-				name: component.name,
-				fields: component.styles
-			});
-		});
-	};
-
 	var mapStateToProps = function mapStateToProps(state, dispatch) {
-		return {
-			components: state.componentFields
-		};
+	  return {
+	    components: state.componentFields
+	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-		return {
-			updateSwatch: function updateSwatch(id, name, preview, componentId) {
-				// validate hex colors (reset warnings if fine)
-				var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
-				if (isHexColor && preview != "") {
-					$('#' + name + '-input').removeClass('form-control-danger');
-					$('#' + name + '-div').removeClass('has-danger');
-					dispatch((0, _actions.updatePreview)(componentId, id, preview));
-				}
-				// add warnings if not valid
-				else if (!isHexColor && preview != "") {
-						$('#' + name + '-input').addClass('form-control-danger');
-						$('#' + name + '-div').addClass('has-danger');
-					}
-			},
-			updateField: function updateField(id, value, componentId) {
-				var inputID = "#editable-" + id;
-				if (value === 'Other') {
-					$(inputID).val('Enter URL...');
-					$(inputID).show();
-					$(inputID).parent().css('margin-bottom', '-20px');
-				} else {
-					$(inputID).hide();
-				}
-				dispatch((0, _actions.updateValue)(componentId, id, value));
-			},
-			saveTheme: function saveTheme() {
-				dispatch((0, _actions.saveTheme)());
-			},
-			dispatch: dispatch
-		};
+	  return {
+	    updateSwatch: function updateSwatch(id, name, preview, componentId) {
+	      // validate hex colors (reset warnings if fine)
+	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
+	      if (isHexColor && preview != "") {
+	        $('#' + name + '-input').removeClass('form-control-danger');
+	        $('#' + name + '-div').removeClass('has-danger');
+	        dispatch((0, _actions.updatePreview)(componentId, id, preview));
+	      }
+	      // add warnings if not valid
+	      else if (!isHexColor && preview != "") {
+	          $('#' + name + '-input').addClass('form-control-danger');
+	          $('#' + name + '-div').addClass('has-danger');
+	        }
+	    },
+	    updateField: function updateField(id, value, componentId) {
+	      var inputID = "#editable-" + id;
+	      if (value === 'Other') {
+	        $(inputID).val('Enter URL...');
+	        $(inputID).show();
+	        $(inputID).parent().css('margin-bottom', '-20px');
+	      } else {
+	        $(inputID).hide();
+	      }
+	      dispatch((0, _actions.updateValue)(componentId, id, value));
+	    },
+	    saveTheme: function saveTheme() {
+	      dispatch((0, _actions.saveTheme)());
+	    },
+	    dispatch: dispatch
+	  };
 	};
 
 	var ComponentsSectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_componentsSection2.default);
@@ -32261,13 +31877,14 @@
 
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'col-lg-4 col-md-6 col-sm-12' },
+	    { className: 'component-module col-lg-4 col-md-6 col-sm-12' },
 	    _react2.default.createElement(
 	      'h5',
-	      null,
+	      { className: 'component-name' },
 	      name
 	    ),
-	    getFields(fields)
+	    getFields(fields),
+	    _react2.default.createElement('hr', null)
 	  );
 	};
 
@@ -32295,6 +31912,45 @@
 	var _redux = __webpack_require__(467);
 
 	var _actions = __webpack_require__(492);
+
+	/**
+	  STATE SHAPE:
+	  {
+	    isLoading: boolean,
+	    requestFailed: boolean,
+	    errorMessage: string,
+	    colorScheme: string,
+	    colorSchemeModule: array of strings (hex colors),
+	    variableFields: [
+	      {
+	        id: string,
+	        name: string, ('color')
+	        type: string, ('hex')
+	        preview: string,
+	        value: string
+	      },
+	      ...
+	    ]
+	    componentFields: [
+	      {
+	        id: string,
+	        name: string, (Hello Bar)
+	        className: string, (hello-bar)
+	        fields: [
+	          {
+	            id: string,
+	            name: string,
+	            type: string,
+	            preview: string,
+	            value: string
+	          },
+	          ...
+	        ]
+	      },
+	      ...
+	    ]
+	  }
+	**/
 
 	function isLoading() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
@@ -32349,6 +32005,7 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? "Analogous" : arguments[0];
 	  var action = arguments[1];
 
+	  // type of color scheme to generate
 	  switch (action.type) {
 	    case _actions.CHOOSE_COLOR_SCHEME:
 	      return action.scheme;
@@ -32361,6 +32018,7 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 
+	  // the actual color palette generated after a color scheme is selected
 	  switch (action.type) {
 	    case _actions.DISPLAY_COLOR_SCHEME:
 	      state = [];
@@ -32405,6 +32063,7 @@
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 	  var action = arguments[1];
 
+	  // same functionality as componentFields, but just formatted differently in the state
 	  switch (action.type) {
 	    case _actions.CONFIGURE_STATE:
 	      return action.data.variables.map(function (variable) {
@@ -32450,10 +32109,13 @@
 	          }
 	        }
 
-	        return Object.assign({}, variable, {
-	          preview: newValue,
-	          value: newValue
-	        });
+	        if (newValue !== '') {
+	          return Object.assign({}, variable, {
+	            preview: newValue,
+	            value: newValue
+	          });
+	        }
+	        return variable;
 	      });
 	    case _actions.UPDATE_PREVIEW:
 	      if (action.componentId !== null) {
@@ -32490,6 +32152,7 @@
 	  }
 	}
 
+	// helper function to configure component fields (one level deeper)
 	function getFields(component, data) {
 	  var fieldsArray = [];
 	  var index = 0;
@@ -32537,15 +32200,17 @@
 
 	  switch (action.type) {
 	    case _actions.CONFIGURE_STATE:
+	      // configure state based on the json config
 	      return action.data.components.map(function (component) {
 	        return Object.assign({}, {
-	          id: 'c' + action.data.components.indexOf(component),
+	          id: 'c' + action.data.components.indexOf(component), // to give each React element a unique key
 	          name: component.name,
 	          className: component.id,
 	          fields: getFields(component, action.data)
 	        });
 	      });
 	    case _actions.REQUEST_STYLES_SUCCESS:
+	      // get data for fields specified by the state (and config) from the API
 	      return state.map(function (component) {
 	        var _iteratorNormalCompletion4 = true;
 	        var _didIteratorError4 = false;
@@ -32593,10 +32258,13 @@
 	                    }
 	                  }
 
-	                  return Object.assign({}, field, {
-	                    preview: newValue,
-	                    value: newValue
-	                  });
+	                  if (newValue !== '') {
+	                    return Object.assign({}, field, {
+	                      preview: newValue,
+	                      value: newValue
+	                    });
+	                  } // if no value stored yet, use the default from config
+	                  return field;
 	                })
 	              });
 	            }
@@ -32619,6 +32287,8 @@
 	        return component;
 	      });
 	    case _actions.UPDATE_PREVIEW:
+	      // to show the preview for hex inputs
+	      // find the component to modify and update the preview attribute
 	      return state.map(function (component) {
 	        if (component.className === action.componentId) {
 	          return Object.assign({}, component, {
@@ -32635,6 +32305,8 @@
 	        return component;
 	      });
 	    case _actions.UPDATE_VALUE:
+	      // for non-hex inputs
+	      //find the component to modify and update the value attribute
 	      return state.map(function (component) {
 	        if (component.className === action.componentId) {
 	          return Object.assign({}, component, {
@@ -32651,6 +32323,7 @@
 	        return component;
 	      });
 	    case _actions.BEFORE_SAVE_THEME:
+	      // move values from preview to "value" field for hex inputs
 	      return state.map(function (component) {
 	        return Object.assign({}, component, {
 	          fields: component.fields.map(function (field) {

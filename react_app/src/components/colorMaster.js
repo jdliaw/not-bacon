@@ -33,12 +33,7 @@ const ColorMaster = ({ field, colors, colorScheme, updateSwatch, chooseColorSche
 }
 
 ColorMaster.propTypes = {
-  field: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
-  }).isRequired,
+  field: PropTypes.object.isRequired,
   colorScheme: PropTypes.string.isRequired,
   colors: PropTypes.array.isRequired,
   updateSwatch: PropTypes.func.isRequired,

@@ -28,10 +28,9 @@ export const updateValue = (componentId, id, value) => {
 }
 
 // action creator for CHOOSE_COLOR_SCHEME
-export const chooseColorScheme = (id, scheme) => {
+export const chooseColorScheme = (scheme) => {
   return {
     type: CHOOSE_COLOR_SCHEME,
-    id,
     scheme
   }
 }
@@ -40,7 +39,7 @@ export const chooseColorScheme = (id, scheme) => {
 export function getColorScheme(masterColor, scheme) {
   return (dispatch, getState) => {
     // update value shown in the select field
-    dispatch(chooseColorScheme(null, scheme))
+    dispatch(chooseColorScheme(scheme))
     // generate colors using base color and specified scheme
     let colors = []
     colors.length = 0
@@ -161,7 +160,7 @@ export function configureState(data) {
   }
 }
 
-// ASYNC ACTION CREATORS
+// ASYNC ACTIONS
 
 // first a function to check response status for errors
 function checkStatus(response) {
@@ -201,13 +200,46 @@ function buildJSON(state) {
   return jsonObj
 }
 
+/**
+  JSON API OBJECT SHAPE:
+  {
+    "data": {
+      "id": "1",
+      "type": "styles",
+      "attributes": {
+        "style-attributes": {
+          "variables": {
+            "brand_primary": "#0275d8",
+            "brand_success": "#5cb85c",
+            "brand_warning": "#f0ad4e",
+            "brand_danger": "#d9534f",
+            "primary_font": "Helvetica",
+            "secondary_font": "Arial"
+          },
+          "hello_bar": {
+            "font": "Trebuchet",
+            "color": "#373a3c"
+          },
+          "navbar": {
+            "background_color": "#000",
+            "color": "#ccc"
+          },
+          "third_one": {
+            "color": "#55595c"
+          }
+        },
+        "publisher-id": 1
+      }
+    }
+  }
+**/
+
 // async GET request
 export function fetchStyles() {
   return (dispatch, getState) => {
-    // update app state to inform that API call is starting
+    // update state to inform that API call is starting
     dispatch(requestStyles())
     console.log('in fetchStyles')
-    // console.log(getState())
 
     return fetch('/api/v1/styles/1')
       .then(checkStatus)
@@ -227,7 +259,6 @@ export function updateStyles(state) {
   return (dispatch, getState) => {
     dispatch(saveStyles())
     console.log('in updateStyles')
-    // console.log(getState())
 
     return fetch('/api/v1/styles/1', {
       method: 'PATCH',

@@ -50,7 +50,7 @@ const TextInput = ({id, name, preview, value, updateSwatch, colors}) => {
 }
 
 TextInput.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   preview: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,

@@ -7,6 +7,45 @@ import { UPDATE_PREVIEW, UPDATE_VALUE,
   CONFIGURE_STATE
 } from './actions'
 
+/**
+  STATE SHAPE:
+  {
+    isLoading: boolean,
+    requestFailed: boolean,
+    errorMessage: string,
+    colorScheme: string,
+    colorSchemeModule: array of strings (hex colors),
+    variableFields: [
+      {
+        id: string,
+        name: string, ('color')
+        type: string, ('hex')
+        preview: string,
+        value: string
+      },
+      ...
+    ]
+    componentFields: [
+      {
+        id: string,
+        name: string, (Hello Bar)
+        className: string, (hello-bar)
+        fields: [
+          {
+            id: string,
+            name: string,
+            type: string,
+            preview: string,
+            value: string
+          },
+          ...
+        ]
+      },
+      ...
+    ]
+  }
+**/
+
 function isLoading(state = false, action) {
   switch (action.type) {
     case REQUEST_STYLES:
@@ -48,6 +87,7 @@ function errorMessage(state = null, action) {
 }
 
 function colorScheme(state = "Analogous", action) {
+  // type of color scheme to generate
   switch (action.type) {
     case CHOOSE_COLOR_SCHEME:
       return action.scheme
@@ -57,6 +97,7 @@ function colorScheme(state = "Analogous", action) {
 }
 
 function colorSchemeModule(state = [], action) {
+  // the actual color palette generated after a color scheme is selected
   switch (action.type) {
     case DISPLAY_COLOR_SCHEME:
       state = []
@@ -73,6 +114,7 @@ function colorSchemeModule(state = [], action) {
 }
 
 function variableFields(state = [], action) {
+  // same functionality as componentFields, but just formatted differently in the state
   switch (action.type) {
     case CONFIGURE_STATE:
       return action.data.variables.map((variable) => {
@@ -93,10 +135,13 @@ function variableFields(state = [], action) {
             break
           }
         }
-        return Object.assign({}, variable, {
-          preview: newValue,
-          value: newValue
-        })
+        if (newValue !== '') {
+          return Object.assign({}, variable, {
+            preview: newValue,
+            value: newValue
+          })
+        }
+        return variable
       })
       case UPDATE_PREVIEW:
         if (action.componentId !== null) {
@@ -133,6 +178,7 @@ function variableFields(state = [], action) {
   }
 }
 
+// helper function to configure component fields (one level deeper)
 function getFields(component, data) {
   let fieldsArray = []
   let index = 0
@@ -152,15 +198,17 @@ function getFields(component, data) {
 function componentFields(state = [], action) {
   switch(action.type) {
     case CONFIGURE_STATE:
+      // configure state based on the json config
       return action.data.components.map((component) => {
         return Object.assign({}, {
-          id: 'c' + action.data.components.indexOf(component),
+          id: 'c' + action.data.components.indexOf(component), // to give each React element a unique key
           name: component.name,
           className: component.id,
           fields: getFields(component, action.data)
         })
       })
     case REQUEST_STYLES_SUCCESS:
+      // get data for fields specified by the state (and config) from the API
       return state.map((component) => {
         for (let [key, value] of Object.entries(action.response)) {
           if ((key.replace(/_/g, '-')) === component.className) {
@@ -173,10 +221,13 @@ function componentFields(state = [], action) {
                     break
                   }
                 }
-                return Object.assign({}, field, {
-                  preview: newValue,
-                  value: newValue
-                })
+                if (newValue !== '') {
+                  return Object.assign({}, field, {
+                    preview: newValue,
+                    value: newValue
+                  })
+                } // if no value stored yet, use the default from config
+                return field
               })
             })
           }
@@ -184,6 +235,8 @@ function componentFields(state = [], action) {
         return component
       })
     case UPDATE_PREVIEW:
+      // to show the preview for hex inputs
+      // find the component to modify and update the preview attribute
       return state.map((component) => {
         if (component.className === action.componentId) {
           return Object.assign({}, component, {
@@ -200,6 +253,8 @@ function componentFields(state = [], action) {
         return component
       })
     case UPDATE_VALUE:
+      // for non-hex inputs
+      //find the component to modify and update the value attribute
       return state.map((component) => {
         if (component.className === action.componentId) {
           return Object.assign({}, component, {
@@ -216,6 +271,7 @@ function componentFields(state = [], action) {
         return component
       })
     case BEFORE_SAVE_THEME:
+      // move values from preview to "value" field for hex inputs
       return state.map((component) => {
         return Object.assign({}, component, {
           fields: component.fields.map((field) => {

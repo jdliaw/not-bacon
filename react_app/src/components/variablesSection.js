@@ -61,25 +61,20 @@ const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorS
 )
 
 VariablesSection.propTypes = {
-  masterField: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    preview: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
-  }).isRequired,
+  masterField: PropTypes.object.isRequired,
   hexFields: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     preview: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   }).isRequired).isRequired,
   selectFields: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   }).isRequired).isRequired,
   colors: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired
   }).isRequired).isRequired,
   colorScheme: PropTypes.string.isRequired,

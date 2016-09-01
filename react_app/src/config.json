@@ -42,7 +42,7 @@
 				},
 				"color": {
 					"type": "hex",
-					"default": "#373a3c"
+					"default": "#ccc"
 				}
 			}
 		},
@@ -50,9 +50,13 @@
 			"name": "Navbar",
 			"id": "navbar",
 			"styles": {
+				"font": {
+					"type": "selector",
+					"default": "Arial"
+				},
 				"background-color": {
 					"type": "hex",
-					"default": "#000"
+					"default": "#ccc"
 				},
 				"color": {
 					"type": "hex",
@@ -64,9 +68,45 @@
 			"name": "Third One",
 			"id": "third-one",
 			"styles": {
+				"font": {
+					"type": "selector",
+					"default": "Arial"
+				},
 				"color": {
 					"type": "hex",
-					"default": "#55595c"
+					"default": "#ccc"
+				},
+				"background-color": {
+					"type": "hex",
+					"default": "#ccc"
+				}
+			}
+		},
+		{
+			"name": "Anotha One",
+			"id": "anotha-one",
+			"styles": {
+				"font": {
+					"type": "selector",
+					"default": "Arial"
+				},
+				"color": {
+					"type": "hex",
+					"default": "#ccc"
+				}
+			}
+		},
+		{
+			"name": "Some Bar",
+			"id": "some-bar",
+			"styles": {
+				"font": {
+					"type": "selector",
+					"default": "Arial"
+				},
+				"color": {
+					"type": "hex",
+					"default": "#ccc"
 				}
 			}
 		}

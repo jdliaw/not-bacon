@@ -6,17 +6,6 @@ import ComponentsSection from '../components/componentsSection'
 import TextInput from '../components/textInput'
 import SelectInput from '../components/selectInput'
 
-var data = require('!json!../config.json')
-
-const getComponents = (data) => {
-	return data.map((component) => {
-		return Object.assign({}, {
-			name: component.name,
-			fields: component.styles
-		})
-	})
-}
-
 const mapStateToProps = (state, dispatch) => {
 	return {
 		components: state.componentFields
