@@ -1,7 +1,7 @@
 require 'digest'
 require 'erb'
 
-class StyleCompiler
+class SassCompiler
   def initialize(publisher_id, attributes)
     @publisher_id = publisher_id
     @attributes = attributes
@@ -14,10 +14,10 @@ class StyleCompiler
       <% @attributes.each do | attr | -%>
       <% if attr[0].to_s == 'variables' -%>
       <% attr[1].each do | var | -%>
-        --<%= var[0].to_s.dasherize %>: <%= var[1] %>;
+        $<%= var[0].to_s.dasherize %>: <%= var[1] %>;
       <% end -%>
       <% else -%>
-        .<%= attr[0].to_s.dasherize %> {
+        <%= attr[0].to_s.dasherize %> {
       <% attr[1].each do | var | -%>
           <%= var[0].to_s.dasherize %>: <%= var[1] %>;
       <% end -%>
@@ -38,7 +38,7 @@ class StyleCompiler
 
   def save
     sig = signature
-    file = File.open("./app/services/#{sig}.css", "w") do |f|
+    file = File.open("./app/services/#{sig}.scss", "w") do |f|
       f.write(render)
     end
   end
