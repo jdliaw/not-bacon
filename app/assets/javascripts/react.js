@@ -64,7 +64,7 @@
 
 	var _Hume = __webpack_require__(489);
 
-	var _reducers = __webpack_require__(506);
+	var _reducers = __webpack_require__(505);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -30601,11 +30601,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _variablesSectionContainer = __webpack_require__(500);
+	var _variablesSectionContainer = __webpack_require__(491);
 
 	var _variablesSectionContainer2 = _interopRequireDefault(_variablesSectionContainer);
 
-	var _componentsSectionContainer = __webpack_require__(503);
+	var _componentsSectionContainer = __webpack_require__(502);
 
 	var _componentsSectionContainer2 = _interopRequireDefault(_componentsSectionContainer);
 
@@ -30621,7 +30621,160 @@
 	}
 
 /***/ },
-/* 491 */,
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(480);
+
+	var _redux = __webpack_require__(467);
+
+	var _actions = __webpack_require__(492);
+
+	var _variablesSection = __webpack_require__(496);
+
+	var _variablesSection2 = _interopRequireDefault(_variablesSection);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var VariablesSectionContainer = function (_Component) {
+	  _inherits(VariablesSectionContainer, _Component);
+
+	  function VariablesSectionContainer() {
+	    _classCallCheck(this, VariablesSectionContainer);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VariablesSectionContainer).apply(this, arguments));
+	  }
+
+	  _createClass(VariablesSectionContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // import config file as json object
+	      var data = __webpack_require__(501);
+	      // configure state according to the json config
+	      this.props.dispatch((0, _actions.configureState)(data));
+	      // fetch values from API
+	      this.props.dispatch((0, _actions.fetchStyles)());
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var masterField = _props.masterField;
+	      var hexFields = _props.hexFields;
+	      var selectFields = _props.selectFields;
+	      var colors = _props.colors;
+	      var colorScheme = _props.colorScheme;
+	      var colorSchemeOptions = _props.colorSchemeOptions;
+	      var fontOptions = _props.fontOptions;
+	      var updateSwatch = _props.updateSwatch;
+	      var updateField = _props.updateField;
+	      var chooseColorScheme = _props.chooseColorScheme;
+	      var saveTheme = _props.saveTheme;
+
+	      return _react2.default.createElement(_variablesSection2.default, this.props);
+	    }
+	  }]);
+
+	  return VariablesSectionContainer;
+	}(_react.Component);
+
+	VariablesSectionContainer.propTypes = {
+	  masterField: _react.PropTypes.object.isRequired,
+	  hexFields: _react.PropTypes.array.isRequired,
+	  selectFields: _react.PropTypes.array.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
+	  colorSchemeOptions: _react.PropTypes.array.isRequired,
+	  fontOptions: _react.PropTypes.array.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
+	};
+
+	function getFieldsOfType(fields, type) {
+	  var result = [];
+	  fields.map(function (field) {
+	    if (field.type === type) {
+	      result.push(field);
+	    }
+	  });
+	  return result;
+	}
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: "1", name: "placeholder", preview: "#fff", value: "#fff" }),
+	    hexFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'hex'),
+	    selectFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'selector'),
+	    colors: state.colorSchemeModule,
+	    colorScheme: state.colorScheme,
+	    colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],
+	    fontOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updateSwatch: function updateSwatch(id, name, preview) {
+	      // validate hex colors (reset warnings if fine)
+	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
+	      if (isHexColor && preview != "") {
+	        $('#' + id + '-input').removeClass('form-control-danger');
+	        $('#' + id + '-div').removeClass('has-danger');
+	        $('#var-color-invalid').hide();
+	        dispatch((0, _actions.updatePreview)(null, id, preview));
+	      }
+	      // add warnings if not valid
+	      else if (!isHexColor && preview != "") {
+	          $('#' + id + '-input').addClass('form-control-danger');
+	          $('#' + id + '-div').addClass('has-danger');
+	          $('#var-color-invalid').show();
+	        }
+	    },
+	    updateField: function updateField(id, value) {
+	      // for 'Other' option in select fields to type a link
+	      var inputID = "#editable-" + id;
+	      if (value === 'Other') {
+	        $(inputID).val('Enter URL...');
+	        $(inputID).show();
+	        $(inputID).parent().css('margin-bottom', '-20px');
+	      } else {
+	        $(inputID).hide();
+	      }
+	      dispatch((0, _actions.updateValue)(null, id, value));
+	    },
+	    chooseColorScheme: function chooseColorScheme(masterColor, scheme) {
+	      dispatch((0, _actions.getColorScheme)(masterColor, scheme));
+	    },
+	    saveTheme: function saveTheme() {
+	      dispatch((0, _actions.saveTheme)());
+	    },
+	    dispatch: dispatch
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(VariablesSectionContainer);
+
+/***/ },
 /* 492 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30644,11 +30797,11 @@
 	exports.fetchStyles = fetchStyles;
 	exports.updateStyles = updateStyles;
 
-	var _isomorphicFetch = __webpack_require__(507);
+	var _isomorphicFetch = __webpack_require__(493);
 
 	var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
 
-	var _tinycolor = __webpack_require__(509);
+	var _tinycolor = __webpack_require__(495);
 
 	var _tinycolor2 = _interopRequireDefault(_tinycolor);
 
@@ -31018,1389 +31171,19 @@
 	}
 
 /***/ },
-/* 493 */,
-/* 494 */,
-/* 495 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _colorInput = __webpack_require__(510);
-
-	var _colorInput2 = _interopRequireDefault(_colorInput);
-
-	var _selectInput = __webpack_require__(496);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	var _colorSchemeModule = __webpack_require__(497);
-
-	var _colorSchemeModule2 = _interopRequireDefault(_colorSchemeModule);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ColorMaster = function ColorMaster(_ref) {
-	  var field = _ref.field;
-	  var colors = _ref.colors;
-	  var colorScheme = _ref.colorScheme;
-	  var _updateSwatch = _ref.updateSwatch;
-	  var chooseColorScheme = _ref.chooseColorScheme;
-	  var selectOptions = _ref.selectOptions;
-
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'col-md-4 col-sm-6 col-xs-12' },
-	      _react2.default.createElement(_colorInput2.default, _extends({
-	        key: field.id
-	      }, field, {
-	        updateSwatch: function updateSwatch(id, name, value) {
-	          return _updateSwatch(id, name, value);
-	        },
-	        colors: colors
-	      }))
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'col-md-4 col-sm-6 col-xs-12' },
-	      _react2.default.createElement(_selectInput2.default, {
-	        id: field.preview,
-	        name: 'Color Scheme',
-	        value: colorScheme,
-	        options: selectOptions,
-	        onInputChange: chooseColorScheme
-	      })
-	    ),
-	    _react2.default.createElement(_colorSchemeModule2.default, {
-	      colors: colors
-	    })
-	  );
-	};
-
-	ColorMaster.propTypes = {
-	  field: _react.PropTypes.object.isRequired,
-	  colorScheme: _react.PropTypes.string.isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  chooseColorScheme: _react.PropTypes.func.isRequired,
-	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
-	};
-
-	exports.default = ColorMaster;
-
-/***/ },
-/* 496 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var SelectInput = function SelectInput(_ref) {
-	  var id = _ref.id;
-	  var name = _ref.name;
-	  var value = _ref.value;
-	  var options = _ref.options;
-	  var onInputChange = _ref.onInputChange;
-
-	  var editableID = "editable-" + id;
-
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "form-group" },
-	    _react2.default.createElement(
-	      "label",
-	      null,
-	      name
-	    ),
-	    _react2.default.createElement(
-	      "select",
-	      { className: "form-control select-input", onChange: function onChange(e) {
-	          return onInputChange(id, e.target.value);
-	        }, value: value },
-	      options.map(function (option) {
-	        return _react2.default.createElement(
-	          "option",
-	          { key: options.findIndex(function (x) {
-	              return x === option;
-	            }) },
-	          option
-	        );
-	      })
-	    ),
-	    _react2.default.createElement("input", { className: "editable", id: editableID, type: "text", key: id, style: { display: "none" } })
-	  );
-	};
-
-	SelectInput.propTypes = {
-	  id: _react.PropTypes.string.isRequired,
-	  name: _react.PropTypes.string.isRequired,
-	  value: _react.PropTypes.string.isRequired,
-	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
-	  onInputChange: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = SelectInput;
-
-/***/ },
-/* 497 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ColorSchemeModule = function ColorSchemeModule(_ref) {
-	  var colors = _ref.colors;
-
-	  return _react2.default.createElement(
-	    "div",
-	    { className: "btn-toolbar col-md-4 col-sm-6 col-xs-12", id: "color-scheme", role: "toolbar" },
-	    colors.map(function (color) {
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "btn-group", role: "group", key: color.id },
-	        _react2.default.createElement(
-	          "button",
-	          { type: "button", className: "btn btn-default", key: color.id, title: color.value, style: { background: color.value, color: color.value } },
-	          "."
-	        )
-	      );
-	    })
-	  );
-	};
-	ColorSchemeModule.propTypes = {
-	  colors: _react.PropTypes.array.isRequired
-	};
-
-	exports.default = ColorSchemeModule;
-
-/***/ },
-/* 498 */,
-/* 499 */,
-/* 500 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(480);
-
-	var _redux = __webpack_require__(467);
-
-	var _actions = __webpack_require__(492);
-
-	var _variablesSection = __webpack_require__(501);
-
-	var _variablesSection2 = _interopRequireDefault(_variablesSection);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var VariablesSectionContainer = function (_Component) {
-	  _inherits(VariablesSectionContainer, _Component);
-
-	  function VariablesSectionContainer() {
-	    _classCallCheck(this, VariablesSectionContainer);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VariablesSectionContainer).apply(this, arguments));
-	  }
-
-	  _createClass(VariablesSectionContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      // import config file as json object
-	      var data = __webpack_require__(502);
-	      // configure state according to the json config
-	      this.props.dispatch((0, _actions.configureState)(data));
-	      // fetch values from API
-	      this.props.dispatch((0, _actions.fetchStyles)());
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var masterField = _props.masterField;
-	      var hexFields = _props.hexFields;
-	      var selectFields = _props.selectFields;
-	      var colors = _props.colors;
-	      var colorScheme = _props.colorScheme;
-	      var colorSchemeOptions = _props.colorSchemeOptions;
-	      var fontOptions = _props.fontOptions;
-	      var updateSwatch = _props.updateSwatch;
-	      var updateField = _props.updateField;
-	      var chooseColorScheme = _props.chooseColorScheme;
-	      var saveTheme = _props.saveTheme;
-
-	      return _react2.default.createElement(_variablesSection2.default, this.props);
-	    }
-	  }]);
-
-	  return VariablesSectionContainer;
-	}(_react.Component);
-
-	VariablesSectionContainer.propTypes = {
-	  masterField: _react.PropTypes.object.isRequired,
-	  hexFields: _react.PropTypes.array.isRequired,
-	  selectFields: _react.PropTypes.array.isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  colorScheme: _react.PropTypes.string.isRequired,
-	  colorSchemeOptions: _react.PropTypes.array.isRequired,
-	  fontOptions: _react.PropTypes.array.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  chooseColorScheme: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	function getFieldsOfType(fields, type) {
-	  var result = [];
-	  fields.map(function (field) {
-	    if (field.type === type) {
-	      result.push(field);
-	    }
-	  });
-	  return result;
-	}
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    masterField: typeof state.variableFields[0] !== 'undefined' ? state.variableFields[0] : Object.assign({}, { id: "1", name: "placeholder", preview: "#fff", value: "#fff" }),
-	    hexFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'hex'),
-	    selectFields: getFieldsOfType(state.variableFields.slice(1, state.variableFields.length), 'selector'),
-	    colors: state.colorSchemeModule,
-	    colorScheme: state.colorScheme,
-	    colorSchemeOptions: ["Analogous", "Monochromatic", "Split-Complementary", "Triad", "Tetrad"],
-	    fontOptions: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"]
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    updateSwatch: function updateSwatch(id, name, preview) {
-	      // validate hex colors (reset warnings if fine)
-	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
-	      if (isHexColor && preview != "") {
-	        $('#' + id + '-input').removeClass('form-control-danger');
-	        $('#' + id + '-div').removeClass('has-danger');
-	        $('#var-color-invalid').hide();
-	        dispatch((0, _actions.updatePreview)(null, id, preview));
-	      }
-	      // add warnings if not valid
-	      else if (!isHexColor && preview != "") {
-	          $('#' + id + '-input').addClass('form-control-danger');
-	          $('#' + id + '-div').addClass('has-danger');
-	          $('#var-color-invalid').show();
-	        }
-	    },
-	    updateField: function updateField(id, value) {
-	      // for 'Other' option in select fields to type a link
-	      var inputID = "#editable-" + id;
-	      if (value === 'Other') {
-	        $(inputID).val('Enter URL...');
-	        $(inputID).show();
-	        $(inputID).parent().css('margin-bottom', '-20px');
-	      } else {
-	        $(inputID).hide();
-	      }
-	      dispatch((0, _actions.updateValue)(null, id, value));
-	    },
-	    chooseColorScheme: function chooseColorScheme(masterColor, scheme) {
-	      dispatch((0, _actions.getColorScheme)(masterColor, scheme));
-	    },
-	    saveTheme: function saveTheme() {
-	      dispatch((0, _actions.saveTheme)());
-	    },
-	    dispatch: dispatch
-	  };
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(VariablesSectionContainer);
-
-/***/ },
-/* 501 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _colorMaster = __webpack_require__(495);
-
-	var _colorMaster2 = _interopRequireDefault(_colorMaster);
-
-	var _colorInput = __webpack_require__(510);
-
-	var _colorInput2 = _interopRequireDefault(_colorInput);
-
-	var _selectInput = __webpack_require__(496);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var VariablesSection = function VariablesSection(_ref) {
-	  var masterField = _ref.masterField;
-	  var hexFields = _ref.hexFields;
-	  var selectFields = _ref.selectFields;
-	  var colors = _ref.colors;
-	  var colorScheme = _ref.colorScheme;
-	  var colorSchemeOptions = _ref.colorSchemeOptions;
-	  var fontOptions = _ref.fontOptions;
-	  var _updateSwatch = _ref.updateSwatch;
-	  var updateField = _ref.updateField;
-	  var _chooseColorScheme = _ref.chooseColorScheme;
-	  var saveTheme = _ref.saveTheme;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-lg-8 col-md-12 col-sm-12' },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'style-type' },
-	          'Variables'
-	        ),
-	        _react2.default.createElement(
-	          'h6',
-	          { className: 'style-type-description' },
-	          'Brand colors, fonts, and more for use across your shop.'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-lg-4 col-md-12 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'alert alert-danger color-input-alert', id: 'var-color-invalid', role: 'alert' },
-	          'Please enter a valid hex value.'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row style-input-row' },
-	      _react2.default.createElement(_colorMaster2.default, {
-	        field: masterField,
-	        colors: colors,
-	        colorScheme: colorScheme,
-	        updateSwatch: _updateSwatch,
-	        chooseColorScheme: function chooseColorScheme(id, value) {
-	          return _chooseColorScheme(id, value);
-	        },
-	        selectOptions: colorSchemeOptions
-	      })
-	    ),
-	    _react2.default.createElement('hr', null),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row style-input-row' },
-	      hexFields.map(function (field) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-4 col-sm-6 col-xs-12' },
-	          _react2.default.createElement(_colorInput2.default, _extends({
-	            key: field.id
-	          }, field, {
-	            updateSwatch: function updateSwatch(id, name, value) {
-	              return _updateSwatch(id, name, value);
-	            },
-	            colors: colors
-	          }))
-	        );
-	      })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row style-input-row' },
-	      selectFields.map(function (field) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'col-md-4 col-sm-6 col-xs-12' },
-	          _react2.default.createElement(_selectInput2.default, _extends({
-	            key: field.id
-	          }, field, {
-	            options: fontOptions,
-	            onInputChange: function onInputChange(id, value) {
-	              return updateField(id, value);
-	            }
-	          }))
-	        );
-	      })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
-	        _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
-	      )
-	    )
-	  );
-	};
-
-	VariablesSection.propTypes = {
-	  masterField: _react.PropTypes.object.isRequired,
-	  hexFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.string.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    preview: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired).isRequired,
-	  selectFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.string.isRequired,
-	    name: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired).isRequired,
-	  colors: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    id: _react.PropTypes.string.isRequired,
-	    value: _react.PropTypes.string.isRequired
-	  }).isRequired).isRequired,
-	  colorScheme: _react.PropTypes.string.isRequired,
-	  colorSchemeOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
-	  fontOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  chooseColorScheme: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = VariablesSection;
-
-/***/ },
-/* 502 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		"variables": [
-			{
-				"name": "brand-primary",
-				"type": "hex",
-				"default": "#000"
-			},
-			{
-				"name": "brand-success",
-				"type": "hex",
-				"default": "#000"
-			},
-			{
-				"name": "brand-warning",
-				"type": "hex",
-				"default": "#000"
-			},
-			{
-				"name": "brand-danger",
-				"type": "hex",
-				"default": "#000"
-			},
-			{
-				"name": "primary-font",
-				"type": "selector",
-				"default": "Arial"
-			},
-			{
-				"name": "secondary-font",
-				"type": "selector",
-				"default": "Arial"
-			}
-		],
-		"components": [
-			{
-				"name": "Hello Bar",
-				"id": "hello-bar",
-				"styles": {
-					"font": {
-						"type": "selector",
-						"default": "Arial"
-					},
-					"color": {
-						"type": "hex",
-						"default": "#ccc"
-					}
-				}
-			},
-			{
-				"name": "Navbar",
-				"id": "navbar",
-				"styles": {
-					"font": {
-						"type": "selector",
-						"default": "Arial"
-					},
-					"background-color": {
-						"type": "hex",
-						"default": "#ccc",
-						"dependencies": "color"
-					},
-					"color": {
-						"type": "hex",
-						"default": "#ccc",
-						"dependencies": "background-color"
-					}
-				}
-			},
-			{
-				"name": "Third One",
-				"id": "third-one",
-				"styles": {
-					"font": {
-						"type": "selector",
-						"default": "Arial",
-						"dependencies": "background-color"
-					},
-					"color": {
-						"type": "hex",
-						"default": "#ccc",
-						"dependencies": "background-color"
-					},
-					"background-color": {
-						"type": "hex",
-						"default": "#ccc",
-						"dependencies": "color"
-					}
-				}
-			},
-			{
-				"name": "Anotha One",
-				"id": "anotha-one",
-				"styles": {
-					"font": {
-						"type": "selector",
-						"default": "Arial"
-					},
-					"color": {
-						"type": "hex",
-						"default": "#ccc"
-					}
-				}
-			},
-			{
-				"name": "Some Bar",
-				"id": "some-bar",
-				"styles": {
-					"font": {
-						"type": "selector",
-						"default": "Arial"
-					},
-					"color": {
-						"type": "hex",
-						"default": "#ccc"
-					}
-				}
-			}
-		]
-	};
-
-/***/ },
-/* 503 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(480);
-
-	var _redux = __webpack_require__(467);
-
-	var _actions = __webpack_require__(492);
-
-	var _componentsSection = __webpack_require__(504);
-
-	var _componentsSection2 = _interopRequireDefault(_componentsSection);
-
-	var _colorInput = __webpack_require__(510);
-
-	var _colorInput2 = _interopRequireDefault(_colorInput);
-
-	var _selectInput = __webpack_require__(496);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var mapStateToProps = function mapStateToProps(state, dispatch) {
-	  return {
-	    components: state.componentFields,
-	    colors: state.colorSchemeModule
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    updateSwatch: function updateSwatch(id, name, preview, componentId) {
-	      // validate hex colors (reset warnings if fine)
-	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
-	      if (isHexColor && preview != "") {
-	        $('#' + id + '-input').removeClass('form-control-danger');
-	        $('#' + id + '-div').removeClass('has-danger');
-	        $('#comp-color-invalid').hide();
-	        dispatch((0, _actions.checkConflicts)(id, name, preview, componentId));
-	      }
-	      // add warnings if not valid
-	      else if (!isHexColor && preview != "") {
-	          $('#' + id + '-input').addClass('form-control-danger');
-	          $('#' + id + '-div').addClass('has-danger');
-	          $('#comp-color-invalid').show();
-	        }
-	    },
-	    updateField: function updateField(id, value, componentId) {
-	      var inputID = "#editable-" + id;
-	      if (value === 'Other') {
-	        $(inputID).val('Enter URL...');
-	        $(inputID).show();
-	        $(inputID).parent().css('margin-bottom', '-20px');
-	      } else {
-	        $(inputID).hide();
-	      }
-	      dispatch((0, _actions.updateValue)(componentId, id, value));
-	    },
-	    saveTheme: function saveTheme() {
-	      dispatch((0, _actions.saveTheme)());
-	    },
-	    dispatch: dispatch
-	  };
-	};
-
-	var ComponentsSectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_componentsSection2.default);
-
-	exports.default = ComponentsSectionContainer;
-
-/***/ },
-/* 504 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _componentModule = __webpack_require__(505);
-
-	var _componentModule2 = _interopRequireDefault(_componentModule);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ComponentsSection = function ComponentsSection(_ref) {
-	  var components = _ref.components;
-	  var colors = _ref.colors;
-	  var _updateSwatch = _ref.updateSwatch;
-	  var _updateField = _ref.updateField;
-	  var saveTheme = _ref.saveTheme;
-	  var dispatch = _ref.dispatch;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'container' },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-lg-4 col-md-6 col-sm-12' },
-	        _react2.default.createElement(
-	          'h2',
-	          { className: 'style-type' },
-	          'Components'
-	        ),
-	        _react2.default.createElement(
-	          'h6',
-	          { className: 'style-type-description' },
-	          'Customize components across your shop.'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-lg-8 col-md-6 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'alert alert-warning color-input-alert', id: 'color-conflict', role: 'alert' },
-	          'Warning: Color conflict detected. Your color choice may not be readable for users.'
-	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-lg-8 col-md-6 col-sm-12' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'alert alert-danger color-input-alert', id: 'comp-color-invalid', role: 'alert' },
-	          'Please enter a valid hex value.'
-	        )
-	      )
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row style-input-row' },
-	      components.map(function (component, index) {
-	        return _react2.default.createElement(_componentModule2.default, {
-	          key: index,
-	          name: component.name,
-	          fields: component.fields,
-	          colors: colors,
-	          updateSwatch: function updateSwatch(id, name, value) {
-	            return _updateSwatch(id, name, value, component.className);
-	          },
-	          updateField: function updateField(id, value) {
-	            return _updateField(id, value, component.className);
-	          },
-	          dispatch: dispatch
-	        });
-	      })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
-	        _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
-	      )
-	    )
-	  );
-	};
-
-	ComponentsSection.propTypes = {
-	  components: _react.PropTypes.arrayOf(_react.PropTypes.object.isRequired).isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  updateField: _react.PropTypes.func.isRequired,
-	  saveTheme: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = ComponentsSection;
-
-/***/ },
-/* 505 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _colorInput = __webpack_require__(510);
-
-	var _colorInput2 = _interopRequireDefault(_colorInput);
-
-	var _selectInput = __webpack_require__(496);
-
-	var _selectInput2 = _interopRequireDefault(_selectInput);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var ComponentModule = function ComponentModule(_ref) {
-	  var name = _ref.name;
-	  var fields = _ref.fields;
-	  var colors = _ref.colors;
-	  var _updateSwatch = _ref.updateSwatch;
-	  var updateField = _ref.updateField;
-	  var dispatch = _ref.dispatch;
-
-	  function getFields(fields) {
-	    return fields.map(function (field) {
-	      switch (field.type) {
-	        case 'hex':
-	          return _react2.default.createElement(_colorInput2.default, _extends({
-	            key: field.id
-	          }, field, {
-	            updateSwatch: function updateSwatch(id, name, value) {
-	              return _updateSwatch(id, name, value);
-	            },
-	            colors: colors
-	          }));
-	          break;
-	        case 'selector':
-	          return _react2.default.createElement(_selectInput2.default, _extends({
-	            key: field.id
-	          }, field, {
-	            options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
-	            onInputChange: function onInputChange(id, value) {
-	              return updateField(id, value);
-	            }
-	          }));
-	          break;
-	        default:
-	          return null;
-	      }
-	    });
-	  }
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'component-module col-lg-4 col-md-6 col-sm-12' },
-	    _react2.default.createElement(
-	      'h5',
-	      { className: 'component-name' },
-	      name
-	    ),
-	    getFields(fields),
-	    _react2.default.createElement('hr', null)
-	  );
-	};
-
-	ComponentModule.propTypes = {
-	  name: _react.PropTypes.string.isRequired,
-	  fields: _react.PropTypes.array.isRequired,
-	  colors: _react.PropTypes.array.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  updateField: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = ComponentModule;
-
-/***/ },
-/* 506 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-	var _redux = __webpack_require__(467);
-
-	var _actions = __webpack_require__(492);
-
-	/**
-	  STATE SHAPE:
-	  {
-	    isLoading: boolean,
-	    requestFailed: boolean,
-	    errorMessage: string,
-	    colorScheme: string,
-	    colorSchemeModule: array of strings (hex colors),
-	    variableFields: [
-	      {
-	        id: string,
-	        name: string, ('color')
-	        type: string, ('hex')
-	        preview: string,
-	        value: string
-	      },
-	      ...
-	    ]
-	    componentFields: [
-	      {
-	        id: string,
-	        name: string, (Hello Bar)
-	        className: string, (hello-bar)
-	        fields: [
-	          {
-	            id: string,
-	            name: string,
-	            type: string,
-	            preview: string,
-	            value: string
-	          },
-	          ...
-	        ]
-	      },
-	      ...
-	    ]
-	  }
-	**/
-
-	function isLoading() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES:
-	    case _actions.SAVE_STYLES:
-	      return true;
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_SUCCESS:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return false;
-	    default:
-	      return state;
-	  }
-	}
-
-	function requestFailed() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return true;
-	    case _actions.REQUEST_STYLES:
-	    case _actions.SAVE_STYLES:
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	    case _actions.SAVE_STYLES_SUCCESS:
-	      return false;
-	    default:
-	      return state;
-	  }
-	}
-
-	function errorMessage() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.REQUEST_STYLES_FAILURE:
-	    case _actions.SAVE_STYLES_FAILURE:
-	      return action.error;
-	    default:
-	      return state;
-	  }
-	}
-
-	function colorScheme() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? "Analogous" : arguments[0];
-	  var action = arguments[1];
-
-	  // type of color scheme to generate
-	  switch (action.type) {
-	    case _actions.CHOOSE_COLOR_SCHEME:
-	      return action.scheme;
-	    default:
-	      return state;
-	  }
-	}
-
-	function colorSchemeModule() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
-
-	  // the actual color palette generated after a color scheme is selected
-	  switch (action.type) {
-	    case _actions.DISPLAY_COLOR_SCHEME:
-	      state = [];
-	      var _iteratorNormalCompletion = true;
-	      var _didIteratorError = false;
-	      var _iteratorError = undefined;
-
-	      try {
-	        for (var _iterator = action.colors.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var _step$value = _slicedToArray(_step.value, 2);
-
-	          var index = _step$value[0];
-	          var value = _step$value[1];
-
-	          state.push({
-	            id: index,
-	            value: value
-	          });
-	        }
-	      } catch (err) {
-	        _didIteratorError = true;
-	        _iteratorError = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion && _iterator.return) {
-	            _iterator.return();
-	          }
-	        } finally {
-	          if (_didIteratorError) {
-	            throw _iteratorError;
-	          }
-	        }
-	      }
-
-	      return state;
-	    default:
-	      return state;
-	  }
-	}
-
-	function variableFields() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
-
-	  // same functionality as componentFields, but just formatted differently in the state
-	  switch (action.type) {
-	    case _actions.CONFIGURE_STATE:
-	      return action.data.variables.map(function (variable) {
-	        return Object.assign({}, {
-	          id: 'v' + action.data.variables.indexOf(variable),
-	          name: variable.name,
-	          type: variable.type, // do we need dis
-	          preview: variable.default,
-	          value: variable.default
-	        });
-	      });
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	      return state.map(function (variable) {
-	        var newValue = '';
-	        var _iteratorNormalCompletion2 = true;
-	        var _didIteratorError2 = false;
-	        var _iteratorError2 = undefined;
-
-	        try {
-	          for (var _iterator2 = Object.entries(action.response.variables)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	            var _step2$value = _slicedToArray(_step2.value, 2);
-
-	            var key = _step2$value[0];
-	            var value = _step2$value[1];
-
-	            if (key.replace(/_/g, '-') === variable.name) {
-	              newValue = value;
-	              break;
-	            }
-	          }
-	        } catch (err) {
-	          _didIteratorError2 = true;
-	          _iteratorError2 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	              _iterator2.return();
-	            }
-	          } finally {
-	            if (_didIteratorError2) {
-	              throw _iteratorError2;
-	            }
-	          }
-	        }
-
-	        if (newValue !== '') {
-	          return Object.assign({}, variable, {
-	            preview: newValue,
-	            value: newValue
-	          });
-	        }
-	        return variable;
-	      });
-	    case _actions.UPDATE_PREVIEW:
-	      if (action.componentId !== null) {
-	        return state;
-	      }
-	      return state.map(function (field) {
-	        if (field.id === action.id) {
-	          return Object.assign({}, field, {
-	            preview: action.preview
-	          });
-	        }
-	        return field;
-	      });
-	    case _actions.UPDATE_VALUE:
-	      if (action.componentId !== null) {
-	        return state;
-	      }
-	      return state.map(function (field) {
-	        if (field.id === action.id) {
-	          return Object.assign({}, field, {
-	            value: action.value
-	          });
-	        }
-	        return field;
-	      });
-	    case _actions.BEFORE_SAVE_THEME:
-	      return state.map(function (field) {
-	        return Object.assign({}, field, {
-	          value: field.preview
-	        });
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
-	// helper function to configure component fields (one level deeper)
-	function getFields(component, data) {
-	  var fieldsArray = [];
-	  var index = 0;
-	  var _iteratorNormalCompletion3 = true;
-	  var _didIteratorError3 = false;
-	  var _iteratorError3 = undefined;
-
-	  try {
-	    for (var _iterator3 = Object.entries(component.styles)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	      var _step3$value = _slicedToArray(_step3.value, 2);
-
-	      var key = _step3$value[0];
-	      var value = _step3$value[1];
-
-	      if ('dependencies' in value) {
-	        fieldsArray.push(Object.assign({}, {
-	          id: 'c' + data.components.indexOf(component) + 'f' + index,
-	          name: key,
-	          type: value.type,
-	          preview: value.default,
-	          value: value.default,
-	          dependencies: value.dependencies
-	        }));
-	      } else {
-	        fieldsArray.push(Object.assign({}, {
-	          id: 'c' + data.components.indexOf(component) + 'f' + index,
-	          name: key,
-	          type: value.type,
-	          preview: value.default,
-	          value: value.default
-	        }));
-	      }
-	      index++;
-	    }
-	  } catch (err) {
-	    _didIteratorError3 = true;
-	    _iteratorError3 = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	        _iterator3.return();
-	      }
-	    } finally {
-	      if (_didIteratorError3) {
-	        throw _iteratorError3;
-	      }
-	    }
-	  }
-
-	  return fieldsArray;
-	}
-
-	function componentFields() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-	  var action = arguments[1];
-
-	  switch (action.type) {
-	    case _actions.CONFIGURE_STATE:
-	      // configure state based on the json config
-	      return action.data.components.map(function (component) {
-	        return Object.assign({}, {
-	          id: 'c' + action.data.components.indexOf(component), // to give each React element a unique key
-	          name: component.name,
-	          className: component.id,
-	          fields: getFields(component, action.data)
-	        });
-	      });
-	    case _actions.REQUEST_STYLES_SUCCESS:
-	      // get data for fields specified by the state (and config) from the API
-	      return state.map(function (component) {
-	        var _iteratorNormalCompletion4 = true;
-	        var _didIteratorError4 = false;
-	        var _iteratorError4 = undefined;
-
-	        try {
-	          for (var _iterator4 = Object.entries(action.response)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-	            var _step4$value = _slicedToArray(_step4.value, 2);
-
-	            var key = _step4$value[0];
-	            var value = _step4$value[1];
-
-	            if (key.replace(/_/g, '-') === component.className) {
-	              return Object.assign({}, component, {
-	                fields: component.fields.map(function (field) {
-	                  var newValue = '';
-	                  var _iteratorNormalCompletion5 = true;
-	                  var _didIteratorError5 = false;
-	                  var _iteratorError5 = undefined;
-
-	                  try {
-	                    for (var _iterator5 = Object.entries(action.response[key])[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-	                      var _step5$value = _slicedToArray(_step5.value, 2);
-
-	                      var _key = _step5$value[0];
-	                      var _value = _step5$value[1];
-
-	                      if (_key.replace(/_/g, '-') === field.name) {
-	                        newValue = _value;
-	                        break;
-	                      }
-	                    }
-	                  } catch (err) {
-	                    _didIteratorError5 = true;
-	                    _iteratorError5 = err;
-	                  } finally {
-	                    try {
-	                      if (!_iteratorNormalCompletion5 && _iterator5.return) {
-	                        _iterator5.return();
-	                      }
-	                    } finally {
-	                      if (_didIteratorError5) {
-	                        throw _iteratorError5;
-	                      }
-	                    }
-	                  }
-
-	                  if (newValue !== '') {
-	                    return Object.assign({}, field, {
-	                      preview: newValue,
-	                      value: newValue
-	                    });
-	                  } // if no value stored yet, use the default from config
-	                  return field;
-	                })
-	              });
-	            }
-	          }
-	        } catch (err) {
-	          _didIteratorError4 = true;
-	          _iteratorError4 = err;
-	        } finally {
-	          try {
-	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
-	              _iterator4.return();
-	            }
-	          } finally {
-	            if (_didIteratorError4) {
-	              throw _iteratorError4;
-	            }
-	          }
-	        }
-
-	        return component;
-	      });
-	    case _actions.UPDATE_PREVIEW:
-	      // to show the preview for hex inputs
-	      // find the component to modify and update the preview attribute
-	      return state.map(function (component) {
-	        if (component.className === action.componentId) {
-	          return Object.assign({}, component, {
-	            fields: component.fields.map(function (field) {
-	              if (field.id === action.id) {
-	                return Object.assign({}, field, {
-	                  preview: action.preview
-	                });
-	              }
-	              return field;
-	            })
-	          });
-	        }
-	        return component;
-	      });
-	    case _actions.UPDATE_VALUE:
-	      // for non-hex inputs
-	      //find the component to modify and update the value attribute
-	      return state.map(function (component) {
-	        if (component.className === action.componentId) {
-	          return Object.assign({}, component, {
-	            fields: component.fields.map(function (field) {
-	              if (field.id === action.id) {
-	                return Object.assign({}, field, {
-	                  value: action.value
-	                });
-	              }
-	              return field;
-	            })
-	          });
-	        }
-	        return component;
-	      });
-	    case _actions.BEFORE_SAVE_THEME:
-	      // move values from preview to "value" field for hex inputs
-	      return state.map(function (component) {
-	        return Object.assign({}, component, {
-	          fields: component.fields.map(function (field) {
-	            if (field.type === 'hex') {
-	              return Object.assign({}, field, {
-	                value: field.preview
-	              });
-	            }
-	            return field;
-	          })
-	        });
-	      });
-	    default:
-	      return state;
-	  }
-	}
-
-	var rootReducer = (0, _redux.combineReducers)({
-	  isLoading: isLoading,
-	  requestFailed: requestFailed,
-	  errorMessage: errorMessage,
-	  colorScheme: colorScheme,
-	  colorSchemeModule: colorSchemeModule,
-	  variableFields: variableFields,
-	  componentFields: componentFields
-	});
-
-	exports.default = rootReducer;
-
-/***/ },
-/* 507 */
+/* 493 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(508);
+	__webpack_require__(494);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 508 */
+/* 494 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -32839,7 +31622,7 @@
 
 
 /***/ },
-/* 509 */
+/* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;// TinyColor v1.4.1
@@ -34040,7 +32823,251 @@
 
 
 /***/ },
-/* 510 */
+/* 496 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _colorMaster = __webpack_require__(497);
+
+	var _colorMaster2 = _interopRequireDefault(_colorMaster);
+
+	var _colorInput = __webpack_require__(498);
+
+	var _colorInput2 = _interopRequireDefault(_colorInput);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var VariablesSection = function VariablesSection(_ref) {
+	  var masterField = _ref.masterField;
+	  var hexFields = _ref.hexFields;
+	  var selectFields = _ref.selectFields;
+	  var colors = _ref.colors;
+	  var colorScheme = _ref.colorScheme;
+	  var colorSchemeOptions = _ref.colorSchemeOptions;
+	  var fontOptions = _ref.fontOptions;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var updateField = _ref.updateField;
+	  var _chooseColorScheme = _ref.chooseColorScheme;
+	  var saveTheme = _ref.saveTheme;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-8 col-md-12 col-sm-12' },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'style-type' },
+	          'Variables'
+	        ),
+	        _react2.default.createElement(
+	          'h6',
+	          { className: 'style-type-description' },
+	          'Brand colors, fonts, and more for use across your shop.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-4 col-md-12 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger color-input-alert', id: 'var-color-invalid', role: 'alert' },
+	          'Please enter a valid hex value.'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row style-input-row' },
+	      _react2.default.createElement(_colorMaster2.default, {
+	        field: masterField,
+	        colors: colors,
+	        colorScheme: colorScheme,
+	        updateSwatch: _updateSwatch,
+	        chooseColorScheme: function chooseColorScheme(id, value) {
+	          return _chooseColorScheme(id, value);
+	        },
+	        selectOptions: colorSchemeOptions
+	      })
+	    ),
+	    _react2.default.createElement('hr', null),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row style-input-row' },
+	      hexFields.map(function (field) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-4 col-sm-6 col-xs-12' },
+	          _react2.default.createElement(_colorInput2.default, _extends({
+	            key: field.id
+	          }, field, {
+	            updateSwatch: function updateSwatch(id, name, value) {
+	              return _updateSwatch(id, name, value);
+	            },
+	            colors: colors
+	          }))
+	        );
+	      })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row style-input-row' },
+	      selectFields.map(function (field) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'col-md-4 col-sm-6 col-xs-12' },
+	          _react2.default.createElement(_selectInput2.default, _extends({
+	            key: field.id
+	          }, field, {
+	            options: fontOptions,
+	            onInputChange: function onInputChange(id, value) {
+	              return updateField(id, value);
+	            }
+	          }))
+	        );
+	      })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
+	        _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
+	      )
+	    )
+	  );
+	};
+
+	VariablesSection.propTypes = {
+	  masterField: _react.PropTypes.object.isRequired,
+	  hexFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	    id: _react.PropTypes.string.isRequired,
+	    name: _react.PropTypes.string.isRequired,
+	    preview: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
+	  }).isRequired).isRequired,
+	  selectFields: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	    id: _react.PropTypes.string.isRequired,
+	    name: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
+	  }).isRequired).isRequired,
+	  colors: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	    id: _react.PropTypes.string.isRequired,
+	    value: _react.PropTypes.string.isRequired
+	  }).isRequired).isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
+	  colorSchemeOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
+	  fontOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = VariablesSection;
+
+/***/ },
+/* 497 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _colorInput = __webpack_require__(498);
+
+	var _colorInput2 = _interopRequireDefault(_colorInput);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	var _colorSchemeModule = __webpack_require__(500);
+
+	var _colorSchemeModule2 = _interopRequireDefault(_colorSchemeModule);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ColorMaster = function ColorMaster(_ref) {
+	  var field = _ref.field;
+	  var colors = _ref.colors;
+	  var colorScheme = _ref.colorScheme;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var chooseColorScheme = _ref.chooseColorScheme;
+	  var selectOptions = _ref.selectOptions;
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'col-md-4 col-sm-6 col-xs-12' },
+	      _react2.default.createElement(_colorInput2.default, _extends({
+	        key: field.id
+	      }, field, {
+	        updateSwatch: function updateSwatch(id, name, value) {
+	          return _updateSwatch(id, name, value);
+	        },
+	        colors: colors
+	      }))
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'col-md-4 col-sm-6 col-xs-12' },
+	      _react2.default.createElement(_selectInput2.default, {
+	        id: field.preview,
+	        name: 'Color Scheme',
+	        value: colorScheme,
+	        options: selectOptions,
+	        onInputChange: chooseColorScheme
+	      })
+	    ),
+	    _react2.default.createElement(_colorSchemeModule2.default, {
+	      colors: colors
+	    })
+	  );
+	};
+
+	ColorMaster.propTypes = {
+	  field: _react.PropTypes.object.isRequired,
+	  colorScheme: _react.PropTypes.string.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  chooseColorScheme: _react.PropTypes.func.isRequired,
+	  selectOptions: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired
+	};
+
+	exports.default = ColorMaster;
+
+/***/ },
+/* 498 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34139,6 +33166,974 @@
 	};
 
 	exports.default = ColorInput;
+
+/***/ },
+/* 499 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SelectInput = function SelectInput(_ref) {
+	  var id = _ref.id;
+	  var name = _ref.name;
+	  var value = _ref.value;
+	  var options = _ref.options;
+	  var onInputChange = _ref.onInputChange;
+
+	  var editableID = "editable-" + id;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "form-group" },
+	    _react2.default.createElement(
+	      "label",
+	      null,
+	      name
+	    ),
+	    _react2.default.createElement(
+	      "select",
+	      { className: "form-control select-input", onChange: function onChange(e) {
+	          return onInputChange(id, e.target.value);
+	        }, value: value },
+	      options.map(function (option) {
+	        return _react2.default.createElement(
+	          "option",
+	          { key: options.findIndex(function (x) {
+	              return x === option;
+	            }) },
+	          option
+	        );
+	      })
+	    ),
+	    _react2.default.createElement("input", { className: "editable", id: editableID, type: "text", key: id, style: { display: "none" } })
+	  );
+	};
+
+	SelectInput.propTypes = {
+	  id: _react.PropTypes.string.isRequired,
+	  name: _react.PropTypes.string.isRequired,
+	  value: _react.PropTypes.string.isRequired,
+	  options: _react.PropTypes.arrayOf(_react.PropTypes.string.isRequired).isRequired,
+	  onInputChange: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = SelectInput;
+
+/***/ },
+/* 500 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ColorSchemeModule = function ColorSchemeModule(_ref) {
+	  var colors = _ref.colors;
+
+	  return _react2.default.createElement(
+	    "div",
+	    { className: "btn-toolbar col-md-4 col-sm-6 col-xs-12", id: "color-scheme", role: "toolbar" },
+	    colors.map(function (color) {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "btn-group", role: "group", key: color.id },
+	        _react2.default.createElement(
+	          "button",
+	          { type: "button", className: "btn btn-default", key: color.id, title: color.value, style: { background: color.value, color: color.value } },
+	          "."
+	        )
+	      );
+	    })
+	  );
+	};
+	ColorSchemeModule.propTypes = {
+	  colors: _react.PropTypes.array.isRequired
+	};
+
+	exports.default = ColorSchemeModule;
+
+/***/ },
+/* 501 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"variables": [
+			{
+				"name": "brand-primary",
+				"type": "hex",
+				"default": "#000"
+			},
+			{
+				"name": "brand-success",
+				"type": "hex",
+				"default": "#000"
+			},
+			{
+				"name": "brand-warning",
+				"type": "hex",
+				"default": "#000"
+			},
+			{
+				"name": "brand-danger",
+				"type": "hex",
+				"default": "#000"
+			},
+			{
+				"name": "primary-font",
+				"type": "selector",
+				"default": "Arial"
+			},
+			{
+				"name": "secondary-font",
+				"type": "selector",
+				"default": "Arial"
+			}
+		],
+		"components": [
+			{
+				"name": "Hello Bar",
+				"id": "hello-bar",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc"
+					}
+				}
+			},
+			{
+				"name": "Navbar",
+				"id": "navbar",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"background-color": {
+						"type": "hex",
+						"default": "#ccc",
+						"dependencies": "color"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc",
+						"dependencies": "background-color"
+					}
+				}
+			},
+			{
+				"name": "Third One",
+				"id": "third-one",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial",
+						"dependencies": "background-color"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc",
+						"dependencies": "background-color"
+					},
+					"background-color": {
+						"type": "hex",
+						"default": "#ccc",
+						"dependencies": "color"
+					}
+				}
+			},
+			{
+				"name": "Anotha One",
+				"id": "anotha-one",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc"
+					}
+				}
+			},
+			{
+				"name": "Some Bar",
+				"id": "some-bar",
+				"styles": {
+					"font": {
+						"type": "selector",
+						"default": "Arial"
+					},
+					"color": {
+						"type": "hex",
+						"default": "#ccc"
+					}
+				}
+			}
+		]
+	};
+
+/***/ },
+/* 502 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(480);
+
+	var _redux = __webpack_require__(467);
+
+	var _actions = __webpack_require__(492);
+
+	var _componentsSection = __webpack_require__(503);
+
+	var _componentsSection2 = _interopRequireDefault(_componentsSection);
+
+	var _colorInput = __webpack_require__(498);
+
+	var _colorInput2 = _interopRequireDefault(_colorInput);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state, dispatch) {
+	  return {
+	    components: state.componentFields,
+	    colors: state.colorSchemeModule
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updateSwatch: function updateSwatch(id, name, preview, componentId) {
+	      // validate hex colors (reset warnings if fine)
+	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
+	      if (isHexColor && preview != "") {
+	        $('#' + id + '-input').removeClass('form-control-danger');
+	        $('#' + id + '-div').removeClass('has-danger');
+	        $('#comp-color-invalid').hide();
+	        dispatch((0, _actions.checkConflicts)(id, name, preview, componentId));
+	      }
+	      // add warnings if not valid
+	      else if (!isHexColor && preview != "") {
+	          $('#' + id + '-input').addClass('form-control-danger');
+	          $('#' + id + '-div').addClass('has-danger');
+	          $('#comp-color-invalid').show();
+	        }
+	    },
+	    updateField: function updateField(id, value, componentId) {
+	      var inputID = "#editable-" + id;
+	      if (value === 'Other') {
+	        $(inputID).val('Enter URL...');
+	        $(inputID).show();
+	        $(inputID).parent().css('margin-bottom', '-20px');
+	      } else {
+	        $(inputID).hide();
+	      }
+	      dispatch((0, _actions.updateValue)(componentId, id, value));
+	    },
+	    saveTheme: function saveTheme() {
+	      dispatch((0, _actions.saveTheme)());
+	    },
+	    dispatch: dispatch
+	  };
+	};
+
+	var ComponentsSectionContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_componentsSection2.default);
+
+	exports.default = ComponentsSectionContainer;
+
+/***/ },
+/* 503 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _componentModule = __webpack_require__(504);
+
+	var _componentModule2 = _interopRequireDefault(_componentModule);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ComponentsSection = function ComponentsSection(_ref) {
+	  var components = _ref.components;
+	  var colors = _ref.colors;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var _updateField = _ref.updateField;
+	  var saveTheme = _ref.saveTheme;
+	  var dispatch = _ref.dispatch;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-4 col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'style-type' },
+	          'Components'
+	        ),
+	        _react2.default.createElement(
+	          'h6',
+	          { className: 'style-type-description' },
+	          'Customize components across your shop.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-8 col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-warning color-input-alert', id: 'color-conflict', role: 'alert' },
+	          'Warning: Color conflict detected. Your color choice may not be readable for users.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-8 col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger color-input-alert', id: 'comp-color-invalid', role: 'alert' },
+	          'Please enter a valid hex value.'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row style-input-row' },
+	      components.map(function (component, index) {
+	        return _react2.default.createElement(_componentModule2.default, {
+	          key: index,
+	          name: component.name,
+	          fields: component.fields,
+	          colors: colors,
+	          updateSwatch: function updateSwatch(id, name, value) {
+	            return _updateSwatch(id, name, value, component.className);
+	          },
+	          updateField: function updateField(id, value) {
+	            return _updateField(id, value, component.className);
+	          },
+	          dispatch: dispatch
+	        });
+	      })
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4 col-md-offset-8 col-sm-4 col-sm-offset-8' },
+	        _react2.default.createElement('input', { className: 'btn btn-primary', id: 'submit', type: 'submit', value: 'Save', onClick: saveTheme })
+	      )
+	    )
+	  );
+	};
+
+	ComponentsSection.propTypes = {
+	  components: _react.PropTypes.arrayOf(_react.PropTypes.object.isRequired).isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  updateField: _react.PropTypes.func.isRequired,
+	  saveTheme: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = ComponentsSection;
+
+/***/ },
+/* 504 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _colorInput = __webpack_require__(498);
+
+	var _colorInput2 = _interopRequireDefault(_colorInput);
+
+	var _selectInput = __webpack_require__(499);
+
+	var _selectInput2 = _interopRequireDefault(_selectInput);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ComponentModule = function ComponentModule(_ref) {
+	  var name = _ref.name;
+	  var fields = _ref.fields;
+	  var colors = _ref.colors;
+	  var _updateSwatch = _ref.updateSwatch;
+	  var updateField = _ref.updateField;
+	  var dispatch = _ref.dispatch;
+
+	  function getFields(fields) {
+	    return fields.map(function (field) {
+	      switch (field.type) {
+	        case 'hex':
+	          return _react2.default.createElement(_colorInput2.default, _extends({
+	            key: field.id
+	          }, field, {
+	            updateSwatch: function updateSwatch(id, name, value) {
+	              return _updateSwatch(id, name, value);
+	            },
+	            colors: colors
+	          }));
+	          break;
+	        case 'selector':
+	          return _react2.default.createElement(_selectInput2.default, _extends({
+	            key: field.id
+	          }, field, {
+	            options: ["Arial", "Helvetica", "Tahoma", "Trebuchet", "Verdana", "Other"],
+	            onInputChange: function onInputChange(id, value) {
+	              return updateField(id, value);
+	            }
+	          }));
+	          break;
+	        default:
+	          return null;
+	      }
+	    });
+	  }
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'component-module col-lg-4 col-md-6 col-sm-12' },
+	    _react2.default.createElement(
+	      'h5',
+	      { className: 'component-name' },
+	      name
+	    ),
+	    getFields(fields),
+	    _react2.default.createElement('hr', null)
+	  );
+	};
+
+	ComponentModule.propTypes = {
+	  name: _react.PropTypes.string.isRequired,
+	  fields: _react.PropTypes.array.isRequired,
+	  colors: _react.PropTypes.array.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  updateField: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = ComponentModule;
+
+/***/ },
+/* 505 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+	var _redux = __webpack_require__(467);
+
+	var _actions = __webpack_require__(492);
+
+	/**
+	  STATE SHAPE:
+	  {
+	    isLoading: boolean,
+	    requestFailed: boolean,
+	    errorMessage: string,
+	    colorScheme: string,
+	    colorSchemeModule: array of strings (hex colors),
+	    variableFields: [
+	      {
+	        id: string,
+	        name: string, ('color')
+	        type: string, ('hex')
+	        preview: string,
+	        value: string
+	      },
+	      ...
+	    ]
+	    componentFields: [
+	      {
+	        id: string,
+	        name: string, (Hello Bar)
+	        className: string, (hello-bar)
+	        fields: [
+	          {
+	            id: string,
+	            name: string,
+	            type: string,
+	            preview: string,
+	            value: string
+	          },
+	          ...
+	        ]
+	      },
+	      ...
+	    ]
+	  }
+	**/
+
+	function isLoading() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES:
+	    case _actions.SAVE_STYLES:
+	      return true;
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_SUCCESS:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return false;
+	    default:
+	      return state;
+	  }
+	}
+
+	function requestFailed() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return true;
+	    case _actions.REQUEST_STYLES:
+	    case _actions.SAVE_STYLES:
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	    case _actions.SAVE_STYLES_SUCCESS:
+	      return false;
+	    default:
+	      return state;
+	  }
+	}
+
+	function errorMessage() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.REQUEST_STYLES_FAILURE:
+	    case _actions.SAVE_STYLES_FAILURE:
+	      return action.error;
+	    default:
+	      return state;
+	  }
+	}
+
+	function colorScheme() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? "Analogous" : arguments[0];
+	  var action = arguments[1];
+
+	  // type of color scheme to generate
+	  switch (action.type) {
+	    case _actions.CHOOSE_COLOR_SCHEME:
+	      return action.scheme;
+	    default:
+	      return state;
+	  }
+	}
+
+	function colorSchemeModule() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  // the actual color palette generated after a color scheme is selected
+	  switch (action.type) {
+	    case _actions.DISPLAY_COLOR_SCHEME:
+	      state = [];
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+
+	      try {
+	        for (var _iterator = action.colors.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var _step$value = _slicedToArray(_step.value, 2);
+
+	          var index = _step$value[0];
+	          var value = _step$value[1];
+
+	          state.push({
+	            id: index,
+	            value: value
+	          });
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+
+	      return state;
+	    default:
+	      return state;
+	  }
+	}
+
+	function variableFields() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  // same functionality as componentFields, but just formatted differently in the state
+	  switch (action.type) {
+	    case _actions.CONFIGURE_STATE:
+	      return action.data.variables.map(function (variable) {
+	        return Object.assign({}, {
+	          id: 'v' + action.data.variables.indexOf(variable),
+	          name: variable.name,
+	          type: variable.type, // do we need dis
+	          preview: variable.default,
+	          value: variable.default
+	        });
+	      });
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	      return state.map(function (variable) {
+	        var newValue = '';
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	          for (var _iterator2 = Object.entries(action.response.variables)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var _step2$value = _slicedToArray(_step2.value, 2);
+
+	            var key = _step2$value[0];
+	            var value = _step2$value[1];
+
+	            if (key.replace(/_/g, '-') === variable.name) {
+	              newValue = value;
+	              break;
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+
+	        if (newValue !== '') {
+	          return Object.assign({}, variable, {
+	            preview: newValue,
+	            value: newValue
+	          });
+	        }
+	        return variable;
+	      });
+	    case _actions.UPDATE_PREVIEW:
+	      if (action.componentId !== null) {
+	        return state;
+	      }
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            preview: action.preview
+	          });
+	        }
+	        return field;
+	      });
+	    case _actions.UPDATE_VALUE:
+	      if (action.componentId !== null) {
+	        return state;
+	      }
+	      return state.map(function (field) {
+	        if (field.id === action.id) {
+	          return Object.assign({}, field, {
+	            value: action.value
+	          });
+	        }
+	        return field;
+	      });
+	    case _actions.BEFORE_SAVE_THEME:
+	      return state.map(function (field) {
+	        return Object.assign({}, field, {
+	          value: field.preview
+	        });
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+	// helper function to configure component fields (one level deeper)
+	function getFields(component, data) {
+	  var fieldsArray = [];
+	  var index = 0;
+	  var _iteratorNormalCompletion3 = true;
+	  var _didIteratorError3 = false;
+	  var _iteratorError3 = undefined;
+
+	  try {
+	    for (var _iterator3 = Object.entries(component.styles)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+	      var _step3$value = _slicedToArray(_step3.value, 2);
+
+	      var key = _step3$value[0];
+	      var value = _step3$value[1];
+
+	      if ('dependencies' in value) {
+	        fieldsArray.push(Object.assign({}, {
+	          id: 'c' + data.components.indexOf(component) + 'f' + index,
+	          name: key,
+	          type: value.type,
+	          preview: value.default,
+	          value: value.default,
+	          dependencies: value.dependencies
+	        }));
+	      } else {
+	        fieldsArray.push(Object.assign({}, {
+	          id: 'c' + data.components.indexOf(component) + 'f' + index,
+	          name: key,
+	          type: value.type,
+	          preview: value.default,
+	          value: value.default
+	        }));
+	      }
+	      index++;
+	    }
+	  } catch (err) {
+	    _didIteratorError3 = true;
+	    _iteratorError3 = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion3 && _iterator3.return) {
+	        _iterator3.return();
+	      }
+	    } finally {
+	      if (_didIteratorError3) {
+	        throw _iteratorError3;
+	      }
+	    }
+	  }
+
+	  return fieldsArray;
+	}
+
+	function componentFields() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case _actions.CONFIGURE_STATE:
+	      // configure state based on the json config
+	      return action.data.components.map(function (component) {
+	        return Object.assign({}, {
+	          id: 'c' + action.data.components.indexOf(component), // to give each React element a unique key
+	          name: component.name,
+	          className: component.id,
+	          fields: getFields(component, action.data)
+	        });
+	      });
+	    case _actions.REQUEST_STYLES_SUCCESS:
+	      // get data for fields specified by the state (and config) from the API
+	      return state.map(function (component) {
+	        var _iteratorNormalCompletion4 = true;
+	        var _didIteratorError4 = false;
+	        var _iteratorError4 = undefined;
+
+	        try {
+	          for (var _iterator4 = Object.entries(action.response)[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+	            var _step4$value = _slicedToArray(_step4.value, 2);
+
+	            var key = _step4$value[0];
+	            var value = _step4$value[1];
+
+	            if (key.replace(/_/g, '-') === component.className) {
+	              return Object.assign({}, component, {
+	                fields: component.fields.map(function (field) {
+	                  var newValue = '';
+	                  var _iteratorNormalCompletion5 = true;
+	                  var _didIteratorError5 = false;
+	                  var _iteratorError5 = undefined;
+
+	                  try {
+	                    for (var _iterator5 = Object.entries(action.response[key])[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+	                      var _step5$value = _slicedToArray(_step5.value, 2);
+
+	                      var _key = _step5$value[0];
+	                      var _value = _step5$value[1];
+
+	                      if (_key.replace(/_/g, '-') === field.name) {
+	                        newValue = _value;
+	                        break;
+	                      }
+	                    }
+	                  } catch (err) {
+	                    _didIteratorError5 = true;
+	                    _iteratorError5 = err;
+	                  } finally {
+	                    try {
+	                      if (!_iteratorNormalCompletion5 && _iterator5.return) {
+	                        _iterator5.return();
+	                      }
+	                    } finally {
+	                      if (_didIteratorError5) {
+	                        throw _iteratorError5;
+	                      }
+	                    }
+	                  }
+
+	                  if (newValue !== '') {
+	                    return Object.assign({}, field, {
+	                      preview: newValue,
+	                      value: newValue
+	                    });
+	                  } // if no value stored yet, use the default from config
+	                  return field;
+	                })
+	              });
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError4 = true;
+	          _iteratorError4 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion4 && _iterator4.return) {
+	              _iterator4.return();
+	            }
+	          } finally {
+	            if (_didIteratorError4) {
+	              throw _iteratorError4;
+	            }
+	          }
+	        }
+
+	        return component;
+	      });
+	    case _actions.UPDATE_PREVIEW:
+	      // to show the preview for hex inputs
+	      // find the component to modify and update the preview attribute
+	      return state.map(function (component) {
+	        if (component.className === action.componentId) {
+	          return Object.assign({}, component, {
+	            fields: component.fields.map(function (field) {
+	              if (field.id === action.id) {
+	                return Object.assign({}, field, {
+	                  preview: action.preview
+	                });
+	              }
+	              return field;
+	            })
+	          });
+	        }
+	        return component;
+	      });
+	    case _actions.UPDATE_VALUE:
+	      // for non-hex inputs
+	      //find the component to modify and update the value attribute
+	      return state.map(function (component) {
+	        if (component.className === action.componentId) {
+	          return Object.assign({}, component, {
+	            fields: component.fields.map(function (field) {
+	              if (field.id === action.id) {
+	                return Object.assign({}, field, {
+	                  value: action.value
+	                });
+	              }
+	              return field;
+	            })
+	          });
+	        }
+	        return component;
+	      });
+	    case _actions.BEFORE_SAVE_THEME:
+	      // move values from preview to "value" field for hex inputs
+	      return state.map(function (component) {
+	        return Object.assign({}, component, {
+	          fields: component.fields.map(function (field) {
+	            if (field.type === 'hex') {
+	              return Object.assign({}, field, {
+	                value: field.preview
+	              });
+	            }
+	            return field;
+	          })
+	        });
+	      });
+	    default:
+	      return state;
+	  }
+	}
+
+	var rootReducer = (0, _redux.combineReducers)({
+	  isLoading: isLoading,
+	  requestFailed: requestFailed,
+	  errorMessage: errorMessage,
+	  colorScheme: colorScheme,
+	  colorSchemeModule: colorSchemeModule,
+	  variableFields: variableFields,
+	  componentFields: componentFields
+	});
+
+	exports.default = rootReducer;
 
 /***/ }
 /******/ ]);
