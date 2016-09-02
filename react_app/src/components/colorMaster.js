@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import TextInput from './textInput';
+import ColorInput from './colorInput';
 import SelectInput from './selectInput';
 import ColorSchemeModule from './colorSchemeModule';
 
@@ -7,7 +7,7 @@ const ColorMaster = ({ field, colors, colorScheme, updateSwatch, chooseColorSche
   return (
     <div>
       <div className="col-md-4 col-sm-6 col-xs-12">
-        <TextInput
+        <ColorInput
           key={field.id}
           {...field}
           updateSwatch={(id, name, value) => updateSwatch(id, name, value)}

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import ColorMaster from './colorMaster'
-import TextInput from './textInput'
+import ColorInput from './colorInput'
 import SelectInput from './selectInput'
 
 const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorScheme, colorSchemeOptions, fontOptions, updateSwatch, updateField, chooseColorScheme, saveTheme }) => (
@@ -31,7 +31,7 @@ const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorS
       {
         hexFields.map(field =>
           <div className="col-md-4 col-sm-6 col-xs-12">
-            <TextInput
+            <ColorInput
               key={field.id}
               {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}

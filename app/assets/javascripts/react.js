@@ -31019,107 +31019,7 @@
 
 /***/ },
 /* 493 */,
-/* 494 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _actions = __webpack_require__(492);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var TextInput = function TextInput(_ref) {
-	  var id = _ref.id;
-	  var name = _ref.name;
-	  var preview = _ref.preview;
-	  var value = _ref.value;
-	  var updateSwatch = _ref.updateSwatch;
-	  var colors = _ref.colors;
-
-	  var style = {
-	    background: preview,
-	    color: preview
-	  };
-
-	  var divID = id + "-div";
-	  var inputID = id + "-input";
-
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'style-input-div', id: divID },
-	    _react2.default.createElement(
-	      'label',
-	      { id: name },
-	      name
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'input-group' },
-	      _react2.default.createElement('input', { className: 'form-control style-input',
-	        id: inputID,
-	        type: 'text',
-	        placeholder: preview,
-	        onBlur: function onBlur(e) {
-	          return updateSwatch(id, name, e.target.value);
-	        }
-	      }),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'input-group-btn' },
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button',
-	            className: 'btn btn-default dropdown-toggle',
-	            id: 'input-preview',
-	            style: style,
-	            'data-toggle': 'dropdown',
-	            'aria-haspopup': 'true', 'aria-expanded': 'false' },
-	          '@',
-	          _react2.default.createElement('span', { className: 'caret' })
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'dropdown-menu' },
-	          colors.map(function (color) {
-	            return _react2.default.createElement(
-	              'button',
-	              { className: 'dropdown-item',
-	                type: 'button',
-	                key: color.id,
-	                style: { background: color.value, color: color.value, borderRadius: '0.25rem' },
-	                onClick: function onClick(e) {
-	                  return updateSwatch(id, name, color.value);
-	                }
-	              },
-	              '@'
-	            );
-	          })
-	        )
-	      )
-	    )
-	  );
-	};
-
-	TextInput.propTypes = {
-	  id: _react.PropTypes.string.isRequired,
-	  name: _react.PropTypes.string.isRequired,
-	  preview: _react.PropTypes.string.isRequired,
-	  value: _react.PropTypes.string.isRequired,
-	  updateSwatch: _react.PropTypes.func.isRequired,
-	  colors: _react.PropTypes.array.isRequired
-	};
-
-	exports.default = TextInput;
-
-/***/ },
+/* 494 */,
 /* 495 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -31135,9 +31035,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _textInput = __webpack_require__(494);
+	var _colorInput = __webpack_require__(510);
 
-	var _textInput2 = _interopRequireDefault(_textInput);
+	var _colorInput2 = _interopRequireDefault(_colorInput);
 
 	var _selectInput = __webpack_require__(496);
 
@@ -31163,7 +31063,7 @@
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'col-md-4 col-sm-6 col-xs-12' },
-	      _react2.default.createElement(_textInput2.default, _extends({
+	      _react2.default.createElement(_colorInput2.default, _extends({
 	        key: field.id
 	      }, field, {
 	        updateSwatch: function updateSwatch(id, name, value) {
@@ -31479,9 +31379,9 @@
 
 	var _colorMaster2 = _interopRequireDefault(_colorMaster);
 
-	var _textInput = __webpack_require__(494);
+	var _colorInput = __webpack_require__(510);
 
-	var _textInput2 = _interopRequireDefault(_textInput);
+	var _colorInput2 = _interopRequireDefault(_colorInput);
 
 	var _selectInput = __webpack_require__(496);
 
@@ -31553,7 +31453,7 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'col-md-4 col-sm-6 col-xs-12' },
-	          _react2.default.createElement(_textInput2.default, _extends({
+	          _react2.default.createElement(_colorInput2.default, _extends({
 	            key: field.id
 	          }, field, {
 	            updateSwatch: function updateSwatch(id, name, value) {
@@ -31770,9 +31670,9 @@
 
 	var _componentsSection2 = _interopRequireDefault(_componentsSection);
 
-	var _textInput = __webpack_require__(494);
+	var _colorInput = __webpack_require__(510);
 
-	var _textInput2 = _interopRequireDefault(_textInput);
+	var _colorInput2 = _interopRequireDefault(_colorInput);
 
 	var _selectInput = __webpack_require__(496);
 
@@ -31950,9 +31850,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _textInput = __webpack_require__(494);
+	var _colorInput = __webpack_require__(510);
 
-	var _textInput2 = _interopRequireDefault(_textInput);
+	var _colorInput2 = _interopRequireDefault(_colorInput);
 
 	var _selectInput = __webpack_require__(496);
 
@@ -31972,7 +31872,7 @@
 	    return fields.map(function (field) {
 	      switch (field.type) {
 	        case 'hex':
-	          return _react2.default.createElement(_textInput2.default, _extends({
+	          return _react2.default.createElement(_colorInput2.default, _extends({
 	            key: field.id
 	          }, field, {
 	            updateSwatch: function updateSwatch(id, name, value) {
@@ -34138,6 +34038,107 @@
 
 	})(Math);
 
+
+/***/ },
+/* 510 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _actions = __webpack_require__(492);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ColorInput = function ColorInput(_ref) {
+	  var id = _ref.id;
+	  var name = _ref.name;
+	  var preview = _ref.preview;
+	  var value = _ref.value;
+	  var updateSwatch = _ref.updateSwatch;
+	  var colors = _ref.colors;
+
+	  var style = {
+	    background: preview,
+	    color: preview
+	  };
+
+	  var divID = id + "-div";
+	  var inputID = id + "-input";
+
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'style-input-div', id: divID },
+	    _react2.default.createElement(
+	      'label',
+	      { id: name },
+	      name
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'input-group' },
+	      _react2.default.createElement('input', { className: 'form-control style-input',
+	        id: inputID,
+	        type: 'text',
+	        placeholder: preview,
+	        onBlur: function onBlur(e) {
+	          return updateSwatch(id, name, e.target.value);
+	        }
+	      }),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'input-group-btn' },
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button',
+	            className: 'btn btn-default dropdown-toggle',
+	            id: 'input-preview',
+	            style: style,
+	            'data-toggle': 'dropdown',
+	            'aria-haspopup': 'true', 'aria-expanded': 'false' },
+	          '@',
+	          _react2.default.createElement('span', { className: 'caret' })
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dropdown-menu' },
+	          colors.map(function (color) {
+	            return _react2.default.createElement(
+	              'button',
+	              { className: 'dropdown-item',
+	                type: 'button',
+	                key: color.id,
+	                style: { background: color.value, color: color.value, borderRadius: '0.25rem' },
+	                onClick: function onClick(e) {
+	                  return updateSwatch(id, name, color.value);
+	                }
+	              },
+	              '@'
+	            );
+	          })
+	        )
+	      )
+	    )
+	  );
+	};
+
+	ColorInput.propTypes = {
+	  id: _react.PropTypes.string.isRequired,
+	  name: _react.PropTypes.string.isRequired,
+	  preview: _react.PropTypes.string.isRequired,
+	  value: _react.PropTypes.string.isRequired,
+	  updateSwatch: _react.PropTypes.func.isRequired,
+	  colors: _react.PropTypes.array.isRequired
+	};
+
+	exports.default = ColorInput;
 
 /***/ }
 /******/ ]);

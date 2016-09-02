@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import TextInput from './textInput'
+import ColorInput from './colorInput'
 import SelectInput from './selectInput'
 
 const ComponentModule = ({ name, fields, colors, updateSwatch, updateField, dispatch }) => {
@@ -8,7 +8,7 @@ const ComponentModule = ({ name, fields, colors, updateSwatch, updateField, disp
       switch (field.type) {
         case 'hex':
           return (
-            <TextInput
+            <ColorInput
               key={field.id}
               {...field}
               updateSwatch={(id, name, value) => updateSwatch(id, name, value)}

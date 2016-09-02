@@ -3,7 +3,7 @@ import { connect, dispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { checkConflicts, updateValue, saveTheme } from '../actions'
 import ComponentsSection from '../components/componentsSection'
-import TextInput from '../components/textInput'
+import ColorInput from '../components/colorInput'
 import SelectInput from '../components/selectInput'
 
 const mapStateToProps = (state, dispatch) => {

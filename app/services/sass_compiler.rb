@@ -17,7 +17,7 @@ class SassCompiler
         $<%= var[0].to_s.dasherize %>: <%= var[1] %>;
       <% end -%>
       <% else -%>
-        <%= attr[0].to_s.dasherize %> {
+        .<%= attr[0].to_s.dasherize %> {
       <% attr[1].each do | var | -%>
           <%= var[0].to_s.dasherize %>: <%= var[1] %>;
       <% end -%>
