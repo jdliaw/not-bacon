@@ -183,13 +183,25 @@ function getFields(component, data) {
   let fieldsArray = []
   let index = 0
   for (let [key, value] of Object.entries(component.styles)) {
-    fieldsArray.push(Object.assign({}, {
-      id: 'c' + data.components.indexOf(component) + 'f' + index,
-      name: key,
-      type: value.type,
-      preview: value.default,
-      value: value.default
-    }))
+    if ('dependencies' in value) {
+      fieldsArray.push(Object.assign({}, {
+        id: 'c' + data.components.indexOf(component) + 'f' + index,
+        name: key,
+        type: value.type,
+        preview: value.default,
+        value: value.default,
+        dependencies: value.dependencies
+      }))
+    }
+    else {
+      fieldsArray.push(Object.assign({}, {
+        id: 'c' + data.components.indexOf(component) + 'f' + index,
+        name: key,
+        type: value.type,
+        preview: value.default,
+        value: value.default
+      }))
+    }
     index++
   }
   return fieldsArray

@@ -30631,6 +30631,7 @@
 	  value: true
 	});
 	exports.CONFIGURE_STATE = exports.SAVE_STYLES_FAILURE = exports.SAVE_STYLES_SUCCESS = exports.SAVE_STYLES = exports.REQUEST_STYLES_FAILURE = exports.REQUEST_STYLES_SUCCESS = exports.REQUEST_STYLES = exports.beforeSaveTheme = exports.BEFORE_SAVE_THEME = exports.displayColorScheme = exports.chooseColorScheme = exports.updateValue = exports.updatePreview = exports.DISPLAY_COLOR_SCHEME = exports.CHOOSE_COLOR_SCHEME = exports.UPDATE_VALUE = exports.UPDATE_PREVIEW = undefined;
+	exports.checkConflicts = checkConflicts;
 	exports.getColorScheme = getColorScheme;
 	exports.saveTheme = saveTheme;
 	exports.requestStyles = requestStyles;
@@ -30670,6 +30671,86 @@
 	    preview: preview
 	  };
 	};
+
+	function findCurrentValue(state, componentId, fieldId) {
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = Object.values(state.componentFields)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var component = _step.value;
+
+	      if (component.className === componentId) {
+	        var _iteratorNormalCompletion2 = true;
+	        var _didIteratorError2 = false;
+	        var _iteratorError2 = undefined;
+
+	        try {
+	          for (var _iterator2 = Object.values(component.fields)[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	            var field = _step2.value;
+
+	            if (field.name === fieldId) {
+	              return field.preview;
+	            }
+	          }
+	        } catch (err) {
+	          _didIteratorError2 = true;
+	          _iteratorError2 = err;
+	        } finally {
+	          try {
+	            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	              _iterator2.return();
+	            }
+	          } finally {
+	            if (_didIteratorError2) {
+	              throw _iteratorError2;
+	            }
+	          }
+	        }
+	      }
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return null;
+	}
+
+	function checkConflicts(id, name, preview, componentId) {
+	  return function (dispatch, getState) {
+	    dispatch(updatePreview(componentId, id, preview));
+	    getState().componentFields.map(function (component) {
+	      if (component.className === componentId) {
+	        component.fields.map(function (field) {
+	          if (field.id === id && 'dependencies' in field) {
+	            var dependentValue = findCurrentValue(getState(), componentId, field.dependencies);
+	            if (_tinycolor2.default.isReadable(field.preview, dependentValue)) {
+	              $('#' + id + '-input').removeClass('form-control-danger');
+	              $('#' + id + '-div').removeClass('has-danger');
+	              $('.color-input-warning').hide();
+	            } else {
+	              $('#' + id + '-input').addClass('form-control-danger');
+	              $('#' + id + '-div').addClass('has-danger');
+	              $('.color-input-warning').show();
+	            }
+	          }
+	        });
+	      }
+	    });
+	  };
+	}
 
 	// action creator for UPDATE_VALUE
 	var updateValue = exports.updateValue = function updateValue(componentId, id, value) {
@@ -30968,8 +31049,8 @@
 	    color: preview
 	  };
 
-	  var divID = name + "-div";
-	  var inputID = name + "-input";
+	  var divID = id + "-div";
+	  var inputID = id + "-input";
 
 	  return _react2.default.createElement(
 	    'div',
@@ -31592,7 +31673,8 @@
 					},
 					"background-color": {
 						"type": "hex",
-						"default": "#ccc"
+						"default": "#ccc",
+						"dependencies": "color"
 					},
 					"color": {
 						"type": "hex",
@@ -31612,7 +31694,8 @@
 					},
 					"color": {
 						"type": "hex",
-						"default": "#ccc"
+						"default": "#ccc",
+						"dependencies": "color"
 					},
 					"background-color": {
 						"type": "hex",
@@ -31700,7 +31783,7 @@
 	      if (isHexColor && preview != "") {
 	        $('#' + name + '-input').removeClass('form-control-danger');
 	        $('#' + name + '-div').removeClass('has-danger');
-	        dispatch((0, _actions.updatePreview)(componentId, id, preview));
+	        dispatch((0, _actions.checkConflicts)(id, name, preview, componentId));
 	      }
 	      // add warnings if not valid
 	      else if (!isHexColor && preview != "") {
@@ -31775,6 +31858,15 @@
 	          'h6',
 	          { className: 'style-type-description' },
 	          'Customize components across your shop.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-4 col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-warning color-input-warning', role: 'alert' },
+	          'Warning: Color conflict detected.'
 	        )
 	      )
 	    ),
@@ -32175,13 +32267,24 @@
 	      var key = _step3$value[0];
 	      var value = _step3$value[1];
 
-	      fieldsArray.push(Object.assign({}, {
-	        id: 'c' + data.components.indexOf(component) + 'f' + index,
-	        name: key,
-	        type: value.type,
-	        preview: value.default,
-	        value: value.default
-	      }));
+	      if ('dependencies' in value) {
+	        fieldsArray.push(Object.assign({}, {
+	          id: 'c' + data.components.indexOf(component) + 'f' + index,
+	          name: key,
+	          type: value.type,
+	          preview: value.default,
+	          value: value.default,
+	          dependencies: value.dependencies
+	        }));
+	      } else {
+	        fieldsArray.push(Object.assign({}, {
+	          id: 'c' + data.components.indexOf(component) + 'f' + index,
+	          name: key,
+	          type: value.type,
+	          preview: value.default,
+	          value: value.default
+	        }));
+	      }
 	      index++;
 	    }
 	  } catch (err) {

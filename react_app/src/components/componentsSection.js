@@ -8,6 +8,9 @@ const ComponentsSection = ({ components, colors, updateSwatch, updateField, save
   			<h2 className="style-type">Components</h2>
   			<h6 className="style-type-description">Customize components across your shop.</h6>
   		</div>
+      <div className="col-lg-4 col-md-6 col-sm-12">
+        <div className="alert alert-warning color-input-warning" role="alert">Warning: Color conflict detected.</div>
+      </div>
   	</div>
 
   	<div className="row style-input-row">

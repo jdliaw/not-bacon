@@ -7,8 +7,8 @@ const TextInput = ({id, name, preview, value, updateSwatch, colors}) => {
     color: preview
   };
 
-  let divID = name + "-div";
-  let inputID = name + "-input"
+  let divID = id + "-div"
+  let inputID = id + "-input"
 
   return (
     <div className="style-input-div" id={divID}>

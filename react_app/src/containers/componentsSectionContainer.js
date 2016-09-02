@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect, dispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { updatePreview, updateValue, saveTheme } from '../actions'
+import { checkConflicts, updateValue, saveTheme } from '../actions'
 import ComponentsSection from '../components/componentsSection'
 import TextInput from '../components/textInput'
 import SelectInput from '../components/selectInput'
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
       if (isHexColor && preview != "") {
         $('#' + name + '-input').removeClass('form-control-danger')
         $('#' + name + '-div').removeClass('has-danger')
-        dispatch(updatePreview(componentId, id, preview))
+        dispatch(checkConflicts(id, name, preview, componentId))
       }
       // add warnings if not valid
       else if (!isHexColor && preview != "") {

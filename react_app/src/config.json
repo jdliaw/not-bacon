@@ -56,11 +56,13 @@
 				},
 				"background-color": {
 					"type": "hex",
-					"default": "#ccc"
+					"default": "#ccc",
+					"dependencies": "color"
 				},
 				"color": {
 					"type": "hex",
-					"default": "#ccc"
+					"default": "#ccc",
+					"dependencies": "background-color"
 				}
 			}
 		},
@@ -70,11 +72,13 @@
 			"styles": {
 				"font": {
 					"type": "selector",
-					"default": "Arial"
+					"default": "Arial",
+					"dependencies": "background-color"
 				},
 				"color": {
 					"type": "hex",
-					"default": "#ccc"
+					"default": "#ccc",
+					"dependencies": "color"
 				},
 				"background-color": {
 					"type": "hex",

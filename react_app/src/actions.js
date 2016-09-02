@@ -17,6 +17,44 @@ export const updatePreview = (componentId, id, preview) => {
   }
 }
 
+function findCurrentValue(state, componentId, fieldId) {
+  for (let component of Object.values(state.componentFields)) {
+    if (component.className === componentId) {
+      for (let field of Object.values(component.fields)) {
+        if (field.name === fieldId) {
+          return field.preview
+        }
+      }
+    }
+  }
+  return null
+}
+
+export function checkConflicts(id, name, preview, componentId) {
+  return (dispatch, getState) => {
+    dispatch(updatePreview(componentId, id, preview))
+    getState().componentFields.map((component) => {
+      if (component.className === componentId) {
+        component.fields.map((field) => {
+          if (field.id === id && 'dependencies' in field) {
+            let dependentValue = findCurrentValue(getState(), componentId, field.dependencies)
+            if (tinycolor.isReadable(field.preview, dependentValue)) {
+              $('#' + id + '-input').removeClass('form-control-danger')
+              $('#' + id + '-div').removeClass('has-danger')
+              $('.color-input-warning').hide()
+            }
+            else {
+              $('#' + id + '-input').addClass('form-control-danger')
+              $('#' + id + '-div').addClass('has-danger')
+              $('.color-input-warning').show()
+            }
+          }
+        })
+      }
+    })
+  }
+}
+
 // action creator for UPDATE_VALUE
 export const updateValue = (componentId, id, value) => {
   return {
