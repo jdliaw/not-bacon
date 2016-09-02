@@ -76,6 +76,8 @@ Consists of a publisher resource and style resource.
 }
 ```
 
+---
+
 ### config.json
 **`/react_app/config.json`**
 
@@ -131,6 +133,8 @@ Fields of a component have attributes `type` and `default` (`dependencies` optio
 }
 ```
 
+---
+
 ### CSS & Sass compiler
 **`/app/services/`**
 
@@ -182,6 +186,8 @@ html {
   }
 }
 ```
+
+---
 
 ### React Components
 Organization:
