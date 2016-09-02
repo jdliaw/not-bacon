@@ -5,18 +5,18 @@ Hume is an publisher customization app that will allow publishers to easily crea
 ## Get Started
 
 ```
-git clone https://github.com/stacksocial/hume.git
-cd hume
-bundle install
-rake db:migrate
-npm install webpack -g
-npm install
+$ git clone https://github.com/stacksocial/hume.git
+$ cd hume
+$ bundle install
+$ rake db:migrate
+$ npm install webpack -g
+$ npm install
 
 # Compile React app - keep this open in its own tab
-npm run build
+$ npm run build
 
 # Start server and see it at localhost:3000
-rails s
+$ rails s
 ```
 
 **React app** on a **Rails app**.
@@ -29,7 +29,7 @@ rails s
 ### for the publisher
 1. Preview your color selection automatically
 2. Don't see the font you want? Choose the 'Other' option and enter the URL of your desired font
-3. Choose from five different color schemes based on your `brand-primary` color to get inspiration for your color choices
+3. Choose from five different color schemes based on your `brand-primary` color for inspiration
   * Populate any of your color fields with one of those colors by clicking on the preview swatch
 
 ### for us
@@ -81,25 +81,20 @@ Consists of a publisher resource and style resource.
 
 Variables have attributes `name`, `type`, and `default`.
 
-  **name**: Displayed as label next to input
-
-  **type**: Field type - 'hex' for colors, 'selector' for fonts, & more to come
+  * **name**: Displayed as label next to input
+  * **type**: Field type - 'hex' for colors, 'selector' for fonts, & more to come
 
 Components have attributes `name`, `className`, and `styles`.
 
-  **name**: Displayed as heading of ComponentModule
-
-  **id**: Class name used to identify it (..eventually change to `className` probably)
-
-  **styles**: Customizable fields for this component
+  * **name**: Displayed as heading of ComponentModule
+  * **id**: Class name used to identify it (..eventually change to `className` probably)
+  * **styles**: Customizable fields for this component
 
 Fields of a component have attributes `type` and `default` (`dependencies` optional).
 
-  **type**: Field type
-
-  **default**: Default value when field is first introduced
-
-  **dependencies**: Name of field that this field may be dependent on (i.e. color and background-color). Dependent is defined as may have conflicts with.
+  * **type**: Field type
+  * **default**: Default value when field is first introduced
+  * **dependencies**: Name of field that this field may be dependent on (i.e. color and background-color). Dependent is defined as may have conflicts with.
 
 *Example config:*
 
@@ -141,9 +136,8 @@ Fields of a component have attributes `type` and `default` (`dependencies` optio
 
 Style Resource has an `after_save` filter that compiles the file. Modify the compiler used between CSS (**StyleCompiler**) and Sass (**SassCompiler**).
 
-Compiles the variables into CSS or Sass variables and components into class name with fields.
-
-Outputs a file with an **MD5** signature.
+* Compiles the variables into CSS or Sass variables and components into class name with fields.
+* Outputs a file with an **MD5** signature.
 
 *Example CSS output*
 
