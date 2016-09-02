@@ -6,9 +6,12 @@ import SelectInput from './selectInput'
 const VariablesSection = ({ masterField, hexFields, selectFields, colors, colorScheme, colorSchemeOptions, fontOptions, updateSwatch, updateField, chooseColorScheme, saveTheme }) => (
   <div className="container">
     <div className="row">
-      <div className="col-md-8">
+      <div className="col-lg-8 col-md-12 col-sm-12">
         <h2 className="style-type">Variables</h2>
         <h6 className="style-type-description">Brand colors, fonts, and more for use across your shop.</h6>
+      </div>
+      <div className="col-lg-4 col-md-12 col-sm-12">
+        <div className="alert alert-danger color-input-alert" id="var-color-invalid" role="alert">Please enter a valid hex value.</div>
       </div>
     </div>
 

@@ -41,12 +41,12 @@ export function checkConflicts(id, name, preview, componentId) {
             if (tinycolor.isReadable(field.preview, dependentValue)) {
               $('#' + id + '-input').removeClass('form-control-danger')
               $('#' + id + '-div').removeClass('has-danger')
-              $('.color-input-warning').hide()
+              $('#color-conflict').hide()
             }
             else {
               $('#' + id + '-input').addClass('form-control-danger')
               $('#' + id + '-div').addClass('has-danger')
-              $('.color-input-warning').show()
+              $('#color-conflict').show()
             }
           }
         })

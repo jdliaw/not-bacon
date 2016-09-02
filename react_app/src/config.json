@@ -78,11 +78,12 @@
 				"color": {
 					"type": "hex",
 					"default": "#ccc",
-					"dependencies": "color"
+					"dependencies": "background-color"
 				},
 				"background-color": {
 					"type": "hex",
-					"default": "#ccc"
+					"default": "#ccc",
+					"dependencies": "color"
 				}
 			}
 		},

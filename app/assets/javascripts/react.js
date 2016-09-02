@@ -30739,11 +30739,11 @@
 	            if (_tinycolor2.default.isReadable(field.preview, dependentValue)) {
 	              $('#' + id + '-input').removeClass('form-control-danger');
 	              $('#' + id + '-div').removeClass('has-danger');
-	              $('.color-input-warning').hide();
+	              $('#color-conflict').hide();
 	            } else {
 	              $('#' + id + '-input').addClass('form-control-danger');
 	              $('#' + id + '-div').addClass('has-danger');
-	              $('.color-input-warning').show();
+	              $('#color-conflict').show();
 	            }
 	          }
 	        });
@@ -31423,14 +31423,16 @@
 	      // validate hex colors (reset warnings if fine)
 	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
 	      if (isHexColor && preview != "") {
-	        $('#' + name + '-input').removeClass('form-control-danger');
-	        $('#' + name + '-div').removeClass('has-danger');
+	        $('#' + id + '-input').removeClass('form-control-danger');
+	        $('#' + id + '-div').removeClass('has-danger');
+	        $('#var-color-invalid').hide();
 	        dispatch((0, _actions.updatePreview)(null, id, preview));
 	      }
 	      // add warnings if not valid
 	      else if (!isHexColor && preview != "") {
-	          $('#' + name + '-input').addClass('form-control-danger');
-	          $('#' + name + '-div').addClass('has-danger');
+	          $('#' + id + '-input').addClass('form-control-danger');
+	          $('#' + id + '-div').addClass('has-danger');
+	          $('#var-color-invalid').show();
 	        }
 	    },
 	    updateField: function updateField(id, value) {
@@ -31507,7 +31509,7 @@
 	      { className: 'row' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-8' },
+	        { className: 'col-lg-8 col-md-12 col-sm-12' },
 	        _react2.default.createElement(
 	          'h2',
 	          { className: 'style-type' },
@@ -31517,6 +31519,15 @@
 	          'h6',
 	          { className: 'style-type-description' },
 	          'Brand colors, fonts, and more for use across your shop.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-4 col-md-12 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger color-input-alert', id: 'var-color-invalid', role: 'alert' },
+	          'Please enter a valid hex value.'
 	        )
 	      )
 	    ),
@@ -31695,11 +31706,12 @@
 					"color": {
 						"type": "hex",
 						"default": "#ccc",
-						"dependencies": "color"
+						"dependencies": "background-color"
 					},
 					"background-color": {
 						"type": "hex",
-						"default": "#ccc"
+						"default": "#ccc",
+						"dependencies": "color"
 					}
 				}
 			},
@@ -31781,14 +31793,16 @@
 	      // validate hex colors (reset warnings if fine)
 	      var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview);
 	      if (isHexColor && preview != "") {
-	        $('#' + name + '-input').removeClass('form-control-danger');
-	        $('#' + name + '-div').removeClass('has-danger');
+	        $('#' + id + '-input').removeClass('form-control-danger');
+	        $('#' + id + '-div').removeClass('has-danger');
+	        $('#comp-color-invalid').hide();
 	        dispatch((0, _actions.checkConflicts)(id, name, preview, componentId));
 	      }
 	      // add warnings if not valid
 	      else if (!isHexColor && preview != "") {
-	          $('#' + name + '-input').addClass('form-control-danger');
-	          $('#' + name + '-div').addClass('has-danger');
+	          $('#' + id + '-input').addClass('form-control-danger');
+	          $('#' + id + '-div').addClass('has-danger');
+	          $('#comp-color-invalid').show();
 	        }
 	    },
 	    updateField: function updateField(id, value, componentId) {
@@ -31862,11 +31876,20 @@
 	      ),
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-lg-4 col-md-6 col-sm-12' },
+	        { className: 'col-lg-8 col-md-6 col-sm-12' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'alert alert-warning color-input-warning', role: 'alert' },
-	          'Warning: Color conflict detected.'
+	          { className: 'alert alert-warning color-input-alert', id: 'color-conflict', role: 'alert' },
+	          'Warning: Color conflict detected. Your color choice may not be readable for users.'
+	        )
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-lg-8 col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger color-input-alert', id: 'comp-color-invalid', role: 'alert' },
+	          'Please enter a valid hex value.'
 	        )
 	      )
 	    ),

@@ -66,14 +66,16 @@ const mapDispatchToProps = (dispatch) => {
       // validate hex colors (reset warnings if fine)
       var isHexColor = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(preview)
       if (isHexColor && preview != "") {
-        $('#' + name + '-input').removeClass('form-control-danger')
-        $('#' + name + '-div').removeClass('has-danger')
+        $('#' + id + '-input').removeClass('form-control-danger')
+        $('#' + id + '-div').removeClass('has-danger')
+        $('#var-color-invalid').hide()
         dispatch(updatePreview(null, id, preview))
       }
       // add warnings if not valid
       else if (!isHexColor && preview != "") {
-        $('#' + name + '-input').addClass('form-control-danger')
-        $('#' + name + '-div').addClass('has-danger')
+        $('#' + id + '-input').addClass('form-control-danger')
+        $('#' + id + '-div').addClass('has-danger')
+        $('#var-color-invalid').show()
       }
     },
     updateField: (id, value) => {

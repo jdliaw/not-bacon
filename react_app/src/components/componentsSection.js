@@ -8,8 +8,11 @@ const ComponentsSection = ({ components, colors, updateSwatch, updateField, save
   			<h2 className="style-type">Components</h2>
   			<h6 className="style-type-description">Customize components across your shop.</h6>
   		</div>
-      <div className="col-lg-4 col-md-6 col-sm-12">
-        <div className="alert alert-warning color-input-warning" role="alert">Warning: Color conflict detected.</div>
+      <div className="col-lg-8 col-md-6 col-sm-12">
+        <div className="alert alert-warning color-input-alert" id="color-conflict" role="alert">Warning: Color conflict detected. Your color choice may not be readable for users.</div>
+      </div>
+      <div className="col-lg-8 col-md-6 col-sm-12">
+        <div className="alert alert-danger color-input-alert" id="comp-color-invalid" role="alert">Please enter a valid hex value.</div>
       </div>
   	</div>
 
