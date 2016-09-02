@@ -11,37 +11,41 @@ bundle install
 rake db:migrate
 npm install webpack -g
 npm install
+
 # Compile React app - keep this open in its own tab
 npm run build
+
 # Start server and see it at localhost:3000
 rails s
 ```
 
-React app on a Rails app.
+**React app** on a **Rails app**.
 * [Redux](https://github.com/reactjs/redux) to handle React state
 * [Thunk](https://github.com/gaearon/redux-thunk) middleware to handle asynchronous calls in Redux
 * [Tinycolor2](https://github.com/bgrins/TinyColor) for color scheme and color conflict detection
 
 ## Features
 
-### for the PUBLISHER
-* Preview your color selection automatically
-* Don't see the font you want? Choose the 'Other' option and enter the URL of your desired font
-* Choose from five different color schemes based on your `brand-primary` color to get inspiration for your color choices
-    * Populate any of your color fields with one of those colors by clicking on the preview swatch
+### for the publisher
+1. Preview your color selection automatically
+2. Don't see the font you want? Choose the 'Other' option and enter the URL of your desired font
+3. Choose from five different color schemes based on your `brand-primary` color to get inspiration for your color choices
+  * Populate any of your color fields with one of those colors by clicking on the preview swatch
 
-### for the shop maanger
-* Easily add or remove what fields a publisher can customize using the JSON config file
-* Compile the publisher's saved theme into a CSS file or a Sass file!
+### for us
+1. Easily add or remove what fields a publisher can customize using the JSON config file
+2. Compile the publisher's saved theme into a CSS file or a Sass file!
+3. GET and PATCH to JSON API
 
 ## Technical Stuff
 
 ### JSON API
-`/app/resources/ap/v1/`
+**`/app/resources/ap/v1/`**
 
 Consists of a publisher resource and style resource.
 
-Example response:
+*Example response:*
+
 ```
 {
   "data": {
@@ -73,21 +77,31 @@ Example response:
 ```
 
 ### config.json
-`/react_app/config.json`
+**`/react_app/config.json`**
 
 Variables have attributes `name`, `type`, and `default`.
-    `name`: Displayed as label next to input
-    `type`: Field type - 'hex' for colors, 'selector' for fonts, & more to come
-Components have attributes `name`, `className`, and `styles`.
-    `name`: Displayed as heading of ComponentModule
-    `id`: Class name used to identify it (..eventually change to `className` probably)
-    `styles`: Customizable fields for this component
-Fields of a component have attributes `type` and `default` (`dependencies` optional).
-    `type`: Field type
-    `default`: Default value when field is first introduced
-    `dependencies`: Name of field that this field may be dependent on (i.e. color and background-color). Dependent is defined as may have conflicts with.
 
-Example config:
+  **name**: Displayed as label next to input
+
+  **type**: Field type - 'hex' for colors, 'selector' for fonts, & more to come
+
+Components have attributes `name`, `className`, and `styles`.
+
+  **name**: Displayed as heading of ComponentModule
+
+  **id**: Class name used to identify it (..eventually change to `className` probably)
+
+  **styles**: Customizable fields for this component
+
+Fields of a component have attributes `type` and `default` (`dependencies` optional).
+
+  **type**: Field type
+
+  **default**: Default value when field is first introduced
+
+  **dependencies**: Name of field that this field may be dependent on (i.e. color and background-color). Dependent is defined as may have conflicts with.
+
+*Example config:*
 
 ```
 {
@@ -123,13 +137,15 @@ Example config:
 ```
 
 ### CSS & Sass compiler
-`/app/services/`
+**`/app/services/`**
 
-`style_resource` has an `after_save` filter that compiles the file. Modify the compiler used between CSS (StyleCompiler) and Sass (SassCompiler).
+Style Resource has an `after_save` filter that compiles the file. Modify the compiler used between CSS (**StyleCompiler**) and Sass (**SassCompiler**).
+
 Compiles the variables into CSS or Sass variables and components into class name with fields.
-Outputs a file with an MD5 signature.
 
-Example CSS output
+Outputs a file with an **MD5** signature.
+
+*Example CSS output*
 
 ```
 html {
@@ -151,7 +167,7 @@ html {
 }
 ```
 
-Example Sass output
+*Example Sass output*
 
 ```
 html {
